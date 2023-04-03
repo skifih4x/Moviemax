@@ -80,15 +80,63 @@
 			path = Moviemax;
 			sourceTree = "<group>";
 		};
-		52899D8D29DAF8F6003D2AB8 /* Controllers */ = {
+		006DF51629DAFE6A00BCB541 /* MainTabBar */ = {
 			isa = PBXGroup;
 			children = (
 				006B2F7529D9E1D100D8F89A /* MainTabBarController.swift */,
+			);
+			path = MainTabBar;
+			sourceTree = "<group>";
+		};
+		006DF51729DAFE7200BCB541 /* SearchVC */ = {
+			isa = PBXGroup;
+			children = (
 				52899D9129DAF9C9003D2AB8 /* SearchViewController.swift */,
+			);
+			path = SearchVC;
+			sourceTree = "<group>";
+		};
+		006DF51829DAFE7800BCB541 /* RecentWatchVC */ = {
+			isa = PBXGroup;
+			children = (
 				52899D9329DAF9E3003D2AB8 /* VideoViewController.swift */,
+			);
+			path = RecentWatchVC;
+			sourceTree = "<group>";
+		};
+		006DF51929DAFE9300BCB541 /* HomeVC */ = {
+			isa = PBXGroup;
+			children = (
 				52899D9529DAFA08003D2AB8 /* HomeViewController.swift */,
+			);
+			path = HomeVC;
+			sourceTree = "<group>";
+		};
+		006DF51A29DAFE9800BCB541 /* FavoritesVC */ = {
+			isa = PBXGroup;
+			children = (
 				52899D9729DAFA19003D2AB8 /* FavoritesViewController.swift */,
+			);
+			path = FavoritesVC;
+			sourceTree = "<group>";
+		};
+		006DF51B29DAFE9E00BCB541 /* ProfileVC */ = {
+			isa = PBXGroup;
+			children = (
 				52899D9929DAFA2C003D2AB8 /* ProfileViewController.swift */,
+			);
+			path = ProfileVC;
+			sourceTree = "<group>";
+		};
+		52899D8D29DAF8F6003D2AB8 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				006DF51629DAFE6A00BCB541 /* MainTabBar */,
+				006DF51729DAFE7200BCB541 /* SearchVC */,
+				006DF51829DAFE7800BCB541 /* RecentWatchVC */,
+				006DF51929DAFE9300BCB541 /* HomeVC */,
+				006DF51A29DAFE9800BCB541 /* FavoritesVC */,
+				006DF51B29DAFE9E00BCB541 /* ProfileVC */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
