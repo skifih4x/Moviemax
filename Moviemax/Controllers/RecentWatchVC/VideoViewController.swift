@@ -49,7 +49,7 @@ class VideoViewController: UIViewController {
     @objc func buttonPressed(_ sender: UIButton) {
         
         let index = IndexPath(item: sender.tag, section: 0)
-        let cell = tableView.cellForRow(at: index) as! CellFilmTableView
+        guard let cell = tableView.cellForRow(at: index) as? CellFilmTableView else { return }
         cell.changeImageButton()
     }
 }
