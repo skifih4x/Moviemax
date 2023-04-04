@@ -64,6 +64,7 @@ extension VideoViewController {
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white,
                                           .font: UIFont.systemFont(ofSize: 24, weight: .bold)
         ]
+        appearance.shadowColor = .clear
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         
         navigationController?.navigationBar.tintColor = .white
