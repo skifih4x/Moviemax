@@ -19,6 +19,12 @@
 		52899D9629DAFA08003D2AB8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52899D9529DAFA08003D2AB8 /* HomeViewController.swift */; };
 		52899D9829DAFA19003D2AB8 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52899D9729DAFA19003D2AB8 /* FavoritesViewController.swift */; };
 		52899D9A29DAFA2C003D2AB8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52899D9929DAFA2C003D2AB8 /* ProfileViewController.swift */; };
+		52AB71BC29DBD2C400F149F1 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB71BB29DBD2C400F149F1 /* CustomCell.swift */; };
+		52AB71BE29DBD2E800F149F1 /* CellFilmTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB71BD29DBD2E800F149F1 /* CellFilmTableView.swift */; };
+		52AB71C029DBD30B00F149F1 /* GenreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB71BF29DBD30B00F149F1 /* GenreView.swift */; };
+		52AB71C229DBD32900F149F1 /* StackView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB71C129DBD32900F149F1 /* StackView + Extension.swift */; };
+		52AB71C429DBD34300F149F1 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB71C329DBD34300F149F1 /* UILabel + Extension.swift */; };
+		52AB71C629DBD36200F149F1 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB71C529DBD36200F149F1 /* UIImageView + Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +42,12 @@
 		52899D9529DAFA08003D2AB8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		52899D9729DAFA19003D2AB8 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		52899D9929DAFA2C003D2AB8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		52AB71BB29DBD2C400F149F1 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		52AB71BD29DBD2E800F149F1 /* CellFilmTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellFilmTableView.swift; sourceTree = "<group>"; };
+		52AB71BF29DBD30B00F149F1 /* GenreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreView.swift; sourceTree = "<group>"; };
+		52AB71C129DBD32900F149F1 /* StackView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView + Extension.swift"; sourceTree = "<group>"; };
+		52AB71C329DBD34300F149F1 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
+		52AB71C529DBD36200F149F1 /* UIImageView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +83,7 @@
 				006B2F7129D9E1D100D8F89A /* AppDelegate.swift */,
 				006B2F7329D9E1D100D8F89A /* SceneDelegate.swift */,
 				52899D8D29DAF8F6003D2AB8 /* Controllers */,
-				52899D9029DAF909003D2AB8 /* SupportingFiles */,
+				52899D9029DAF909003D2AB8 /* Extension */,
 				006B2F7729D9E1D100D8F89A /* Main.storyboard */,
 				006B2F7A29D9E1D200D8F89A /* Assets.xcassets */,
 				006B2F7C29D9E1D200D8F89A /* LaunchScreen.storyboard */,
@@ -141,12 +153,26 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		52899D9029DAF909003D2AB8 /* SupportingFiles */ = {
+		52899D9029DAF909003D2AB8 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				52AB71BB29DBD2C400F149F1 /* CustomCell.swift */,
+				52AB71BD29DBD2E800F149F1 /* CellFilmTableView.swift */,
+				52AB71BF29DBD30B00F149F1 /* GenreView.swift */,
 				52899D8E29DAF905003D2AB8 /* CustomTabBar.swift */,
+				52AB71C829DBD5B300F149F1 /* UIKit */,
 			);
-			path = SupportingFiles;
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		52AB71C829DBD5B300F149F1 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				52AB71C129DBD32900F149F1 /* StackView + Extension.swift */,
+				52AB71C329DBD34300F149F1 /* UILabel + Extension.swift */,
+				52AB71C529DBD36200F149F1 /* UIImageView + Extension.swift */,
+			);
+			path = UIKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,12 +247,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				52899D9229DAF9C9003D2AB8 /* SearchViewController.swift in Sources */,
+				52AB71BE29DBD2E800F149F1 /* CellFilmTableView.swift in Sources */,
 				52899D8F29DAF905003D2AB8 /* CustomTabBar.swift in Sources */,
+				52AB71BC29DBD2C400F149F1 /* CustomCell.swift in Sources */,
 				52899D9829DAFA19003D2AB8 /* FavoritesViewController.swift in Sources */,
 				52899D9429DAF9E3003D2AB8 /* VideoViewController.swift in Sources */,
+				52AB71C029DBD30B00F149F1 /* GenreView.swift in Sources */,
 				006B2F7629D9E1D100D8F89A /* MainTabBarController.swift in Sources */,
 				006B2F7229D9E1D100D8F89A /* AppDelegate.swift in Sources */,
+				52AB71C629DBD36200F149F1 /* UIImageView + Extension.swift in Sources */,
 				52899D9A29DAFA2C003D2AB8 /* ProfileViewController.swift in Sources */,
+				52AB71C429DBD34300F149F1 /* UILabel + Extension.swift in Sources */,
+				52AB71C229DBD32900F149F1 /* StackView + Extension.swift in Sources */,
 				52899D9629DAFA08003D2AB8 /* HomeViewController.swift in Sources */,
 				006B2F7429D9E1D100D8F89A /* SceneDelegate.swift in Sources */,
 			);
