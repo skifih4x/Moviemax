@@ -13,7 +13,7 @@ class CustomCell: UICollectionViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Test"
-        label.textColor = #colorLiteral(red: 0.9960784314, green: 0.9960784314, blue: 0.9960784314, alpha: 1)
+        label.textColor = UIColor(named: K.Colors.titleColor)
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 16)
         label.numberOfLines = 0
@@ -26,7 +26,7 @@ class CustomCell: UICollectionViewCell {
         
       
         layer.borderWidth = 2
-        layer.borderColor = #colorLiteral(red: 0.2080721557, green: 0.2107053101, blue: 0.2790962458, alpha: 1)
+        layer.borderColor = #colorLiteral(red: 0.1568627451, green: 0.1568627451, blue: 0.2156862745, alpha: 1)
         setupConstraints()
     }
     
