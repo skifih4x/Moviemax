@@ -19,17 +19,17 @@ class CellFilmTableView: UITableViewCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Drifting Home"
-        label.textColor = #colorLiteral(red: 0.9960784314, green: 0.9960784314, blue: 0.9960784314, alpha: 1)
+        label.textColor = UIColor(named: K.Colors.titleColor)
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 20, weight: .bold)
         return label
     }()
     // Time Stack
-    let timeLabel = UILabel(text: "148 Minutes", font: UIFont.systemFont(ofSize: 15))
+    let timeLabel = UILabel(text: "148 Minutes", font: UIFont.systemFont(ofSize: 15),  textColor: UIColor(named: K.Colors.labelColor))
     let imageTime = UIImageView(image: UIImage(named: "clock"), contentMode: .scaleAspectFill)
     // Data Stack
-    let dataLabel = UILabel(text: "17 Sep 2021", font: UIFont.systemFont(ofSize: 15))
-    let imageData = UIImageView(image: UIImage(named: "data"), contentMode: .scaleAspectFill)
+    let dataLabel = UILabel(text: "17 Sep 2021", font: UIFont.systemFont(ofSize: 15), textColor: UIColor(named: K.Colors.labelColor))
+    let imageData = UIImageView(image: UIImage(named: "calendar"), contentMode: .scaleAspectFill)
     
     // Genre Stack
     let imageGenre = UIImageView(image: UIImage(named: "genre"), contentMode: .scaleAspectFill)
