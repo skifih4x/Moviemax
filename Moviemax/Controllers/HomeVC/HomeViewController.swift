@@ -9,7 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
     //MARK: - properties
-    private let categories = ["All", "Action", "Adventure", "Mystery"]
+    private let categories = ["All", "Action", "Adventure", "Mystery", "Kids", "Aboba"]
     lazy var collectionView : UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -58,9 +58,9 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0 :
-            return 3
+            return 6
         case 1 :
-            return 4
+            return categories.count
         default:
             return 8
         }

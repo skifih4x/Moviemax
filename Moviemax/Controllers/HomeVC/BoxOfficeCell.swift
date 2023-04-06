@@ -11,7 +11,7 @@ class BoxOfficeCell: UICollectionViewCell {
     //MARK: - properties
     private let movieImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
