@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Vector@1x.png",
+      "filename" : "Arrow Back@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Vector@2x.png",
+      "filename" : "Arrow Back@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Vector@3x.png",
+      "filename" : "Arrow Back@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

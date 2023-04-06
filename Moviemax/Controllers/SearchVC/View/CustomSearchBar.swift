@@ -47,8 +47,8 @@ class CustomSearchBar: UISearchBar {
         
         searchBarStyle = .minimal
         textField?.placeholder = "Введите название"
-        textField?.textColor = .white
-        textField?.backgroundColor = #colorLiteral(red: 0.1187649444, green: 0.1217879131, blue: 0.1932167113, alpha: 1)
+        textField?.textColor = UIColor(named: K.Colors.titleColor)
+        textField?.backgroundColor = UIColor(named: K.Colors.background)
         textField?.borderStyle = .none
         textField?.layer.cornerRadius = 20
         textField?.layer.borderWidth = 1

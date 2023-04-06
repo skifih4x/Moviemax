@@ -49,7 +49,7 @@ class SearchViewController: UIViewController {
         self.tableView.register(CellFilmTableView.self, forCellReuseIdentifier: "CellForTable")
         self.collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "Cell")
         
-        view.backgroundColor = #colorLiteral(red: 0.1187649444, green: 0.1217879131, blue: 0.1932167113, alpha: 1)
+        view.backgroundColor = UIColor(named: K.Colors.background)
         setupConstraints()
         settingsNavigationBar()
         
@@ -59,9 +59,9 @@ class SearchViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if let image = UIImage(named: "Combined-Shape") {
-            let color = #colorLiteral(red: 0.4705882353, green: 0.5098039216, blue: 0.5411764706, alpha: 1)
+            guard let color = UIColor(named: K.Colors.titleColor) else { return }
             searchBar.setRightImage(image)
-            searchBar.textField?.rightView?.tintColor = color
+            searchBar.textField?.rightView?.tintColor = UIColor(named: K.Colors.titleColor)
             searchBar.changePlaceholderColor(color)
         }
         
@@ -89,8 +89,8 @@ extension SearchViewController {
     private func settingsNavigationBar() {
         
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = #colorLiteral(red: 0.1187649444, green: 0.1217879131, blue: 0.1932167113, alpha: 1)
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white,
+        appearance.backgroundColor = UIColor(named: K.Colors.background)
+        appearance.titleTextAttributes = [.foregroundColor: UIColor(named: K.Colors.titleColor) ?? .white,
                                           .font: UIFont.systemFont(ofSize: 24, weight: .bold)
         ]
         appearance.shadowColor = .clear
@@ -205,8 +205,10 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? CustomCell else { return UICollectionViewCell()}
         if indexCell == indexPath.item {
             cell.backgroundColor = #colorLiteral(red: 0.3176470588, green: 0.3058823529, blue: 0.7137254902, alpha: 1)
+            cell.titleLabel.textColor = .white
         } else {
             cell.backgroundColor = .clear
+            cell.titleLabel.textColor = #colorLiteral(red: 0.6117647059, green: 0.6431372549, blue: 0.6705882353, alpha: 1)
         }
         let width = array[indexPath.item]
         cell.titleLabel.text = width
