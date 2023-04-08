@@ -20,7 +20,7 @@ final class NetworkManager {
 
             if let response = response as? HTTPURLResponse,
                 response.statusCode < 200 || response.statusCode >= 300 {
-                completion(.failure(error.unsafelyUnwrapped) )
+                completion(.failure(MovieError.errorInvalidResponse) )
                 return
             }
 

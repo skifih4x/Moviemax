@@ -42,57 +42,75 @@ final class MultimediaLoader {
 
     private let imageBaseUrl = "https://image.tmdb.org/t/p/w500"
 
-
-    private let movieGenres: [Int: String] = [
-        28: "Action",
-        12: "Adventure",
-        16: "Animation",
-        35: "Comedy",
-        80: "Crime",
-        99: "Documentary",
-        18: "Drama",
-        10751: "Family",
-        14: "Fantasy",
-        36: "History",
-        27: "Horror",
-        10402: "Music",
-        9648: "Mystery",
-        10749: "Romance",
-        878: "Science Fiction",
-        10770: "TV Movie",
-        53: "Thriller",
-        10752: "War",
-        37: "Western",
-
-        00: "No data"
-    ]
-
-    let tvShowGenres: [Int: String] = [
-        10759: "Action & Adventure",
-        16: "Animation",
-        35: "Comedy",
-        80: "Crime",
-        99: "Documentary",
-        18: "Drama",
-        10751: "Family",
-        10762: "Kids",
-        9648: "Mystery",
-        10763: "News",
-        10764: "Reality",
-        10765: "Sci-Fi & Fantasy",
-        10766: "Soap",
-        10767: "Talk",
-        10768: "War & Politics",
-        37: "Western"
-    ]
-
-
-
     init(delegate: UIViewController? = nil) {
         self.delegate = delegate
     }
 
     //MARK: - Main ViewController Functions
+
+    func searchMedia(type: MultimediaTypeURL, query: String, page: Int = 1, completion: @escaping (Result<MultimediaModel, Error>) -> Void) {
+        let urlString: String
+        switch type {
+        case .movie:
+            urlString = "\(baseURL)search/tv?api_key=\(apiKey)&language=en-US&query=\(query)&page=\(page)"
+        case .tvShow:
+            urlString = "\(baseURL)search/movie?api_key=\(apiKey)&language=en-US&query=\(query)&page=\(page)"
+        }
+        guard let encodedUrlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: encodedUrlString) else {
+            return
+        }
+        networkManager.fetchData(with: url) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let movies = try self.decoder.decode(MultimediaModel.self, from: data)
+                    completion(.success(movies))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func fetchMoviesByGenre(genre: MovieGenre, completion: @escaping (Result<MultimediaModel, Error>) -> Void) {
+        let urlString = "\(baseURL)discover/movie?api_key=\(apiKey)&with_genres=\(genre.rawValue)"
+        guard let url = URL(string: urlString) else { return }
+        networkManager.fetchData(with: url) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let movies = try self.decoder.decode(MultimediaModel.self, from: data)
+                    completion(.success(movies))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func fetchTvSeriesByGenre(genre: TvShowGenre, completion: @escaping (Result<MultimediaModel, Error>) -> Void) {
+        let urlString = "\(baseURL)discover/tv?api_key=\(apiKey)&with_genres=\(genre.rawValue)"
+        guard let url = URL(string: urlString) else { return }
+        networkManager.fetchData(with: url) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let tvSeries = try self.decoder.decode(MultimediaModel.self, from: data)
+                    completion(.success(tvSeries))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
 
     func getMediaData(for type: MultimediaTypeURL, completion: @escaping (([MultimediaTypeURL: [MultimediaViewModel]]) -> Void)) {
         var multimediaViewModel = [MultimediaViewModel]()
@@ -109,15 +127,26 @@ final class MultimediaLoader {
 
                 switch type {
                 case .movie:
-                    formattedDate = movieResult.releaseDate?.convertDateString() ?? "Unknown date"
-                    genre = self.movieGenres[movieResult.genreIds.first ?? 00] ?? "Unknown genre"
-                    title = movieResult.title ?? "Unknown movie"
+                       formattedDate = movieResult.releaseDate?.convertDateString() ?? "Unknown date"
+                    if let genreId = movieResult.genreIds.first,
+                          let genreEnum = MovieGenre(rawValue: genreId) {
+                           genre = genreEnum.name
+                       } else {
+                           genre = "Unknown genre"
+                       }
+                       title = movieResult.title ?? "Unknown movie"
 
 
                 case .tvShow:
                     formattedDate = movieResult.firstAirDate?.convertDateString() ?? "Unknown date"
-                    genre = self.tvShowGenres[movieResult.genreIds.first ?? 00] ?? "Unknown genre"
+                    if let genreId = movieResult.genreIds.first,
+                       let genreEnum = TvShowGenre(rawValue: genreId) {
+                        genre = genreEnum.name
+                    } else {
+                        genre = "Unknown genre"
+                    }
                     title = movieResult.name ?? "Unknown name"
+
                 }
 
                 multimediaViewModel.append(MultimediaViewModel(id: movieResult.id,
@@ -168,7 +197,7 @@ final class MultimediaLoader {
             case .failure:
                 self.delegate?.presentAlert(message: MovieError.codeError.rawValue, completion: {
                     if let mainVC = self.delegate as? HomeViewController {
-                        mainVC.fetchAllTypesOfMedia()
+                     //   mainVC.fetchAllTypesOfMedia()
                     }
                 })
             }

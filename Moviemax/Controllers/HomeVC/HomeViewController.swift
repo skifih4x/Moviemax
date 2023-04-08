@@ -31,6 +31,28 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+
+        let multimediaLoader = MultimediaLoader(delegate: self)
+
+//        multimediaLoader.fetchTvSeriesByGenre(genre: .news) { result in
+//            switch result {
+//            case .success(let success):
+//                print(success)
+//            case .failure(let failure):
+//                print(failure)
+//            }
+//        }
+
+    
+
+//        multimediaLoader.searchMedia(type: .tvShow, query: "arcane") { result in
+//            switch result {
+//            case .success(let success):
+//                print(success)
+//            case .failure(let failure):
+//                print(failure)
+//            }
+//        }
     }
      
     //MARK: - private setup UI methods
