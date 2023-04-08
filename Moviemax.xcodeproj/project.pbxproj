@@ -20,6 +20,9 @@
 		52899D9829DAFA19003D2AB8 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52899D9729DAFA19003D2AB8 /* FavoritesViewController.swift */; };
 		52899D9A29DAFA2C003D2AB8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52899D9929DAFA2C003D2AB8 /* ProfileViewController.swift */; };
 		6E35D00029DC5A9800573829 /* UIStackView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35CFFF29DC5A9800573829 /* UIStackView + Extensions.swift */; };
+		C52B7D9029DF00EB00016D20 /* LeftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52B7D8F29DF00EB00016D20 /* LeftBarButtonItem.swift */; };
+		C550327429E09014001BFF2A /* ProfileSettings2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C550327329E09014001BFF2A /* ProfileSettings2ViewController.swift */; };
+		C550328429E0C9B5001BFF2A /* CustomGenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C550328329E0C9B5001BFF2A /* CustomGenderButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		52899D9729DAFA19003D2AB8 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		52899D9929DAFA2C003D2AB8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		6E35CFFF29DC5A9800573829 /* UIStackView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extensions.swift"; sourceTree = "<group>"; };
+		C52B7D8F29DF00EB00016D20 /* LeftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftBarButtonItem.swift; sourceTree = "<group>"; };
+		C550327329E09014001BFF2A /* ProfileSettings2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettings2ViewController.swift; sourceTree = "<group>"; };
+		C550328329E0C9B5001BFF2A /* CustomGenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGenderButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				52899D9929DAFA2C003D2AB8 /* ProfileViewController.swift */,
+				C550328229E09A78001BFF2A /* ProfileSettings */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -174,6 +181,24 @@
 				6E35CFFF29DC5A9800573829 /* UIStackView + Extensions.swift */,
 			);
 			path = UIKit;
+			sourceTree = "<group>";
+		};
+		C550328129E09A6E001BFF2A /* res */ = {
+			isa = PBXGroup;
+			children = (
+				C52B7D8F29DF00EB00016D20 /* LeftBarButtonItem.swift */,
+				C550328329E0C9B5001BFF2A /* CustomGenderButton.swift */,
+			);
+			path = res;
+			sourceTree = "<group>";
+		};
+		C550328229E09A78001BFF2A /* ProfileSettings */ = {
+			isa = PBXGroup;
+			children = (
+				C550327329E09014001BFF2A /* ProfileSettings2ViewController.swift */,
+				C550328129E09A6E001BFF2A /* res */,
+			);
+			path = ProfileSettings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C550327429E09014001BFF2A /* ProfileSettings2ViewController.swift in Sources */,
 				52899D9229DAF9C9003D2AB8 /* SearchViewController.swift in Sources */,
 				52899D8F29DAF905003D2AB8 /* CustomTabBar.swift in Sources */,
 				52899D9829DAFA19003D2AB8 /* FavoritesViewController.swift in Sources */,
@@ -255,6 +281,8 @@
 				006B2F7629D9E1D100D8F89A /* MainTabBarController.swift in Sources */,
 				006B2F7229D9E1D100D8F89A /* AppDelegate.swift in Sources */,
 				52899D9A29DAFA2C003D2AB8 /* ProfileViewController.swift in Sources */,
+				C550328429E0C9B5001BFF2A /* CustomGenderButton.swift in Sources */,
+				C52B7D9029DF00EB00016D20 /* LeftBarButtonItem.swift in Sources */,
 				52899D9629DAFA08003D2AB8 /* HomeViewController.swift in Sources */,
 				006B2F7429D9E1D100D8F89A /* SceneDelegate.swift in Sources */,
 			);

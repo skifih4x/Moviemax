@@ -69,7 +69,7 @@ class ProfileViewController: UIViewController {
     
     private let personLabel: UILabel = {
         let label = UILabel()
-        label.text = "Person"
+        label.text = "Profile"
         label.font = label.font.withSize(16)
         label.textColor = .black
         label.textAlignment = .left
@@ -197,6 +197,8 @@ class ProfileViewController: UIViewController {
     //MARK: - flow funcs
     
     @objc private func nextButtonTapped() {
+        let newViewController = ProfileSettingsVC()
+            navigationController?.pushViewController(newViewController, animated: true)
     }
     
     @objc private func changePasswordButtonTapped() {

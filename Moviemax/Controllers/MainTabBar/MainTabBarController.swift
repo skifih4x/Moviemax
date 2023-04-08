@@ -47,7 +47,7 @@ class MainTabBarController: UITabBarController {
         videoViewController.title     = "Video"
         homeViewController.title      = "Home"
         favoritesViewController.title = "Favorites"
-        profileViewController.title   = "Profile"
+        profileViewController.title   = "Settings"
         
         let boldConfig                = UIImage.SymbolConfiguration(weight: .medium)
         let searchImage               = UIImage(systemName: "magnifyingglass", withConfiguration: boldConfig)!

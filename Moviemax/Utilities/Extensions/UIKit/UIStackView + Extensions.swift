@@ -15,3 +15,8 @@ extension UIStackView {
         self.translatesAutoresizingMaskIntoConstraints = false
     }
 }
+
+extension CGFloat {
+    var negative: CGFloat { self * -1.0 }
+    var half: CGFloat { self / 2 }
+}
