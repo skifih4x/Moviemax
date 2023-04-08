@@ -7,9 +7,9 @@
 
 import UIKit
 
-protocol CustomCellDelegate: AnyObject {
-    func TextFieldDidEndEditing(textField: UITextField, text: String)
-}
+//protocol CustomCellDelegate: AnyObject {
+//    func TextFieldDidEndEditing(textField: UITextField, text: String)
+//}
 
 final class GenderCustomButton: UIButton {
     

@@ -21,7 +21,7 @@
 		52899D9A29DAFA2C003D2AB8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52899D9929DAFA2C003D2AB8 /* ProfileViewController.swift */; };
 		6E35D00029DC5A9800573829 /* UIStackView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35CFFF29DC5A9800573829 /* UIStackView + Extensions.swift */; };
 		C52B7D9029DF00EB00016D20 /* LeftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52B7D8F29DF00EB00016D20 /* LeftBarButtonItem.swift */; };
-		C550327429E09014001BFF2A /* ProfileSettings2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C550327329E09014001BFF2A /* ProfileSettings2ViewController.swift */; };
+		C550327429E09014001BFF2A /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C550327329E09014001BFF2A /* ProfileSettingsViewController.swift */; };
 		C550328429E0C9B5001BFF2A /* CustomGenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C550328329E0C9B5001BFF2A /* CustomGenderButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +42,7 @@
 		52899D9929DAFA2C003D2AB8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		6E35CFFF29DC5A9800573829 /* UIStackView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extensions.swift"; sourceTree = "<group>"; };
 		C52B7D8F29DF00EB00016D20 /* LeftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftBarButtonItem.swift; sourceTree = "<group>"; };
-		C550327329E09014001BFF2A /* ProfileSettings2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettings2ViewController.swift; sourceTree = "<group>"; };
+		C550327329E09014001BFF2A /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
 		C550328329E0C9B5001BFF2A /* CustomGenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGenderButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -195,7 +195,7 @@
 		C550328229E09A78001BFF2A /* ProfileSettings */ = {
 			isa = PBXGroup;
 			children = (
-				C550327329E09014001BFF2A /* ProfileSettings2ViewController.swift */,
+				C550327329E09014001BFF2A /* ProfileSettingsViewController.swift */,
 				C550328129E09A6E001BFF2A /* res */,
 			);
 			path = ProfileSettings;
@@ -272,7 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C550327429E09014001BFF2A /* ProfileSettings2ViewController.swift in Sources */,
+				C550327429E09014001BFF2A /* ProfileSettingsViewController.swift in Sources */,
 				52899D9229DAF9C9003D2AB8 /* SearchViewController.swift in Sources */,
 				52899D8F29DAF905003D2AB8 /* CustomTabBar.swift in Sources */,
 				52899D9829DAFA19003D2AB8 /* FavoritesViewController.swift in Sources */,

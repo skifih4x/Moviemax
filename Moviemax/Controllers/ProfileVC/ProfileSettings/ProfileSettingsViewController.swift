@@ -293,20 +293,31 @@ extension ProfileSettingsVC {
     func makeTextFieldWithCalendar(withPlaceholder text: String) -> UITextField {
         let textField = makeTextField(withPlaceholder: text)
         
+        let calendarButton = UIButton(type: .system)
+        calendarButton.setImage(#imageLiteral(resourceName: "calendar.pdf"), for: .normal)
+        calendarButton.tintColor = #colorLiteral(red: 0.3179999888, green: 0.3059999943, blue: 0.7139999866, alpha: 1)
+        calendarButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -15.5, bottom: 0, right: 0)
+        textField.rightView = calendarButton
+        textField.rightViewMode = .always
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
-        
         if #available(iOS 13.4, *) {
             datePicker.preferredDatePickerStyle = .wheels
         }
-
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
         textField.inputView = datePicker
         
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.text = datePickerValueChanged(datePicker)
+        let toolBar = UIToolbar().toolBarPicker(#selector(doneButtonPressed))
+        textField.inputAccessoryView = toolBar
+//        textField.translatesAutoresizingMaskIntoConstraints = false
+//        textField.text = datePickerValueChanged(datePicker)
         return textField
     }
+    
+    
+    
     
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) -> String {
@@ -314,6 +325,10 @@ extension ProfileSettingsVC {
         dateFormatter.dateFormat = "dd.MM.yyyy"
         
         return dateFormatter.string(from:  sender.date)
+    }
+    
+    @objc func doneButtonPressed() {
+//        textField.resignFirstResponder()
     }
 
 }
