@@ -23,8 +23,6 @@ class CastAndCrewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        photoImageView.layer.cornerRadius = photoImageView.frame.height / 2
         layer.cornerRadius = contentView.frame.height / 2
     }
     
@@ -40,16 +38,14 @@ class CastAndCrewCell: UICollectionViewCell {
         contentView.addSubview(titleStackView)
         
         NSLayoutConstraint.activate([
-            photoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             photoImageView.heightAnchor.constraint(equalToConstant: 40),
-            photoImageView.widthAnchor.constraint(equalToConstant: 40),
+            photoImageView.heightAnchor.constraint(equalToConstant: 40),
             photoImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
         
         NSLayoutConstraint.activate([
             titleStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
             titleStackView.leadingAnchor.constraint(equalTo: photoImageView.trailingAnchor, constant: 8),
-            titleStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
         ])
     }
     

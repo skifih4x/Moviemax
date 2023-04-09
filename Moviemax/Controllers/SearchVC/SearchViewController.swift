@@ -10,10 +10,8 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    let array = ["All", "Action", "Adventure", "Animation", "Comedy", "Crime"]
+    let array = ["mfdvmfmvfmerferferferfer", "dfjvmkfdffdf", "sdjjsj"]
     var indexCell = 0
-    
-    let manager = MultimediaLoader.shared
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -39,8 +37,6 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        manager.
 
         collectionView.dataSource = self
         collectionView.delegate   = self
@@ -72,7 +68,7 @@ class SearchViewController: UIViewController {
     }
     
     @objc func buttonPressed(_ sender: UIButton) {
-        print("e")
+        
         let index = IndexPath(item: sender.tag, section: 0)
         guard let cell = tableView.cellForRow(at: index) as? CellFilmTableView else { return }
         cell.changeImageButton()
@@ -171,10 +167,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        150
-    }
-    
     
 }
 
@@ -226,7 +218,6 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.indexCell = indexPath.item
-        print(indexPath.row)
         
         DispatchQueue.main.async {
             collectionView.reloadData()
