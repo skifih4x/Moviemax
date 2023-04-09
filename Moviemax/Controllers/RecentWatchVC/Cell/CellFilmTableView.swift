@@ -12,7 +12,7 @@ class CellFilmTableView: UITableViewCell {
     
     let filmImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -42,6 +42,8 @@ class CellFilmTableView: UITableViewCell {
         return button
     }()
     
+    let genreView = GenreView(frame: .zero)
+    
     var buttonTapped = false
     
     
@@ -58,6 +60,25 @@ class CellFilmTableView: UITableViewCell {
         super.layoutSubviews()
         filmImageView.layer.cornerRadius = contentView.frame.height / 7
         
+    }
+    
+    func cellConfigure(with model: MultimediaViewModel) {
+        
+        self.nameLabel.text = model.titleName
+        setImage(nameImage: model.posterImageLink)
+        self.timeLabel.text = "\(model.id) Minutes"
+        self.dataLabel.text = "\(model.releaseDate)"
+        self.genreView.genreLabel.text = model.genre
+    }
+    
+    func setImage(nameImage: String) {
+        
+        MultimediaLoader.shared.fetchImage(from: nameImage) { [weak self] image in
+            
+            DispatchQueue.main.async {
+                self?.filmImageView.image = image
+            }
+        }
     }
       
     func changeImageButton() {
@@ -90,13 +111,12 @@ class CellFilmTableView: UITableViewCell {
         ])
         // Genre image
         NSLayoutConstraint.activate([
-            imageGenre.heightAnchor.constraint(equalToConstant: 14),
-            imageGenre.widthAnchor.constraint(equalToConstant: 14),
+            imageGenre.heightAnchor.constraint(equalToConstant: 20),
+            imageGenre.widthAnchor.constraint(equalToConstant: 20),
         ])
         
-        let genreView = GenreView(frame: .zero)
-        
         let topStack = UIStackView(arrangedSubviews: [nameLabel, likeButton], axis: .horizontal, spacing: 10)
+        topStack.alignment = .center
         let timeStack = UIStackView(arrangedSubviews: [imageTime, timeLabel], axis: .horizontal, spacing: 5)
         let dataStack = UIStackView(arrangedSubviews: [imageData, dataLabel], axis: .horizontal, spacing: 5)
         let genreStack = UIStackView(arrangedSubviews: [imageGenre, genreView], axis: .horizontal, spacing: 5)
@@ -116,17 +136,17 @@ class CellFilmTableView: UITableViewCell {
         
         NSLayoutConstraint.activate([
             
-            //            filmImageView.heightAnchor.constraint(equalToConstant: 160),
+                        filmImageView.heightAnchor.constraint(equalToConstant: 160),
             filmImageView.widthAnchor.constraint(equalToConstant: 120),
             filmImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            filmImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            filmImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
+//            filmImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            filmImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
         // Top Stack
         NSLayoutConstraint.activate([
             topStack.leadingAnchor.constraint(equalTo: filmImageView.trailingAnchor, constant: 12),
             topStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            topStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 31),
+            topStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
         ])
         // Time Stack
         NSLayoutConstraint.activate([
@@ -147,6 +167,7 @@ class CellFilmTableView: UITableViewCell {
             
             genreStack.topAnchor.constraint(equalTo: dataStack.bottomAnchor, constant: 10),
             genreStack.leadingAnchor.constraint(equalTo: filmImageView.trailingAnchor, constant: 12),
+//            genreView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         ])
         
     }
