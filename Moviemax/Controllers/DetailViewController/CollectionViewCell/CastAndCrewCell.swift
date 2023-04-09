@@ -31,7 +31,7 @@ class CastAndCrewCell: UICollectionViewCell {
         photoImageView.translatesAutoresizingMaskIntoConstraints = false
         
         
-        let titleStackView = UIStackView(arrangedSubviews: [titleLabel, jobTitleLabel], axis: .vertical, spacing: 5)
+        let titleStackView = UIStackView(customArrangedSubviews: [titleLabel, jobTitleLabel], axis: .vertical, spacing: 5)
         titleStackView.alignment = .leading
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(photoImageView)
