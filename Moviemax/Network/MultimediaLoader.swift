@@ -168,7 +168,7 @@ final class MultimediaLoader {
             case .failure:
                 self.delegate?.presentAlert(message: MovieError.codeError.rawValue, completion: {
                     if let mainVC = self.delegate as? HomeViewController {
-                        mainVC.fetchAllTypesOfMedia()
+//                        mainVC.fetchAllTypesOfMedia()
                     }
                 })
             }

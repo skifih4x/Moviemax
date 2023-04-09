@@ -10,6 +10,9 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    var model: MultimediaViewModel?
+    var castArray = [Cast]()
+    
     let array = ["mfdvmfmvfmerferferferfer", "dfjvmkfdffdf", "sdjjsj"]
     var indexCell = 0
     
@@ -51,7 +54,7 @@ class DetailViewController: UIViewController {
         CGSize(width: view.frame.width, height: view.frame.height)
     }
     
-    let imageFilm = UIImageView(image: UIImage(named: "image1"), contentMode: .scaleAspectFill)
+    let imageFilm = CustomImageView(frame: .zero)
     let nameFilm = UILabel(text: "Avatar", font: UIFont.systemFont(ofSize: 24, weight: .bold), textColor: UIColor(named: K.Colors.titleColor))
     
     let dataImage = UIImageView(image: UIImage(named: "data"), contentMode: .scaleAspectFill)
@@ -80,9 +83,33 @@ class DetailViewController: UIViewController {
 
     let textView = ExpandableLabel(text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book", font: UIFont.systemFont(ofSize: 18), textColor: UIColor(named: K.Colors.titleColor))
     
+    let manager = MultimediaLoader.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let model = model {
+            manager.fetchDetailData(multimedia: model) { [weak self] detailModel in
+                print(detailModel)
+                DispatchQueue.main.async {
+                    self?.imageFilm.activityIndicator.startAnimating()
+                }
+                self?.manager.fetchCastData(multimedia: model) { model in
+                    self?.castArray = model.cast
+                    
+                    DispatchQueue.main.async {
+                        self?.collectionView.reloadData()
+                    }
+                
+                }
+                self?.setDetailModel(with: detailModel)
+            }
+        }
+        
+        
+        
+        
+        
         
         view.backgroundColor = UIColor(named: K.Colors.background)
         
@@ -97,6 +124,29 @@ class DetailViewController: UIViewController {
         setupConstraints()
         watchNowButton.addPulsationAnimation()
 
+    }
+    
+    // MARK: - Set Detail Model
+    func setDetailModel(with detailModel: DetailMultimediaModel) {
+        
+        DispatchQueue.main.async {
+            self.datalabel.text = detailModel.releaseDate
+            self.genrelabel.text = detailModel.genres.first?.name
+            self.textView.text = detailModel.overview
+            
+            if let model = detailModel.runtime {
+                self.timelabel.text = "\(model) Minutes"
+            }
+            
+        }
+        
+        self.manager.fetchImage(from: detailModel.posterPath) { [weak self] image in
+            
+            DispatchQueue.main.async {
+                self?.imageFilm.image = image
+                self?.imageFilm.activityIndicator.stopAnimating()
+            }
+        }
     }
     
     @objc func watchNowButtonPressed() {
@@ -138,7 +188,9 @@ extension DetailViewController {
     
     private func setupConstraints() {
         
+    
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        imageFilm.translatesAutoresizingMaskIntoConstraints = false
         nameFilm.translatesAutoresizingMaskIntoConstraints = false
         raitingStack.translatesAutoresizingMaskIntoConstraints = false
         storyLineLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -255,8 +307,12 @@ extension DetailViewController {
 extension DetailViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let text = array[indexPath.item]
-        let width = text.count * 10 + 40
+        let text = castArray[indexPath.item]
+        var width = text.name.count * 10 + 20
+        if text.character.count > text.name.count {
+            width = text.character.count * 10 + 20
+            print("aaa")
+        }
         return CGSize(width: width, height: 50)
     }
     
@@ -269,6 +325,11 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 12
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        40
     }
     
 }
@@ -277,7 +338,7 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
 extension DetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return array.count
+        return castArray.count
     }
     
     
@@ -285,9 +346,23 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as? CastAndCrewCell else { return UICollectionViewCell()}
         
-        let width = array[indexPath.item]
-        cell.titleLabel.text = width
+        let cast = castArray[indexPath.item]
+        cell.backgroundColor = .lightGray
+        cell.titleLabel.text = cast.name
+        cell.jobTitleLabel.text = cast.character
         
+        if let cast = cast.profilePath {
+            manager.fetchImage(from: cast) { image in
+
+                if let image = image {
+                    DispatchQueue.main.async {
+                        cell.photoImageView.image = image
+                    }
+                }
+
+            }
+        }
+
         return cell
     }
     
