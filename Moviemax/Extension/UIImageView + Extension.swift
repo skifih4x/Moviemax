@@ -13,8 +13,9 @@ extension UIImageView {
     convenience init(image: UIImage?, contentMode: UIView.ContentMode) {
         self.init()
         
+        self.clipsToBounds = true
         self.image = image
         self.contentMode = contentMode
-        self.translatesAutoresizingMaskIntoConstraints=false
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 }
