@@ -25,6 +25,7 @@
 		52210A4929DF49EF002F159D /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52210A4829DF49EF002F159D /* RatingControl.swift */; };
 		52210A4C29DF4A30002F159D /* CastAndCrewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52210A4B29DF4A30002F159D /* CastAndCrewCell.swift */; };
 		52210A4F29DF4D9D002F159D /* ExpandableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52210A4E29DF4D9D002F159D /* ExpandableLabel.swift */; };
+		527748C429E3545A0052DAA9 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527748C329E3545A0052DAA9 /* CustomImageView.swift */; };
 		52899D8F29DAF905003D2AB8 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52899D8E29DAF905003D2AB8 /* CustomTabBar.swift */; };
 		52899D9229DAF9C9003D2AB8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52899D9129DAF9C9003D2AB8 /* SearchViewController.swift */; };
 		52899D9429DAF9E3003D2AB8 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52899D9329DAF9E3003D2AB8 /* VideoViewController.swift */; };
@@ -73,6 +74,7 @@
 		52210A4829DF49EF002F159D /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		52210A4B29DF4A30002F159D /* CastAndCrewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastAndCrewCell.swift; sourceTree = "<group>"; };
 		52210A4E29DF4D9D002F159D /* ExpandableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableLabel.swift; sourceTree = "<group>"; };
+		527748C329E3545A0052DAA9 /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		52899D8E29DAF905003D2AB8 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		52899D9129DAF9C9003D2AB8 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		52899D9329DAF9E3003D2AB8 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 			children = (
 				52210A4829DF49EF002F159D /* RatingControl.swift */,
 				52210A4E29DF4D9D002F159D /* ExpandableLabel.swift */,
+				527748C329E3545A0052DAA9 /* CustomImageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52899D9229DAF9C9003D2AB8 /* SearchViewController.swift in Sources */,
+				527748C429E3545A0052DAA9 /* CustomImageView.swift in Sources */,
 				ABA9934929DF51380015329F /* MultimediaModel.swift in Sources */,
 				52210A3D29DE8D33002F159D /* Constants.swift in Sources */,
 				52210A4F29DF4D9D002F159D /* ExpandableLabel.swift in Sources */,
