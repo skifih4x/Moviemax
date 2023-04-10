@@ -76,7 +76,7 @@ class CellFilmTableView: UITableViewCell {
         self.nameLabel.text = model.name ?? model.title
         setImage(nameImage: model.posterPath ?? "")
         self.timeLabel.text = "\(model.voteAverage)"
-        self.dataLabel.text = "\(model.releaseDate ?? "")"
+        self.dataLabel.text = "\(model.releaseDate ?? model.firstAirDate ?? "")"
         self.genreView.genreLabel.text = genre
     }
     
