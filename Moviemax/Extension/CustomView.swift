@@ -13,17 +13,17 @@ class CustomView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setViews()
+        setupViews()
         layoutViews()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setViews()
+        setupViews()
         layoutViews()
     }
     
-    func setViews() {
+    func setupViews() {
         backgroundColor = UIColor.systemBackground
     }
     

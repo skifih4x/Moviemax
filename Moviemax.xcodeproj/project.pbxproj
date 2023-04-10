@@ -38,6 +38,11 @@
 		A549AA2E29DD5AD200F3F359 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA2D29DD5AD200F3F359 /* LoginView.swift */; };
 		A549AA3129DD7BF600F3F359 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA3029DD7BF600F3F359 /* GoogleSignIn */; };
 		A549AA3329DD7BF600F3F359 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA3229DD7BF600F3F359 /* GoogleSignInSwift */; };
+		A549AA3629DECC2400F3F359 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A549AA3529DECC2400F3F359 /* GoogleService-Info.plist */; };
+		A549AA3B29DFFB8100F3F359 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3A29DFFB8100F3F359 /* RegisterView.swift */; };
+		A549AA3D29DFFBB000F3F359 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */; };
+		A549AA3F29E4160200F3F359 /* AlertControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */; };
+		A549AA4229E4B7F900F3F359 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA4129E4B7F900F3F359 /* IQKeyboardManagerSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +75,10 @@
 		A549AA2729DD595800F3F359 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		A549AA2929DD597700F3F359 /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		A549AA2D29DD5AD200F3F359 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		A549AA3529DECC2400F3F359 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A549AA3A29DFFB8100F3F359 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A549AA4229E4B7F900F3F359 /* IQKeyboardManagerSwift in Frameworks */,
 				A549AA1629DCAD9700F3F359 /* SnapKit in Frameworks */,
 				A549AA1929DCADB700F3F359 /* FirebaseAuth in Frameworks */,
 				A549AA3129DD7BF600F3F359 /* GoogleSignIn in Frameworks */,
@@ -115,6 +125,7 @@
 				006B2F7A29D9E1D200D8F89A /* Assets.xcassets */,
 				006B2F7C29D9E1D200D8F89A /* LaunchScreen.storyboard */,
 				006B2F7F29D9E1D200D8F89A /* Info.plist */,
+				A549AA3529DECC2400F3F359 /* GoogleService-Info.plist */,
 			);
 			path = Moviemax;
 			sourceTree = "<group>";
@@ -170,6 +181,7 @@
 		52899D8D29DAF8F6003D2AB8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A549AA3729DFFB0500F3F359 /* RegisterVC */,
 				A549AA2429DD590000F3F359 /* LogInVC */,
 				006DF51629DAFE6A00BCB541 /* MainTabBar */,
 				006DF51729DAFE7200BCB541 /* SearchVC */,
@@ -213,6 +225,7 @@
 				A549AA1C29DCB2A300F3F359 /* ValidationManager.swift */,
 				A549AA1E29DCB2BC00F3F359 /* StringTypeList.swift */,
 				A549AA2029DCB2F300F3F359 /* ErrorsList.swift */,
+				A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -242,6 +255,31 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A549AA3729DFFB0500F3F359 /* RegisterVC */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA3929DFFB6500F3F359 /* Controller */,
+				A549AA3829DFFB5B00F3F359 /* View */,
+			);
+			path = RegisterVC;
+			sourceTree = "<group>";
+		};
+		A549AA3829DFFB5B00F3F359 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA3A29DFFB8100F3F359 /* RegisterView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A549AA3929DFFB6500F3F359 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -263,6 +301,7 @@
 				A549AA1829DCADB700F3F359 /* FirebaseAuth */,
 				A549AA3029DD7BF600F3F359 /* GoogleSignIn */,
 				A549AA3229DD7BF600F3F359 /* GoogleSignInSwift */,
+				A549AA4129E4B7F900F3F359 /* IQKeyboardManagerSwift */,
 			);
 			productName = Moviemax;
 			productReference = 006B2F6E29D9E1D100D8F89A /* Moviemax.app */;
@@ -296,6 +335,7 @@
 				A549AA1429DCAD9700F3F359 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				A549AA1729DCADB700F3F359 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				A549AA2F29DD7BF600F3F359 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				A549AA4029E4B7F900F3F359 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 006B2F6F29D9E1D100D8F89A /* Products */;
 			projectDirPath = "";
@@ -311,6 +351,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A549AA3629DECC2400F3F359 /* GoogleService-Info.plist in Resources */,
 				006B2F7E29D9E1D200D8F89A /* LaunchScreen.storyboard in Resources */,
 				006B2F7B29D9E1D200D8F89A /* Assets.xcassets in Resources */,
 				006B2F7929D9E1D100D8F89A /* Main.storyboard in Resources */,
@@ -325,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A549AA2629DD592300F3F359 /* LoginViewController.swift in Sources */,
+				A549AA3F29E4160200F3F359 /* AlertControllerManager.swift in Sources */,
 				A549AA2329DCB33400F3F359 /* UserAuthData.swift in Sources */,
 				A549AA2A29DD597700F3F359 /* CustomViewController.swift in Sources */,
 				A549AA1F29DCB2BC00F3F359 /* StringTypeList.swift in Sources */,
@@ -335,6 +377,7 @@
 				52AB71BC29DBD2C400F149F1 /* CustomCell.swift in Sources */,
 				52899D9829DAFA19003D2AB8 /* FavoritesViewController.swift in Sources */,
 				52899D9429DAF9E3003D2AB8 /* VideoViewController.swift in Sources */,
+				A549AA3B29DFFB8100F3F359 /* RegisterView.swift in Sources */,
 				52AB71C029DBD30B00F149F1 /* GenreView.swift in Sources */,
 				006B2F7629D9E1D100D8F89A /* MainTabBarController.swift in Sources */,
 				006B2F7229D9E1D100D8F89A /* AppDelegate.swift in Sources */,
@@ -346,6 +389,7 @@
 				A549AA2829DD595800F3F359 /* CustomView.swift in Sources */,
 				A549AA2129DCB2F300F3F359 /* ErrorsList.swift in Sources */,
 				52899D9629DAFA08003D2AB8 /* HomeViewController.swift in Sources */,
+				A549AA3D29DFFBB000F3F359 /* RegisterViewController.swift in Sources */,
 				A549AA1D29DCB2A300F3F359 /* ValidationManager.swift in Sources */,
 				006B2F7429D9E1D100D8F89A /* SceneDelegate.swift in Sources */,
 			);
@@ -591,6 +635,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		A549AA4029E4B7F900F3F359 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = exactVersion;
+				version = 6.5.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -613,6 +665,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A549AA2F29DD7BF600F3F359 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		A549AA4129E4B7F900F3F359 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A549AA4029E4B7F900F3F359 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

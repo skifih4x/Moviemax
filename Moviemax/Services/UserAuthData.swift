@@ -7,8 +7,10 @@
 
 import Foundation
 struct UserAuthData {
-    var userName: String
+    var userFirstName: String
+    var userLastName: String
     var userEmail: String
     var userPassword: String
     var uid: String
+    var userImageUrl: URL?
 }

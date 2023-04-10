@@ -41,13 +41,15 @@ class MainTabBarController: UITabBarController {
         let videoViewController       = VideoViewController()
         let homeViewController        = HomeViewController()
         let favoritesViewController   = FavoritesViewController()
-        let profileViewController     = ProfileViewController()
+//        let profileViewController     = ProfileViewController()
+        let profileViewController     = LoginViewController()
         
         searchViewController.title    = "Search"
         videoViewController.title     = "Recent watch"
         homeViewController.title      = "Home"
         favoritesViewController.title = "Favorites"
-        profileViewController.title   = "Profile"
+//        profileViewController.title   = "Profile"
+        profileViewController.title   = ""
         
         let boldConfig                = UIImage.SymbolConfiguration(weight: .medium)
         let searchImage               = UIImage(systemName: "magnifyingglass", withConfiguration: boldConfig)!
