@@ -38,6 +38,24 @@
 		52AB71C229DBD32900F149F1 /* StackView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB71C129DBD32900F149F1 /* StackView + Extension.swift */; };
 		52AB71C429DBD34300F149F1 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB71C329DBD34300F149F1 /* UILabel + Extension.swift */; };
 		52AB71C629DBD36200F149F1 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB71C529DBD36200F149F1 /* UIImageView + Extension.swift */; };
+		A549AA1629DCAD9700F3F359 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA1529DCAD9700F3F359 /* SnapKit */; };
+		A549AA1929DCADB700F3F359 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA1829DCADB700F3F359 /* FirebaseAuth */; };
+		A549AA1B29DCB26C00F3F359 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA1A29DCB26C00F3F359 /* AuthManager.swift */; };
+		A549AA1D29DCB2A300F3F359 /* ValidationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA1C29DCB2A300F3F359 /* ValidationManager.swift */; };
+		A549AA1F29DCB2BC00F3F359 /* StringTypeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA1E29DCB2BC00F3F359 /* StringTypeList.swift */; };
+		A549AA2129DCB2F300F3F359 /* ErrorsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA2029DCB2F300F3F359 /* ErrorsList.swift */; };
+		A549AA2329DCB33400F3F359 /* UserAuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA2229DCB33400F3F359 /* UserAuthData.swift */; };
+		A549AA2629DD592300F3F359 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA2529DD592300F3F359 /* LoginViewController.swift */; };
+		A549AA2829DD595800F3F359 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA2729DD595800F3F359 /* CustomView.swift */; };
+		A549AA2A29DD597700F3F359 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA2929DD597700F3F359 /* CustomViewController.swift */; };
+		A549AA2E29DD5AD200F3F359 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA2D29DD5AD200F3F359 /* LoginView.swift */; };
+		A549AA3129DD7BF600F3F359 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA3029DD7BF600F3F359 /* GoogleSignIn */; };
+		A549AA3329DD7BF600F3F359 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA3229DD7BF600F3F359 /* GoogleSignInSwift */; };
+		A549AA3629DECC2400F3F359 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A549AA3529DECC2400F3F359 /* GoogleService-Info.plist */; };
+		A549AA3B29DFFB8100F3F359 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3A29DFFB8100F3F359 /* RegisterView.swift */; };
+		A549AA3D29DFFBB000F3F359 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */; };
+		A549AA3F29E4160200F3F359 /* AlertControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */; };
+		A549AA4229E4B7F900F3F359 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA4129E4B7F900F3F359 /* IQKeyboardManagerSwift */; };
 		6E35D00029DC5A9800573829 /* UIStackView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35CFFF29DC5A9800573829 /* UIStackView + Extensions.swift */; };
 		AB6CE25929E42DA900EB02DA /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25829E42DA900EB02DA /* OnboardingViewController.swift */; };
 		AB6CE25B29E439FE00EB02DA /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25A29E439FE00EB02DA /* CustomPageControl.swift */; };
@@ -93,6 +111,19 @@
 		52AB71C129DBD32900F149F1 /* StackView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView + Extension.swift"; sourceTree = "<group>"; };
 		52AB71C329DBD34300F149F1 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
 		52AB71C529DBD36200F149F1 /* UIImageView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extension.swift"; sourceTree = "<group>"; };
+		A549AA1A29DCB26C00F3F359 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		A549AA1C29DCB2A300F3F359 /* ValidationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationManager.swift; sourceTree = "<group>"; };
+		A549AA1E29DCB2BC00F3F359 /* StringTypeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTypeList.swift; sourceTree = "<group>"; };
+		A549AA2029DCB2F300F3F359 /* ErrorsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorsList.swift; sourceTree = "<group>"; };
+		A549AA2229DCB33400F3F359 /* UserAuthData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthData.swift; sourceTree = "<group>"; };
+		A549AA2529DD592300F3F359 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A549AA2729DD595800F3F359 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
+		A549AA2929DD597700F3F359 /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
+		A549AA2D29DD5AD200F3F359 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		A549AA3529DECC2400F3F359 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A549AA3A29DFFB8100F3F359 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerManager.swift; sourceTree = "<group>"; };
 		6E35CFFF29DC5A9800573829 /* UIStackView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extensions.swift"; sourceTree = "<group>"; };
 		AB6CE25829E42DA900EB02DA /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		AB6CE25A29E439FE00EB02DA /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
@@ -119,6 +150,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A549AA4229E4B7F900F3F359 /* IQKeyboardManagerSwift in Frameworks */,
+				A549AA1629DCAD9700F3F359 /* SnapKit in Frameworks */,
+				A549AA1929DCADB700F3F359 /* FirebaseAuth in Frameworks */,
+				A549AA3129DD7BF600F3F359 /* GoogleSignIn in Frameworks */,
+				A549AA3329DD7BF600F3F359 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,12 +184,14 @@
 				ABA9934129DF51250015329F /* Network */,
 				006B2F7129D9E1D100D8F89A /* AppDelegate.swift */,
 				006B2F7329D9E1D100D8F89A /* SceneDelegate.swift */,
+				A549AA1329DCAD7F00F3F359 /* Services */,
 				52899D8D29DAF8F6003D2AB8 /* Controllers */,
 				52899D9029DAF909003D2AB8 /* Extension */,
 				006B2F7729D9E1D100D8F89A /* Main.storyboard */,
 				006B2F7A29D9E1D200D8F89A /* Assets.xcassets */,
 				006B2F7C29D9E1D200D8F89A /* LaunchScreen.storyboard */,
 				006B2F7F29D9E1D200D8F89A /* Info.plist */,
+				A549AA3529DECC2400F3F359 /* GoogleService-Info.plist */,
 			);
 			path = Moviemax;
 			sourceTree = "<group>";
@@ -249,6 +287,8 @@
 		52899D8D29DAF8F6003D2AB8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A549AA3729DFFB0500F3F359 /* RegisterVC */,
+				A549AA2429DD590000F3F359 /* LogInVC */,
 				006DF51629DAFE6A00BCB541 /* MainTabBar */,
 				52210A4729DF4967002F159D /* DetailViewController */,
 				006DF51729DAFE7200BCB541 /* SearchVC */,
@@ -288,6 +328,9 @@
 			isa = PBXGroup;
 			children = (
 				52899D8E29DAF905003D2AB8 /* CustomTabBar.swift */,
+				52AB71C829DBD5B300F149F1 /* UIKit */,
+				A549AA2729DD595800F3F359 /* CustomView.swift */,
+				A549AA2929DD597700F3F359 /* CustomViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -359,6 +402,69 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A549AA1329DCAD7F00F3F359 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA1A29DCB26C00F3F359 /* AuthManager.swift */,
+				A549AA2229DCB33400F3F359 /* UserAuthData.swift */,
+				A549AA1C29DCB2A300F3F359 /* ValidationManager.swift */,
+				A549AA1E29DCB2BC00F3F359 /* StringTypeList.swift */,
+				A549AA2029DCB2F300F3F359 /* ErrorsList.swift */,
+				A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A549AA2429DD590000F3F359 /* LogInVC */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA2C29DD5AAB00F3F359 /* View */,
+				A549AA2B29DD5A9D00F3F359 /* Controller */,
+			);
+			path = LogInVC;
+			sourceTree = "<group>";
+		};
+		A549AA2B29DD5A9D00F3F359 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA2529DD592300F3F359 /* LoginViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A549AA2C29DD5AAB00F3F359 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA2D29DD5AD200F3F359 /* LoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A549AA3729DFFB0500F3F359 /* RegisterVC */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA3929DFFB6500F3F359 /* Controller */,
+				A549AA3829DFFB5B00F3F359 /* View */,
+			);
+			path = RegisterVC;
+			sourceTree = "<group>";
+		};
+		A549AA3829DFFB5B00F3F359 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA3A29DFFB8100F3F359 /* RegisterView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A549AA3929DFFB6500F3F359 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -375,6 +481,13 @@
 			dependencies = (
 			);
 			name = Moviemax;
+			packageProductDependencies = (
+				A549AA1529DCAD9700F3F359 /* SnapKit */,
+				A549AA1829DCADB700F3F359 /* FirebaseAuth */,
+				A549AA3029DD7BF600F3F359 /* GoogleSignIn */,
+				A549AA3229DD7BF600F3F359 /* GoogleSignInSwift */,
+				A549AA4129E4B7F900F3F359 /* IQKeyboardManagerSwift */,
+			);
 			productName = Moviemax;
 			productReference = 006B2F6E29D9E1D100D8F89A /* Moviemax.app */;
 			productType = "com.apple.product-type.application";
@@ -403,6 +516,12 @@
 				Base,
 			);
 			mainGroup = 006B2F6529D9E1D100D8F89A;
+			packageReferences = (
+				A549AA1429DCAD9700F3F359 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				A549AA1729DCADB700F3F359 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A549AA2F29DD7BF600F3F359 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				A549AA4029E4B7F900F3F359 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+			);
 			productRefGroup = 006B2F6F29D9E1D100D8F89A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -417,6 +536,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A549AA3629DECC2400F3F359 /* GoogleService-Info.plist in Resources */,
 				006B2F7E29D9E1D200D8F89A /* LaunchScreen.storyboard in Resources */,
 				006B2F7B29D9E1D200D8F89A /* Assets.xcassets in Resources */,
 				006B2F7929D9E1D100D8F89A /* Main.storyboard in Resources */,
@@ -430,6 +550,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A549AA2629DD592300F3F359 /* LoginViewController.swift in Sources */,
+				A549AA3F29E4160200F3F359 /* AlertControllerManager.swift in Sources */,
+				A549AA2329DCB33400F3F359 /* UserAuthData.swift in Sources */,
+				A549AA2A29DD597700F3F359 /* CustomViewController.swift in Sources */,
+				A549AA1F29DCB2BC00F3F359 /* StringTypeList.swift in Sources */,
 				52899D9229DAF9C9003D2AB8 /* SearchViewController.swift in Sources */,
 				527748C429E3545A0052DAA9 /* CustomImageView.swift in Sources */,
 				ABA9934929DF51380015329F /* MultimediaModel.swift in Sources */,
@@ -437,6 +562,7 @@
 				52210A4F29DF4D9D002F159D /* ExpandableLabel.swift in Sources */,
 				359C38B129DE01FC0021DAE4 /* BoxOfficeHeaderView.swift in Sources */,
 				52AB71BE29DBD2E800F149F1 /* CellFilmTableView.swift in Sources */,
+				A549AA2E29DD5AD200F3F359 /* LoginView.swift in Sources */,
 				52899D8F29DAF905003D2AB8 /* CustomTabBar.swift in Sources */,
 				ABA9934E29DF51430015329F /* NetworkManager.swift in Sources */,
 				52AB71BC29DBD2C400F149F1 /* CustomCell.swift in Sources */,
@@ -444,6 +570,7 @@
 				6E35D00029DC5A9800573829 /* UIStackView + Extensions.swift in Sources */,
 				359C38A929DDCB960021DAE4 /* CategoryCell.swift in Sources */,
 				52899D9429DAF9E3003D2AB8 /* VideoViewController.swift in Sources */,
+				A549AA3B29DFFB8100F3F359 /* RegisterView.swift in Sources */,
 				ABA9934A29DF51380015329F /* MultimediaViewModel.swift in Sources */,
 				C5994A9F29E4A24E00461450 /* CustomGenderButton.swift in Sources */,
 				ABA9934B29DF51380015329F /* CastModel.swift in Sources */,
@@ -468,6 +595,7 @@
 				AB6CE25B29E439FE00EB02DA /* CustomPageControl.swift in Sources */,
 				ABA9935529DF51A30015329F /* Dateformatter + Extension.swift in Sources */,
 				006B2F7229D9E1D100D8F89A /* AppDelegate.swift in Sources */,
+				A549AA1B29DCB26C00F3F359 /* AuthManager.swift in Sources */,
 				52AB71C629DBD36200F149F1 /* UIImageView + Extension.swift in Sources */,
 				52899D9A29DAFA2C003D2AB8 /* ProfileViewController.swift in Sources */,
 				52AB71C429DBD34300F149F1 /* UILabel + Extension.swift in Sources */,
@@ -475,7 +603,11 @@
 				359C38AD29DDCBE30021DAE4 /* BoxOfficeCell.swift in Sources */,
 				359C38AB29DDCBCA0021DAE4 /* BestMovieCell.swift in Sources */,
 				52AB71C229DBD32900F149F1 /* StackView + Extension.swift in Sources */,
+				A549AA2829DD595800F3F359 /* CustomView.swift in Sources */,
+				A549AA2129DCB2F300F3F359 /* ErrorsList.swift in Sources */,
 				52899D9629DAFA08003D2AB8 /* HomeViewController.swift in Sources */,
+				A549AA3D29DFFBB000F3F359 /* RegisterViewController.swift in Sources */,
+				A549AA1D29DCB2A300F3F359 /* ValidationManager.swift in Sources */,
 				006B2F7429D9E1D100D8F89A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -694,6 +826,69 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A549AA1429DCAD9700F3F359 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		A549AA1729DCADB700F3F359 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+		A549AA2F29DD7BF600F3F359 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+		A549AA4029E4B7F900F3F359 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = exactVersion;
+				version = 6.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A549AA1529DCAD9700F3F359 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A549AA1429DCAD9700F3F359 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		A549AA1829DCADB700F3F359 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A549AA1729DCADB700F3F359 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		A549AA3029DD7BF600F3F359 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A549AA2F29DD7BF600F3F359 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		A549AA3229DD7BF600F3F359 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A549AA2F29DD7BF600F3F359 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		A549AA4129E4B7F900F3F359 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A549AA4029E4B7F900F3F359 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 006B2F6629D9E1D100D8F89A /* Project object */;
 }
