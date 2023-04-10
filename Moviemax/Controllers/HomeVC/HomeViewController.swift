@@ -9,7 +9,10 @@ import UIKit
 
 class HomeViewController: UIViewController {
     //MARK: - properties
-    private let categories = ["All", "Action", "Adventure", "Mystery", "Kids", "Aboba"]
+    private let categories: [MovieGenre] = [.action, .horror, .documentary, .animation]
+    private var topMovies: [MultimediaViewModel] = []
+    private var categoryMovies: [MultimediaViewModel] = []
+    private let multimediaLoader = MultimediaLoader.shared
     lazy var collectionView : UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -20,7 +23,7 @@ class HomeViewController: UIViewController {
         collectionView.register(BestMovieCell.self, forCellWithReuseIdentifier: String(describing: BestMovieCell.self))
         collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: String(describing: CategoryCell.self))
         collectionView.register(BoxOfficeCell.self, forCellWithReuseIdentifier: String(describing: BoxOfficeCell.self))
-                                                        
+        
         collectionView.register(UserHeaderView.self, forSupplementaryViewOfKind: "UserHeader", withReuseIdentifier: UserHeaderView.headerIdentifier)
         collectionView.register(CategoryHeaderView.self, forSupplementaryViewOfKind: "CategoryHeader", withReuseIdentifier: CategoryHeaderView.headerIdentifier)
         collectionView.register(BoxOfficeHeaderView.self, forSupplementaryViewOfKind: "BoxOfficeHeader", withReuseIdentifier: BoxOfficeHeaderView.headerIdentifier)
@@ -31,30 +34,15 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-
-        let multimediaLoader = MultimediaLoader(delegate: self)
-
-//        multimediaLoader.fetchTvSeriesByGenre(genre: .news) { result in
-//            switch result {
-//            case .success(let success):
-//                print(success)
-//            case .failure(let failure):
-//                print(failure)
-//            }
-//        }
-
-    
-
-//        multimediaLoader.searchMedia(type: .tvShow, query: "arcane") { result in
-//            switch result {
-//            case .success(let success):
-//                print(success)
-//            case .failure(let failure):
-//                print(failure)
-//            }
-//        }
+        getInitialMovies()
     }
-     
+    
+    @objc func buttonPressed(_ sender: UIButton) {
+        let indexPath = IndexPath(item: sender.tag, section: 2)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? BoxOfficeCell else { return }
+        cell.changeImageButton()
+    }
+    
     //MARK: - private setup UI methods
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -71,7 +59,7 @@ class HomeViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
     }
 }
-    //MARK: - UICollectionViewDataSource
+//MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
@@ -80,11 +68,11 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0 :
-            return 6
+            return topMovies.count
         case 1 :
-            return categories.count
+            return categories.count + 1
         default:
-            return 8
+            return categoryMovies.count
         }
     }
     
@@ -92,21 +80,26 @@ extension HomeViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0 :
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BestMovieCell.self), for: indexPath) as? BestMovieCell else {fatalError("Could not create new cell")}
-            cell.configure(title: "Thor: Love and Thunder", genre: "Action")
+            let movie = topMovies[indexPath.item]
+            cell.configure(with: movie)
             return cell
             
         case 1 :
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CategoryCell.self), for: indexPath) as? CategoryCell else {fatalError("Could not create new cell")}
             if indexPath.item == 0 {
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
+                cell.configure(with: nil)
+                return cell
+            } else {
+                let category = categories[indexPath.item - 1]
+                cell.configure(with: category)
+                return cell
             }
-            let title = categories[indexPath.item]
-            cell.configure(title: title)
-            return cell
             
         default:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BoxOfficeCell.self), for: indexPath) as? BoxOfficeCell else {fatalError("Could not create new cell")}
-            cell.configure(title: "Drifting Home", genre: "Action")
+            let movie = categoryMovies[indexPath.item]
+            cell.configure(with: movie)
             return cell
         }
     }
@@ -124,14 +117,68 @@ extension HomeViewController: UICollectionViewDataSource {
             return header
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            let detailViewController = DetailViewController()
+            detailViewController.id = topMovies[indexPath.row].id
+            detailViewController.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(detailViewController, animated: true)
+        case 1:
+            if indexPath.row == 0 {
+                getInitialMovies()
+            } else {
+                let genre = categories[indexPath.row - 1]
+                fetchByGenre(genre: genre)
+            }
+        default:
+            let detailViewController = DetailViewController()
+            detailViewController.id = categoryMovies[indexPath.row].id
+            detailViewController.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(detailViewController, animated: true)
+        }
+    }
+    
+    //MARK: fetching movies
+    private func getInitialMovies() {
+        multimediaLoader.fetchMultimedia(for: .movie) { [weak self] movieModel in
+            guard let self = self else { return }
+            DispatchQueue.global(qos: .userInitiated).async {
+                let movies = self.multimediaLoader.getViewModelFromModel(model: movieModel, typeOfMedia: .movie)
+                DispatchQueue.main.async {
+                    self.topMovies = movies
+                    self.categoryMovies = movies
+                    self.collectionView.reloadData()
+                }
+            }
+        }
+    }
+    
+    private func fetchByGenre(genre: MovieGenre) {
+        multimediaLoader.fetchMoviesByGenre(genre: genre) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let success):
+                guard let movies = success.results else { return }
+                let moviesModel = movies.map { MultimediaViewModel(id: $0.id, type: .movie, posterImageLink: $0.posterPath ?? "", titleName: $0.title ?? "", releaseDate: $0.releaseDate ?? "", genre: genre.name, description: $0.name ?? "", rating: $0.voteAverage)}
+                self.categoryMovies = moviesModel.compactMap{$0}
+                DispatchQueue.main.async {
+                    self.collectionView.reloadSections(IndexSet(integer: 2))
+                }
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
+    }
 }
 
-    //MARK: - UICollectionViewDelegate
+//MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     
 }
 
-    //MARK: - UICollectionViewDelegateFlowLayout
+//MARK: - UICollectionViewDelegateFlowLayout
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     private func configureCompositionalLayout() {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
@@ -148,10 +195,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
     
     private func bestMovieSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/3), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         let section = NSCollectionLayoutSection(group: group)
@@ -168,6 +215,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "UserHeader", alignment: .top)
+        sectionHeader.pinToVisibleBounds = true
+        sectionHeader.zIndex = 2
         section.boundarySupplementaryItems = [sectionHeader]
         return section
     }
@@ -181,27 +230,28 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0)
-        section.orthogonalScrollingBehavior = .continuous
+        section.orthogonalScrollingBehavior = .paging
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "CategoryHeader", alignment: .top)
+        sectionHeader.pinToVisibleBounds = true
+        sectionHeader.zIndex = 2
         section.boundarySupplementaryItems = [sectionHeader]
         return section
     }
     
     private func boxOfficeSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.5))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.9))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 24)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.35))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 2)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 24)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(120))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
+        section.interGroupSpacing = CGFloat(10)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24)
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "BoxOfficeHeader", alignment: .top)
+        sectionHeader.pinToVisibleBounds = true
+        sectionHeader.zIndex = 2
         section.boundarySupplementaryItems = [sectionHeader]
         return section
     }
 }
-

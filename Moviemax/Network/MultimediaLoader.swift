@@ -198,7 +198,7 @@ final class MultimediaLoader {
            completion(dictOfAllData)
         }
     }
-    private func fetchMultimedia(for type: MultimediaTypeURL, completion: @escaping (MultimediaModel) -> Void) {
+    func fetchMultimedia(for type: MultimediaTypeURL, completion: @escaping (MultimediaModel) -> Void) {
 
         guard let url = URL(string: baseURL + "discover/" + type.rawValue + "?api_key=" + apiKey) else {
             return
@@ -364,4 +364,52 @@ final class MultimediaLoader {
             }
         }
     }
+    
+    func getViewModelFromModel(model: MultimediaModel, typeOfMedia: MultimediaTypeURL) -> [MultimediaViewModel] {
+
+            var multimdediaViewModels = [MultimediaViewModel]()
+
+            guard let result = model.results else { return [] }
+            result.forEach { movieResult in
+
+                let posterURL = self.imageBaseUrl + (movieResult.posterPath ?? "")
+                let formattedDate: String
+                let genre: String
+                let title: String
+
+                switch typeOfMedia {
+                case .movie:
+                    formattedDate = movieResult.releaseDate?.convertDateString() ?? "Unknown date"
+                    if let genreId = movieResult.genreIds.first,
+                       let genreEnum = MovieGenre(rawValue: genreId) {
+                        genre = genreEnum.name
+                    } else {
+                        genre = "Unknown genre"
+                    }
+                    title = movieResult.title ?? "Unknown movie"
+
+
+                case .tvShow:
+                    formattedDate = movieResult.firstAirDate?.convertDateString() ?? "Unknown date"
+                    if let genreId = movieResult.genreIds.first,
+                       let genreEnum = TvShowGenre(rawValue: genreId) {
+                        genre = genreEnum.name
+                    } else {
+                        genre = "Unknown genre"
+                    }
+                    title = movieResult.name ?? "Unknown name"
+
+                }
+
+                multimdediaViewModels.append(MultimediaViewModel(id: movieResult.id,
+                                                               type: typeOfMedia,
+                                                               posterImageLink: posterURL,
+                                                               titleName: title,
+                                                               releaseDate: formattedDate,
+                                                               genre: genre,
+                                                               description: movieResult.overview,
+                                                               rating: movieResult.voteAverage))
+            }
+            return multimdediaViewModels
+        }
 }
