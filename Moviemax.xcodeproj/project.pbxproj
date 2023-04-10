@@ -53,6 +53,10 @@
 		ABA9935329DF516F0015329F /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9935229DF516F0015329F /* UIViewController+Extension.swift */; };
 		ABA9935529DF51A30015329F /* Dateformatter + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9935429DF51A30015329F /* Dateformatter + Extension.swift */; };
 		ABCE3E1429E17989000AE6C5 /* GenreEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE3E1329E17989000AE6C5 /* GenreEnums.swift */; };
+		C5994A9629E49FD100461450 /* ProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5994A9529E49FD100461450 /* ProfileSettingsVC.swift */; };
+		C5994A9B29E4A1EC00461450 /* CustomBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5994A9A29E4A1EC00461450 /* CustomBarButtonItem.swift */; };
+		C5994A9D29E4A22900461450 /* ChangeAvatarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5994A9C29E4A22900461450 /* ChangeAvatarViewController.swift */; };
+		C5994A9F29E4A24E00461450 /* CustomGenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5994A9E29E4A24E00461450 /* CustomGenderButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +108,10 @@
 		ABA9935229DF516F0015329F /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		ABA9935429DF51A30015329F /* Dateformatter + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dateformatter + Extension.swift"; sourceTree = "<group>"; };
 		ABCE3E1329E17989000AE6C5 /* GenreEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreEnums.swift; sourceTree = "<group>"; };
+		C5994A9529E49FD100461450 /* ProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsVC.swift; sourceTree = "<group>"; };
+		C5994A9A29E4A1EC00461450 /* CustomBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButtonItem.swift; sourceTree = "<group>"; };
+		C5994A9C29E4A22900461450 /* ChangeAvatarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAvatarViewController.swift; sourceTree = "<group>"; };
+		C5994A9E29E4A24E00461450 /* CustomGenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGenderButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +148,6 @@
 				ABA9934129DF51250015329F /* Network */,
 				006B2F7129D9E1D100D8F89A /* AppDelegate.swift */,
 				006B2F7329D9E1D100D8F89A /* SceneDelegate.swift */,
-				6E35CFFC29DC5A4200573829 /* Utilities */,
 				52899D8D29DAF8F6003D2AB8 /* Controllers */,
 				52899D9029DAF909003D2AB8 /* Extension */,
 				006B2F7729D9E1D100D8F89A /* Main.storyboard */,
@@ -206,6 +213,8 @@
 			isa = PBXGroup;
 			children = (
 				52899D9929DAFA2C003D2AB8 /* ProfileViewController.swift */,
+				C5994A9529E49FD100461450 /* ProfileSettingsVC.swift */,
+				C5994A9929E4A1D500461450 /* View */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -255,6 +264,7 @@
 		52899D9029DAF909003D2AB8 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				6E35CFFF29DC5A9800573829 /* UIStackView + Extensions.swift */,
 				52AB71C129DBD32900F149F1 /* StackView + Extension.swift */,
 				52210A3E29DE9B9C002F159D /* UIView + Extension.swift */,
 				52AB71C329DBD34300F149F1 /* UILabel + Extension.swift */,
@@ -298,30 +308,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		6E35CFFC29DC5A4200573829 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				6E35CFFD29DC5A6600573829 /* Extensions */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		6E35CFFD29DC5A6600573829 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				6E35CFFE29DC5A7900573829 /* UIKit */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		6E35CFFE29DC5A7900573829 /* UIKit */ = {
-			isa = PBXGroup;
-			children = (
-				6E35CFFF29DC5A9800573829 /* UIStackView + Extensions.swift */,
-			);
-			path = UIKit;
-			sourceTree = "<group>";
-		};
 		AB6CE25729E42C8A00EB02DA /* OnboardingVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,6 +347,16 @@
 				ABA9934529DF51380015329F /* MultimediaViewModel.swift */,
 			);
 			path = Viewmodel;
+			sourceTree = "<group>";
+		};
+		C5994A9929E4A1D500461450 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C5994A9A29E4A1EC00461450 /* CustomBarButtonItem.swift */,
+				C5994A9C29E4A22900461450 /* ChangeAvatarViewController.swift */,
+				C5994A9E29E4A24E00461450 /* CustomGenderButton.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -449,15 +445,19 @@
 				359C38A929DDCB960021DAE4 /* CategoryCell.swift in Sources */,
 				52899D9429DAF9E3003D2AB8 /* VideoViewController.swift in Sources */,
 				ABA9934A29DF51380015329F /* MultimediaViewModel.swift in Sources */,
+				C5994A9F29E4A24E00461450 /* CustomGenderButton.swift in Sources */,
 				ABA9934B29DF51380015329F /* CastModel.swift in Sources */,
 				359C38AF29DE01EC0021DAE4 /* CategoryHeaderView.swift in Sources */,
+				C5994A9629E49FD100461450 /* ProfileSettingsVC.swift in Sources */,
 				52900CC029DCA2DC003014FD /* CustomSearchBar.swift in Sources */,
 				52210A4C29DF4A30002F159D /* CastAndCrewCell.swift in Sources */,
 				52210A3F29DE9B9C002F159D /* UIView + Extension.swift in Sources */,
+				C5994A9B29E4A1EC00461450 /* CustomBarButtonItem.swift in Sources */,
 				ABCE3E1429E17989000AE6C5 /* GenreEnums.swift in Sources */,
 				52AB71C029DBD30B00F149F1 /* GenreView.swift in Sources */,
 				ABA9934729DF51380015329F /* DetailMultimediaModel.swift in Sources */,
 				AB6CE25D29E447BB00EB02DA /* OnboardingPageContentView.swift in Sources */,
+				C5994A9D29E4A22900461450 /* ChangeAvatarViewController.swift in Sources */,
 				ABA9935329DF516F0015329F /* UIViewController+Extension.swift in Sources */,
 				AB6CE25929E42DA900EB02DA /* OnboardingViewController.swift in Sources */,
 				ABA9935129DF514A0015329F /* MovieError.swift in Sources */,
@@ -623,7 +623,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V544T4J767;
+				DEVELOPMENT_TEAM = DTKBA33P3A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Moviemax/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -651,7 +651,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V544T4J767;
+				DEVELOPMENT_TEAM = DTKBA33P3A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Moviemax/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -5,14 +5,11 @@
 //  Created by Андрей Фроленков on 3.04.23.
 //
 
-import Foundation
 import UIKit
 
 class ProfileViewController: UIViewController {
     
-    //MARK: - let/var
-    
-    var navigationBar = UINavigationBar()
+    private var navigationBar = UINavigationBar()
     
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -23,7 +20,7 @@ class ProfileViewController: UIViewController {
         return imageView
     }()
     
-    var profileStackView = UIStackView()
+    private var profileStackView = UIStackView()
     
     private let profileNameLabel: UILabel = {
         let label = UILabel()
@@ -58,24 +55,18 @@ class ProfileViewController: UIViewController {
         return label
     }()
     
-    private let personImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "Person")
-        imageView.layer.masksToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return imageView
-    }()
-    
-    private let personLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Person"
-        label.font = label.font.withSize(16)
-        label.textColor = .black
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        return label
+
+    private lazy var ProfileButton: UIButton = {
+        let button = UIButton(type: .system)
+        let image = UIImage(named: "Person")?.withRenderingMode(.alwaysOriginal)
+        button.setImage(image, for: .normal)
+        button.setTitle("   Profile", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.contentHorizontalAlignment = .left
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private lazy var nextButton: UIButton = {
@@ -97,46 +88,33 @@ class ProfileViewController: UIViewController {
         
         return label
     }()
-    
+
     private lazy var changePasswordButton: UIButton = {
         let button = UIButton(type: .system)
         let image = UIImage(named: "Lock")?.withRenderingMode(.alwaysOriginal)
         button.setImage(image, for: .normal)
+        button.setTitle("   Change Password", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.contentHorizontalAlignment = .left
+        button.tintColor = .black
         button.addTarget(self, action: #selector(changePasswordButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private let changePasswordLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Change Password"
-        label.font = label.font.withSize(16)
-        label.textColor = .black
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        return label
-    }()
-    
     private lazy var forgotPasswordButton: UIButton = {
         let button = UIButton(type: .system)
-        let image = UIImage(named: "Unlock")?.withRenderingMode(.alwaysOriginal)
+        let image = UIImage(named: "Lock")?.withRenderingMode(.alwaysOriginal)
         button.setImage(image, for: .normal)
+        button.setTitle("   Forgot Password", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        button.contentHorizontalAlignment = .left
+        button.tintColor = .black
         button.addTarget(self, action: #selector(forgotPasswordButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private let forgotPasswordLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Forgot Password"
-        label.font = label.font.withSize(16)
-        label.textColor = .black
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        return label
-    }()
     
     private lazy var darkModeButton: UIButton = {
         let button = UIButton(type: .system)
@@ -150,7 +128,7 @@ class ProfileViewController: UIViewController {
     private let darkModeLabel: UILabel = {
         let label = UILabel()
         label.text = "Dark Mode"
-        label.font = label.font.withSize(16)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .black
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -197,6 +175,8 @@ class ProfileViewController: UIViewController {
     //MARK: - flow funcs
     
     @objc private func nextButtonTapped() {
+        let newViewController = ProfileSettingsVC()
+            navigationController?.pushViewController(newViewController, animated: true)
     }
     
     @objc private func changePasswordButtonTapped() {
@@ -221,8 +201,6 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    //MARK: - public
-    
 }
 
 //MARK: - extensions setupViews
@@ -234,26 +212,20 @@ extension ProfileViewController {
         
         view.addSubview(profileImageView)
         
-        profileStackView = UIStackView(
-            arrangedSubviews: [profileNameLabel, nickNameLabel],
-            axis: .vertical,
-            spacing: 2
-        )
+        profileStackView = UIStackView(customArrangedSubviews: [profileNameLabel, nickNameLabel], axis: .vertical, spacing: 2)
+        
         view.addSubview(profileStackView)
         
         view.addSubview(personalInfoLabel)
-        view.addSubview(personImageView)
-        view.addSubview(personLabel)
-        
+
+        view.addSubview(ProfileButton)
         view.addSubview(nextButton)
         
         view.addSubview(securityInfoLabel)
         
         view.addSubview(changePasswordButton)
-        view.addSubview(changePasswordLabel)
         
         view.addSubview(forgotPasswordButton)
-        view.addSubview(forgotPasswordLabel)
         
         view.addSubview(darkModeButton)
         view.addSubview(darkModeLabel)
@@ -296,20 +268,14 @@ extension ProfileViewController {
         ])
         
         NSLayoutConstraint.activate([
-            personImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            personImageView.topAnchor.constraint(equalTo: personalInfoLabel.bottomAnchor, constant: 16),
-            personImageView.widthAnchor.constraint(equalToConstant: 24),
-            personImageView.heightAnchor.constraint(equalToConstant: 24)
+            ProfileButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            ProfileButton.topAnchor.constraint(equalTo: personalInfoLabel.bottomAnchor, constant: 16),
+            ProfileButton.widthAnchor.constraint(equalToConstant: 327),
+            ProfileButton.heightAnchor.constraint(equalToConstant: 24)
         ])
         
         NSLayoutConstraint.activate([
-            personLabel.leadingAnchor.constraint(equalTo: personImageView.trailingAnchor, constant: 12),
-            personLabel.topAnchor.constraint(equalTo: personalInfoLabel.bottomAnchor, constant: 16),
-            personLabel.heightAnchor.constraint(equalToConstant: 24)
-        ])
-        
-        NSLayoutConstraint.activate([
-            nextButton.centerYAnchor.constraint(equalTo: personLabel.centerYAnchor),
+            nextButton.centerYAnchor.constraint(equalTo: ProfileButton.centerYAnchor),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22),
             nextButton.widthAnchor.constraint(equalToConstant: 24),
             nextButton.heightAnchor.constraint(equalToConstant: 24)
@@ -317,39 +283,29 @@ extension ProfileViewController {
         
         NSLayoutConstraint.activate([
             securityInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            securityInfoLabel.topAnchor.constraint(equalTo: personImageView.bottomAnchor, constant: 24),
+            securityInfoLabel.topAnchor.constraint(equalTo: ProfileButton.bottomAnchor, constant: 24),
             securityInfoLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
         
         NSLayoutConstraint.activate([
             changePasswordButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             changePasswordButton.topAnchor.constraint(equalTo: securityInfoLabel.bottomAnchor, constant: 16),
-            changePasswordButton.widthAnchor.constraint(equalToConstant: 24),
+            changePasswordButton.widthAnchor.constraint(equalToConstant: 327),
             changePasswordButton.heightAnchor.constraint(equalToConstant: 24)
         ])
         
-        NSLayoutConstraint.activate([
-            changePasswordLabel.leadingAnchor.constraint(equalTo: changePasswordButton.trailingAnchor, constant: 12),
-            changePasswordLabel.centerYAnchor.constraint(equalTo: changePasswordButton.centerYAnchor),
-            changePasswordLabel.heightAnchor.constraint(equalToConstant: 24)
-        ])
         
         NSLayoutConstraint.activate([
             forgotPasswordButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             forgotPasswordButton.topAnchor.constraint(equalTo: changePasswordButton.bottomAnchor, constant: 32),
-            forgotPasswordButton.widthAnchor.constraint(equalToConstant: 24),
+            forgotPasswordButton.widthAnchor.constraint(equalToConstant: 327),
             forgotPasswordButton.heightAnchor.constraint(equalToConstant: 24)
         ])
         
-        NSLayoutConstraint.activate([
-            forgotPasswordLabel.leadingAnchor.constraint(equalTo: forgotPasswordButton.trailingAnchor, constant: 12),
-            forgotPasswordLabel.centerYAnchor.constraint(equalTo: forgotPasswordButton.centerYAnchor),
-            forgotPasswordLabel.heightAnchor.constraint(equalToConstant: 24)
-        ])
         
         NSLayoutConstraint.activate([
             darkModeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            darkModeButton.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor, constant: 28),
+            darkModeButton.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor, constant: 32),
             darkModeButton.widthAnchor.constraint(equalToConstant: 24),
             darkModeButton.heightAnchor.constraint(equalToConstant: 24)
         ])
