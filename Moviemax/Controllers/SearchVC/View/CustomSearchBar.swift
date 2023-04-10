@@ -71,13 +71,15 @@ class CustomSearchBar: UISearchBar {
         }
     }
     
-    func setRightImage (_ image: UIImage) {
+    func setRightImage (_ image: UIImage) -> UIButton {
         showsBookmarkButton = true
         
         if let btn = textField?.rightView as? UIButton {
             btn.setImage(image, for: .normal)
             btn.setImage(image, for: .highlighted)
+            return btn
         }
+        return UIButton()
     }
     
 }
