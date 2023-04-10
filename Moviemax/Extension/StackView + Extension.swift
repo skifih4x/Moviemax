@@ -17,4 +17,11 @@ extension UIStackView {
         self.spacing = spacing
         alignment = .center
     }
+    
+
+}
+
+extension CGFloat {
+    var negative: CGFloat { self * -1.0 }
+    var half: CGFloat { self / 2 }
 }
