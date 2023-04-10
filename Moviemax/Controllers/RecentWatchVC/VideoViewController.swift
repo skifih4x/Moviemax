@@ -10,7 +10,9 @@ import UIKit
 
 class VideoViewController: UIViewController {
     
-    let array = ["All", "Action", "Adventure", "Animation", "Comedy", "Crime"]
+    let array = MovieGenre.allCases
+    var genreArrayMovie = [Movie]()
+    var genre = "Action"
     var genreArray = [MultimediaViewModel]()
     var indexCell = 0
     
@@ -61,6 +63,23 @@ class VideoViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }
+            }
+        }
+        
+        manager.fetchMoviesByGenre(genre: array.first ?? .action) { result in
+            
+            switch result {
+                
+            case .success(let arrayModel):
+                if let array = arrayModel.results {
+                    self.genreArrayMovie = array
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
@@ -129,15 +148,18 @@ extension VideoViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return genreArray.count
+        return genreArrayMovie.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellForTable", for: indexPath) as? CellFilmTableView else { return UITableViewCell()}
         
         cell.likeButton.tag = indexPath.row
-        let model = genreArray[indexPath.row]
-        cell.cellConfigure(with: model)
+//        let model = genreArray[indexPath.row]
+//        cell.cellConfigure(with: model)
+        let movie = genreArrayMovie[indexPath.row]
+        
+        cell.cellConfigureMovie(with: movie, genre: genre)
        
         
         
@@ -146,7 +168,7 @@ extension VideoViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailViewController = DetailViewController()
-        detailViewController.model = genreArray[indexPath.row]
+        detailViewController.id = genreArrayMovie[indexPath.row].id
         detailViewController.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(detailViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
@@ -164,7 +186,7 @@ extension VideoViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let text = array[indexPath.item]
-        let width = text.count * 10 + 40
+        let width = text.name.count * 10 + 40
         return CGSize(width: width, height: 50)
     }
     
@@ -198,13 +220,32 @@ extension VideoViewController: UICollectionViewDataSource, UICollectionViewDeleg
             cell.backgroundColor = .clear
         }
         let width = array[indexPath.item]
-        cell.titleLabel.text = width
+        cell.titleLabel.text = width.name
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.indexCell = indexPath.item
+        
+        genre = array[indexPath.row].name
+        
+        manager.fetchMoviesByGenre(genre: array[indexPath.row]) { result in
+            
+            switch result {
+                
+            case .success(let arrayModel):
+                if let array = arrayModel.results {
+                    self.genreArrayMovie = array
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
         
         DispatchQueue.main.async {
             collectionView.reloadData()

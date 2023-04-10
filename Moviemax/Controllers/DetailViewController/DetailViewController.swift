@@ -10,16 +10,14 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    var model: MultimediaViewModel?
+    var id: Int?
+    var detailModel: DetailMultimediaModel?
     var castArray = [Cast]()
     
     let array = ["mfdvmfmvfmerferferferfer", "dfjvmkfdffdf", "sdjjsj"]
     var indexCell = 0
     
     var buttonTapped = false
-    
-    // MARK: - Custom RatingControl
-    let raitingStack = RatingControl(frame: .zero)
     
     // MARK: - CollectionView
     let collectionView: UICollectionView = {
@@ -35,7 +33,7 @@ class DetailViewController: UIViewController {
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .clear
-//        scrollView.frame = view.bounds
+        //        scrollView.frame = view.bounds
         scrollView.isUserInteractionEnabled = true
         scrollView.contentSize = contentSize
         
@@ -69,7 +67,7 @@ class DetailViewController: UIViewController {
     let storyLineLabel = UILabel(text: "Story Line", font: UIFont.systemFont(ofSize: 16, weight: .bold), textColor: UIColor(named: K.Colors.titleColor))
     
     let castAndCrewLabel = UILabel(text: "Cast And Crew", font: UIFont.systemFont(ofSize: 16, weight: .bold), textColor: UIColor(named: K.Colors.titleColor))
-   
+    
     let watchNowButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Watch now", for: .normal)
@@ -80,36 +78,58 @@ class DetailViewController: UIViewController {
         return button
     }()
     
-
+    
     let textView = ExpandableLabel(text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book", font: UIFont.systemFont(ofSize: 18), textColor: UIColor(named: K.Colors.titleColor))
     
     let manager = MultimediaLoader.shared
     
+    lazy var ratingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.textColor = #colorLiteral(red: 1, green: 0.7547127604, blue: 0.0322817266, alpha: 1)
+        label.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        return label
+    }()
+    
+    lazy var starsStackView: UIStackView = {
+        var arrangedSubviews = [UIView]()
+        (0..<5).forEach { _ in
+            let imageView = UIImageView(image: #imageLiteral(resourceName: "star-4"))
+            imageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+            arrangedSubviews.append(imageView)
+        }
+        arrangedSubviews.append(UIView())
+
+        let stackView = UIStackView(arrangedSubviews: arrangedSubviews)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 4
+        return stackView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let model = model {
-            manager.fetchDetailData(multimedia: model) { [weak self] detailModel in
-                print(detailModel)
-                DispatchQueue.main.async {
-                    self?.imageFilm.activityIndicator.startAnimating()
-                }
-                self?.manager.fetchCastData(multimedia: model) { model in
-                    self?.castArray = model.cast
+        manager.fetchDetailDataByID(type: .movie, id: id?.description ?? "") { [weak self] detailModel in
+            
+            DispatchQueue.main.async {
+                self?.imageFilm.activityIndicator.startAnimating()
+            }
+            
+            if let detailModel {
+                self?.setDetailModel(with: detailModel)
+                
+                self?.manager.fetchCastDataById(id: self?.id?.description ?? "", type: .movie, completion: { castModel in
+                    self?.castArray = castModel?.cast ?? []
                     
                     DispatchQueue.main.async {
                         self?.collectionView.reloadData()
                     }
-                
-                }
-                self?.setDetailModel(with: detailModel)
+                })
             }
+            
         }
-        
-        
-        
-        
-        
         
         view.backgroundColor = UIColor(named: K.Colors.background)
         
@@ -123,16 +143,18 @@ class DetailViewController: UIViewController {
         settingsNavigationBar()
         setupConstraints()
         watchNowButton.addPulsationAnimation()
-
+        
     }
     
     // MARK: - Set Detail Model
     func setDetailModel(with detailModel: DetailMultimediaModel) {
         
         DispatchQueue.main.async {
+            self.nameFilm.text = detailModel.name ?? detailModel.title
             self.datalabel.text = detailModel.releaseDate
             self.genrelabel.text = detailModel.genres.first?.name
             self.textView.text = detailModel.overview
+            self.updateStars(rating: detailModel.voteAverage)
             
             if let model = detailModel.runtime {
                 self.timelabel.text = "\(model) Minutes"
@@ -166,18 +188,14 @@ class DetailViewController: UIViewController {
         sender.tintColor = buttonTapped ? .red : .gray
     }
     
-    // MARK: - Action Raiting Button
-    @objc func raitingButtonPressed(sender: UIButton) {
-        
-        guard let index = raitingStack.ratingButtons.firstIndex(of: sender) else { return }
-        
-        let selectedRating = index + 1
-        print(selectedRating)
-        
-        if selectedRating == raitingStack.rating {
-            raitingStack.rating = 0
-        } else {
-            raitingStack.rating = selectedRating
+
+    func updateStars(rating: Double) {
+        let numberOfStars = Int(rating / 2)
+        ratingLabel.text = String(format: "%.1f", rating)
+        for (index, arrangedSubview) in starsStackView.arrangedSubviews.enumerated() {
+            if let imageView = arrangedSubview as? UIImageView {
+                imageView.image = index < numberOfStars ? UIImage(named: "star-4")?.withTintColor(#colorLiteral(red: 1, green: 0.7547127604, blue: 0.0322817266, alpha: 1)) : UIImage(named: "star-3")?.withTintColor(.systemGray)
+            }
         }
     }
 
@@ -188,11 +206,11 @@ extension DetailViewController {
     
     private func setupConstraints() {
         
-    
+        
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         imageFilm.translatesAutoresizingMaskIntoConstraints = false
         nameFilm.translatesAutoresizingMaskIntoConstraints = false
-        raitingStack.translatesAutoresizingMaskIntoConstraints = false
+        
         storyLineLabel.translatesAutoresizingMaskIntoConstraints = false
         textView.translatesAutoresizingMaskIntoConstraints = false
         castAndCrewLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -220,12 +238,15 @@ extension DetailViewController {
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         mainStack.distribution = .fillProportionally
         
+        let starStack = UIStackView(arrangedSubviews: [ratingLabel, starsStackView], axis: .horizontal, spacing: 15)
+        starStack.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(imageFilm)
         contentView.addSubview(nameFilm)
         contentView.addSubview(mainStack)
-        contentView.addSubview(raitingStack)
+        contentView.addSubview(starStack)
         contentView.addSubview(storyLineLabel)
         contentView.addSubview(textView)
         contentView.addSubview(castAndCrewLabel)
@@ -259,14 +280,16 @@ extension DetailViewController {
             mainStack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
         
-        // MARK: - RatingStack
+        // MARK: - mainstack
         NSLayoutConstraint.activate([
-            raitingStack.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 16),
-            raitingStack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            starStack.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 16),
+            starStack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
         ])
+        
         // MARK: - StoryLine label
         NSLayoutConstraint.activate([
-            storyLineLabel.topAnchor.constraint(equalTo: raitingStack.bottomAnchor, constant: 32),
+            storyLineLabel.topAnchor.constraint(equalTo: starsStackView.bottomAnchor, constant: 32),
             storyLineLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
         ])
         
@@ -291,10 +314,10 @@ extension DetailViewController {
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: 100)
         ])
-
+        
         // MARK: - StoryLine label
         NSLayoutConstraint.activate([
-//            watchNowButton.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 70),
+            //            watchNowButton.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 70),
             watchNowButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             watchNowButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             watchNowButton.heightAnchor.constraint(equalToConstant: 50),
@@ -311,7 +334,6 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
         var width = text.name.count * 10 + 20
         if text.character.count > text.name.count {
             width = text.character.count * 10 + 20
-            print("aaa")
         }
         return CGSize(width: width, height: 50)
     }
@@ -353,16 +375,16 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         
         if let cast = cast.profilePath {
             manager.fetchImage(from: cast) { image in
-
+                
                 if let image = image {
                     DispatchQueue.main.async {
                         cell.photoImageView.image = image
                     }
                 }
-
+                
             }
         }
-
+        
         return cell
     }
     

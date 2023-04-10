@@ -22,7 +22,6 @@
 		52210A3D29DE8D33002F159D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52210A3C29DE8D33002F159D /* Constants.swift */; };
 		52210A3F29DE9B9C002F159D /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52210A3E29DE9B9C002F159D /* UIView + Extension.swift */; };
 		52210A4629DF4945002F159D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52210A4529DF4945002F159D /* DetailViewController.swift */; };
-		52210A4929DF49EF002F159D /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52210A4829DF49EF002F159D /* RatingControl.swift */; };
 		52210A4C29DF4A30002F159D /* CastAndCrewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52210A4B29DF4A30002F159D /* CastAndCrewCell.swift */; };
 		52210A4F29DF4D9D002F159D /* ExpandableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52210A4E29DF4D9D002F159D /* ExpandableLabel.swift */; };
 		527748C429E3545A0052DAA9 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527748C329E3545A0052DAA9 /* CustomImageView.swift */; };
@@ -71,7 +70,6 @@
 		52210A3C29DE8D33002F159D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		52210A3E29DE9B9C002F159D /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		52210A4529DF4945002F159D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		52210A4829DF49EF002F159D /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		52210A4B29DF4A30002F159D /* CastAndCrewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastAndCrewCell.swift; sourceTree = "<group>"; };
 		52210A4E29DF4D9D002F159D /* ExpandableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableLabel.swift; sourceTree = "<group>"; };
 		527748C329E3545A0052DAA9 /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
@@ -219,7 +217,6 @@
 		52210A4A29DF4A00002F159D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				52210A4829DF49EF002F159D /* RatingControl.swift */,
 				52210A4E29DF4D9D002F159D /* ExpandableLabel.swift */,
 				527748C329E3545A0052DAA9 /* CustomImageView.swift */,
 			);
@@ -438,7 +435,6 @@
 				ABA9934B29DF51380015329F /* CastModel.swift in Sources */,
 				359C38AF29DE01EC0021DAE4 /* CategoryHeaderView.swift in Sources */,
 				52900CC029DCA2DC003014FD /* CustomSearchBar.swift in Sources */,
-				52210A4929DF49EF002F159D /* RatingControl.swift in Sources */,
 				52210A4C29DF4A30002F159D /* CastAndCrewCell.swift in Sources */,
 				52210A3F29DE9B9C002F159D /* UIView + Extension.swift in Sources */,
 				ABCE3E1429E17989000AE6C5 /* GenreEnums.swift in Sources */,
