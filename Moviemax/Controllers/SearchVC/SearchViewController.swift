@@ -10,7 +10,9 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    let array = ["All", "Action", "Adventure", "Animation", "Comedy", "Crime"]
+    let array = MovieGenre.allCases
+    var genre = "Action"
+    var genreArray = [Movie]()
     var indexCell = 0
     
     let manager = MultimediaLoader.shared
@@ -50,6 +52,8 @@ class SearchViewController: UIViewController {
         
         searchBar.delegate = self
         
+        searchBar.textField?.delegate = self
+        
         self.tableView.register(CellFilmTableView.self, forCellReuseIdentifier: "CellForTable")
         self.collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "Cell")
         
@@ -69,6 +73,23 @@ class SearchViewController: UIViewController {
             searchBar.changePlaceholderColor(color)
         }
         
+        manager.fetchMoviesByGenre(genre: array.first ?? .action) { result in
+            
+            switch result {
+                
+            case .success(let arrayModel):
+                if let array = arrayModel.results {
+                    self.genreArray = array
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
     }
     
     @objc func buttonPressed(_ sender: UIButton) {
@@ -79,11 +100,76 @@ class SearchViewController: UIViewController {
     }
 }
 
+// MARK: - UISearchTextFieldDelegat
+extension SearchViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let text = textField.text {
+            
+            manager.searchMedia(type: .movie, query: text) { result in
+                
+                switch result {
+                    
+                case .success(let arrayModel):
+                    if let array = arrayModel.results {
+                        print(array)
+                        self.genreArray = array
+                        
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        } else {
+            print("false")
+        }
+        return false
+    }
+    
+    
+    
+}
+
 // MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.isLoading = !self.searchBar.isLoading
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            print("wow")
+            manager.fetchMoviesByGenre(genre: array.first ?? .action) { result in
+                
+                switch result {
+                    
+                case .success(let arrayModel):
+                    if let array = arrayModel.results {
+                        print(array)
+                        self.genreArray = array
+                        
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+            
+            
+           
+
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+                self.tableView.reloadData()
+            }
+
+        }
     }
 }
 
@@ -155,24 +241,35 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return genreArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellForTable", for: indexPath) as? CellFilmTableView else { return UITableViewCell()}
-        cell.filmImageView.image = UIImage(named: "image1")
+        
+        let movie = genreArray[indexPath.row]
+        
+        cell.cellConfigureMovie(with: movie, genre: genre)
+        
         cell.likeButton.tag = indexPath.row
+        
         
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let detailViewController = DetailViewController()
+        detailViewController.id = genreArray[indexPath.row].id
+        detailViewController.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(detailViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
+
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        150
+        200
     }
     
     
@@ -183,7 +280,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let text = array[indexPath.item]
-        let width = text.count * 10 + 40
+        let width = text.name.count * 10 + 40
         return CGSize(width: width, height: 50)
     }
     
@@ -219,14 +316,32 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
             cell.titleLabel.textColor = #colorLiteral(red: 0.6117647059, green: 0.6431372549, blue: 0.6705882353, alpha: 1)
         }
         let width = array[indexPath.item]
-        cell.titleLabel.text = width
+        cell.titleLabel.text = width.name
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.indexCell = indexPath.item
-        print(indexPath.row)
+        
+        genre = array[indexPath.row].name
+        
+        manager.fetchMoviesByGenre(genre: array[indexPath.row]) { result in
+            
+            switch result {
+                
+            case .success(let arrayModel):
+                if let array = arrayModel.results {
+                    self.genreArray = array
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            case .failure(let error): 
+                print(error.localizedDescription)
+            }
+        }
         
         DispatchQueue.main.async {
             collectionView.reloadData()

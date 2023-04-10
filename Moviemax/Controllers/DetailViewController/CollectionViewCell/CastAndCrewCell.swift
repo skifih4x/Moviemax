@@ -24,7 +24,7 @@ class CastAndCrewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        photoImageView.layer.cornerRadius = photoImageView.frame.height / 2
+        photoImageView.layer.cornerRadius = 20
         layer.cornerRadius = contentView.frame.height / 2
     }
     

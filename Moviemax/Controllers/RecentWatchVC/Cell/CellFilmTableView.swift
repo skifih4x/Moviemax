@@ -26,7 +26,7 @@ class CellFilmTableView: UITableViewCell {
     }()
     // Time Stack
     let timeLabel = UILabel(text: "148 Minutes", font: UIFont.systemFont(ofSize: 15),  textColor: UIColor(named: K.Colors.labelColor))
-    let imageTime = UIImageView(image: UIImage(named: "clock"), contentMode: .scaleAspectFill)
+    let imageTime = UIImageView(image: UIImage(named: "star-4"), contentMode: .scaleAspectFill)
     // Data Stack
     let dataLabel = UILabel(text: "17 Sep 2021", font: UIFont.systemFont(ofSize: 15), textColor: UIColor(named: K.Colors.labelColor))
     let imageData = UIImageView(image: UIImage(named: "calendar"), contentMode: .scaleAspectFill)
@@ -71,6 +71,15 @@ class CellFilmTableView: UITableViewCell {
         self.genreView.genreLabel.text = model.genre
     }
     
+    func cellConfigureMovie(with model: Movie, genre: String) {
+    
+        self.nameLabel.text = model.name ?? model.title
+        setImage(nameImage: model.posterPath ?? "")
+        self.timeLabel.text = "\(model.voteAverage)"
+        self.dataLabel.text = "\(model.releaseDate ?? "")"
+        self.genreView.genreLabel.text = genre
+    }
+    
     func setImage(nameImage: String) {
         
         MultimediaLoader.shared.fetchImage(from: nameImage) { [weak self] image in
@@ -111,8 +120,8 @@ class CellFilmTableView: UITableViewCell {
         ])
         // Genre image
         NSLayoutConstraint.activate([
-            imageGenre.heightAnchor.constraint(equalToConstant: 20),
-            imageGenre.widthAnchor.constraint(equalToConstant: 20),
+            imageGenre.heightAnchor.constraint(equalToConstant: 14),
+            imageGenre.widthAnchor.constraint(equalToConstant: 14),
         ])
         
         let topStack = UIStackView(arrangedSubviews: [nameLabel, likeButton], axis: .horizontal, spacing: 10)

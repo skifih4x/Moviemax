@@ -163,6 +163,25 @@ final class MultimediaLoader {
 
         }
     }
+    
+    func fetchDetailDataByID(type: MultimediaTypeURL, id: String, completion: @escaping (DetailMultimediaModel?) -> Void) {
+            guard let url = URL(string: baseURL + "\(type.rawValue)/\(id)?api_key=\(apiKey)") else { return }
+
+            networkManager.fetchData(with: url) { result in
+                switch result {
+                case .success(let data):
+                    do {
+                        let detailMultimedia = try self.decoder.decode(DetailMultimediaModel.self, from: data)
+                        completion(detailMultimedia)
+                    } catch {
+                        self.delegate?.presentDefaultError()
+
+                    }
+                case .failure:
+                    completion(nil)
+                }
+            }
+        }
 
     func getAllTypesOfMediaData(completion: @escaping (([MultimediaTypeURL: [MultimediaViewModel]]) -> Void)) {
         var dictOfAllData = [MultimediaTypeURL: [MultimediaViewModel]]()
@@ -244,6 +263,24 @@ final class MultimediaLoader {
             }
         }
     }
+    
+    func fetchCastDataById(id: String, type: MultimediaTypeURL, completion: @escaping (CastModel?) -> Void) {
+            guard let url = URL(string: baseURL + "\(type.rawValue)/\(id)/credits?api_key=\(apiKey)") else { return }
+
+            networkManager.fetchData(with: url) { result in
+                switch result {
+                case .success(let data):
+                    do {
+                        let detailMultimedia = try self.decoder.decode(CastModel.self, from: data)
+                        completion(detailMultimedia)
+                    } catch {
+                        self.delegate?.presentDefaultError()
+                    }
+                case .failure:
+                    completion(nil)
+                }
+            }
+        }
 
     func convertDetailMMtoViewModel(detailMultimedia: DetailMultimediaModel, type: MultimediaTypeURL) -> DetailMultimediaViewModel {
 
