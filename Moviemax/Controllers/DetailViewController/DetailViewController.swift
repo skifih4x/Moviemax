@@ -55,14 +55,14 @@ class DetailViewController: UIViewController {
     let imageFilm = CustomImageView(frame: .zero)
     let nameFilm = UILabel(text: "Avatar", font: UIFont.systemFont(ofSize: 24, weight: .bold), textColor: UIColor(named: K.Colors.titleColor))
     
-    let dataImage = UIImageView(image: UIImage(named: "data"), contentMode: .scaleAspectFill)
-    let datalabel = UILabel(text: "17 Sep 21", font: UIFont.systemFont(ofSize: 12))
+    let dataImage = UIImageView(image: UIImage(named: "calendar"), contentMode: .scaleAspectFill)
+    let datalabel = UILabel(text: "17 Sep 21", font: UIFont.systemFont(ofSize: 12), textColor: UIColor(named: K.Colors.labelColor))
     
     let timeImage = UIImageView(image: UIImage(named: "clock"), contentMode: .scaleAspectFill)
-    let timelabel = UILabel(text: "148 Minutes", font: UIFont.systemFont(ofSize: 12))
+    let timelabel = UILabel(text: "148 Minutes", font: UIFont.systemFont(ofSize: 12), textColor: UIColor(named: K.Colors.labelColor))
     
     let genreImage = UIImageView(image: UIImage(named: "genre"), contentMode: .scaleAspectFill)
-    let genrelabel = UILabel(text: "Action", font: UIFont.systemFont(ofSize: 12))
+    let genrelabel = UILabel(text: "Action", font: UIFont.systemFont(ofSize: 12), textColor: UIColor(named: K.Colors.labelColor))
     
     let storyLineLabel = UILabel(text: "Story Line", font: UIFont.systemFont(ofSize: 16, weight: .bold), textColor: UIColor(named: K.Colors.titleColor))
     
