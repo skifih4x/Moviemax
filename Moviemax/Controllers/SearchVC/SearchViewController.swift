@@ -11,6 +11,8 @@ import UIKit
 class SearchViewController: UIViewController {
     
     let array = MovieGenre.allCases
+    var search = ""
+    var searchFlag = false
     var genre = "Action"
     var genreArray = [Movie]()
     var indexCell = 0
@@ -63,6 +65,48 @@ class SearchViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if searchFlag {
+            manager.searchMedia(type: .movie, query: search) { result in
+                
+                switch result {
+                    
+                case .success(let arrayModel):
+                    if let array = arrayModel.results {
+                        print(array)
+                        self.genreArray = array
+                        
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+            
+        } else {
+            manager.fetchMoviesByGenre(genre: array.first ?? .action) { result in
+                
+                switch result {
+                    
+                case .success(let arrayModel):
+                    if let array = arrayModel.results {
+                        self.genreArray = array
+                        
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -73,22 +117,7 @@ class SearchViewController: UIViewController {
             searchBar.changePlaceholderColor(color)
         }
         
-        manager.fetchMoviesByGenre(genre: array.first ?? .action) { result in
-            
-            switch result {
-                
-            case .success(let arrayModel):
-                if let array = arrayModel.results {
-                    self.genreArray = array
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        
         
     }
     
@@ -104,15 +133,17 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         if let text = textField.text {
-            
+            search = text
+            print(search)
             manager.searchMedia(type: .movie, query: text) { result in
                 
                 switch result {
                     
                 case .success(let arrayModel):
                     if let array = arrayModel.results {
-                        print(array)
+                        self.searchFlag = true
                         self.genreArray = array
                         
                         DispatchQueue.main.async {
