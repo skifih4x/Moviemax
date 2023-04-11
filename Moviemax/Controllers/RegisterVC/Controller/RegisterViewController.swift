@@ -77,10 +77,10 @@ extension RegisterViewController: RegisterViewDelegate {
                         print(user)
                         var homeVC: HomeViewController!
                         homeVC = HomeViewController()
-                        present(homeVC, animated: true)
+                        self.present(homeVC, animated: true)
                         
                     case .failure(let error):
-                        present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
+                        self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
                     }
                 }
             }

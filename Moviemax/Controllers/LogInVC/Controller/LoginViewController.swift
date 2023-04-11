@@ -85,7 +85,7 @@ extension LoginViewController: LoginViewDelegate {
                         homeVC = HomeViewController()
                         self.navigationController?.pushViewController(homeVC, animated: true)
                     case .failure(let error):
-                        present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
+                        self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
                     }
                 }
             }
