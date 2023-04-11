@@ -54,6 +54,8 @@
 		ABA9935129DF514A0015329F /* MovieError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9935029DF514A0015329F /* MovieError.swift */; };
 		ABA9935329DF516F0015329F /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9935229DF516F0015329F /* UIViewController+Extension.swift */; };
 		ABA9935529DF51A30015329F /* Dateformatter + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9935429DF51A30015329F /* Dateformatter + Extension.swift */; };
+		ABB7BEE129E594780099038C /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB7BEE029E594780099038C /* FilterButton.swift */; };
+		ABB7BEE329E596B20099038C /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB7BEE229E596B20099038C /* UIColor + Extension.swift */; };
 		ABCE3E1429E17989000AE6C5 /* GenreEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE3E1329E17989000AE6C5 /* GenreEnums.swift */; };
 		C5994A9629E49FD100461450 /* ProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5994A9529E49FD100461450 /* ProfileSettingsVC.swift */; };
 		C5994A9B29E4A1EC00461450 /* CustomBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5994A9A29E4A1EC00461450 /* CustomBarButtonItem.swift */; };
@@ -111,6 +113,8 @@
 		ABA9935029DF514A0015329F /* MovieError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieError.swift; sourceTree = "<group>"; };
 		ABA9935229DF516F0015329F /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		ABA9935429DF51A30015329F /* Dateformatter + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dateformatter + Extension.swift"; sourceTree = "<group>"; };
+		ABB7BEE029E594780099038C /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
+		ABB7BEE229E596B20099038C /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		ABCE3E1329E17989000AE6C5 /* GenreEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreEnums.swift; sourceTree = "<group>"; };
 		C5994A9529E49FD100461450 /* ProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsVC.swift; sourceTree = "<group>"; };
 		C5994A9A29E4A1EC00461450 /* CustomBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButtonItem.swift; sourceTree = "<group>"; };
@@ -178,6 +182,7 @@
 				AB6CE26229E4BF3D00EB02DA /* ClassAnimator.swift */,
 				52900CC129DCBF08003014FD /* View */,
 				AB6CE26029E4BD5A00EB02DA /* ModalViewController.swift */,
+				ABB7BEE029E594780099038C /* FilterButton.swift */,
 			);
 			path = SearchVC;
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 				52AB71C529DBD36200F149F1 /* UIImageView + Extension.swift */,
 				ABA9935229DF516F0015329F /* UIViewController+Extension.swift */,
 				ABA9935429DF51A30015329F /* Dateformatter + Extension.swift */,
+				ABB7BEE229E596B20099038C /* UIColor + Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -451,8 +457,10 @@
 				359C38A929DDCB960021DAE4 /* CategoryCell.swift in Sources */,
 				52899D9429DAF9E3003D2AB8 /* VideoViewController.swift in Sources */,
 				ABA9934A29DF51380015329F /* MultimediaViewModel.swift in Sources */,
+				ABB7BEE329E596B20099038C /* UIColor + Extension.swift in Sources */,
 				C5994A9F29E4A24E00461450 /* CustomGenderButton.swift in Sources */,
 				AB6CE26129E4BD5A00EB02DA /* ModalViewController.swift in Sources */,
+				ABB7BEE129E594780099038C /* FilterButton.swift in Sources */,
 				ABA9934B29DF51380015329F /* CastModel.swift in Sources */,
 				359C38AF29DE01EC0021DAE4 /* CategoryHeaderView.swift in Sources */,
 				C5994A9629E49FD100461450 /* ProfileSettingsVC.swift in Sources */,

@@ -127,8 +127,8 @@ class SearchViewController: UIViewController {
 
     @objc
     private func filterButtonPressed() {
-            let customModalVC = CustomModalViewController()
-         //   customModalVC.delegate = self
+            let customModalVC = FilterModalViewController()
+            customModalVC.delegate = self
             customModalVC.modalPresentationStyle = .custom
             customModalVC.modalTransitionStyle = .coverVertical
             customModalVC.transitioningDelegate = self
@@ -159,6 +159,33 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UIViewControllerTransitioningDelegate {
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return DismissAnimator()
+    }
+}
+
+extension SearchViewController: FilterViewControllerDelegate {
+    func filterApplied(category: MovieGenre?, starRating: Double?) {
+        UIView.animate(withDuration: 0.3) {
+            self.visualEffectView.alpha = 0
+        }
+
+        if category == nil && starRating == nil { return }
+
+        let genre = category ?? .all
+        let rating = Int(starRating ?? 0)
+
+        manager.fetchMoviesByGenreAndRating(genre: genre, rating: rating) { result in
+            switch result {
+            case .success(let arrayModel):
+                if let array = arrayModel.results {
+                    self.genreArray = array
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+                case .failure(let failure):
+                    print(failure)
+                }
+        }
     }
 }
 

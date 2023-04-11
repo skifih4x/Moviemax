@@ -1,11 +1,23 @@
 import UIKit
 
-class CustomModalViewController: UIViewController {
+enum CGConstants: CGFloat {
+    case paddingBetweenButtons = 12
+}
 
+class FilterModalViewController: UIViewController {
+
+
+    weak var delegate: FilterViewControllerDelegate?
     var visualEffectView: UIVisualEffectView!
     var categorySelectionView: UIView!
-    var categories: [String] = ["All", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
-    var selectedCategory: String = "All"
+  //  var categories: [MovieGenre] = ["all", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
+    var categories: [MovieGenre] = [.all, .action, .adventure, .mystery, .fantasy, .comedy]
+    var categoriesButtons = [UIButton]()
+    var starsButtons = [UIButton]()
+
+    var selectedCategory: MovieGenre?
+    var selectedRating: Double?
+
     var starRating: Int = 1
     var applyFilterButton: UIButton!
 
@@ -20,41 +32,75 @@ class CustomModalViewController: UIViewController {
         let viewHeight = screenHeight / 2
         let yPosition = screenHeight - viewHeight
 
+        view.layer.cornerRadius = 24
+        view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+
         view.frame = CGRect(x: 0, y: yPosition, width: view.bounds.width, height: viewHeight)
     }
 
-    func createButton(categoryTitle: String) -> UIButton {
+
+    lazy var dismissButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("  \(categoryTitle)  ", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .white
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.systemGray.cgColor
+        button.setTitle("⤬ Filter", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.layer.cornerRadius = 20
+        button.addTarget(self, action: #selector(dismissButtonPressed), for: .touchUpInside)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 24)
+
         return button
-    }
+    }()
+
+    lazy var resetFiltersButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Reset Filters", for: .normal)
+        button.setTitleColor(.customPurple, for: .normal)
+        button.addTarget(self, action: #selector(resetFiltersButtonPressed), for: .touchUpInside)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        return button
+    }()
 
     lazy var upperCategoriesStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
-        sv.spacing = 8
-     //   sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.spacing = CGConstants.paddingBetweenButtons.rawValue
         return sv
     }()
 
     lazy var lowerCategoriesStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
-        sv.spacing = 8
-    //    sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.spacing = CGConstants.paddingBetweenButtons.rawValue
         return sv
     }()
 
-    lazy var verticalStackView: UIStackView = {
+    lazy var overallCategoriesStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
-        sv.spacing = 8
+        sv.spacing = 12
+        sv.distribution = .fillEqually
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        return sv
+    }()
+
+    lazy var upperStarsStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .horizontal
+        sv.spacing = CGConstants.paddingBetweenButtons.rawValue
+        return sv
+    }()
+
+    lazy var lowerStarsStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .horizontal
+        sv.spacing = CGConstants.paddingBetweenButtons.rawValue
+        return sv
+    }()
+
+    lazy var overallStarsStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.spacing = 12
         sv.distribution = .fillEqually
         sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
@@ -68,53 +114,41 @@ class CustomModalViewController: UIViewController {
         return label
     }()
 
-
-    func setupUI() {
-
-//        categories.forEach { cateogry in
-//         let button = createButton(categoryTitle: cateogry)
-//            upperCategoriesStackView.addArrangedSubview(button)
-//        }
-
-        for (index, category) in categories.enumerated() {
-            if index < categories.count / 2 {
-                let button = createButton(categoryTitle: category)
-                   upperCategoriesStackView.addArrangedSubview(button)
-            } else {
-                let button = createButton(categoryTitle: category)
-                lowerCategoriesStackView.addArrangedSubview(button)
-            }
-            }
-        verticalStackView.addArrangedSubview(lowerCategoriesStackView)
-        verticalStackView.addArrangedSubview(upperCategoriesStackView)
+    func createButton(categoryTitle: String, tag: Int) -> FilterButton {
+        let button = FilterButton(type: .system)
+        button.setTitle(categoryTitle, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.borderWidth = 1
+        button.addTarget(self, action: #selector(categoryChanged), for: .touchUpInside)
+        button.layer.borderColor = UIColor.systemGray.cgColor
+        button.setTitleColor(.black, for: .normal)
+        button.layer.cornerRadius = 20
+        button.contentEdgeInsets = .init(top: 0, left: 16, bottom: 0, right: 16)
+        categoriesButtons.append(button)
+        return button
+    }
 
 
-        view.addSubview(categoriesLabel)
-        view.addSubview(verticalStackView)
-
-        NSLayoutConstraint.activate([
-            categoriesLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            categoriesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            categoriesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
-        ])
-
-
-
+    fileprivate func configureApplyButton() {
+        // Configure the Apply Filter button
+        applyFilterButton = UIButton(type: .system)
+        applyFilterButton.setTitle("Apply Filter", for: .normal)
+        applyFilterButton.setTitleColor(.white, for: .normal)
+        applyFilterButton.backgroundColor = .customPurple
+        applyFilterButton.layer.cornerRadius = 12
+        applyFilterButton.translatesAutoresizingMaskIntoConstraints = false
+        applyFilterButton.addTarget(self, action: #selector(applyFilter), for: .touchUpInside)
+        view.addSubview(applyFilterButton)
 
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: categoriesLabel.bottomAnchor, constant: 10),
-            verticalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-//            verticalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            verticalStackView.heightAnchor.constraint(equalToConstant: 90)
+            applyFilterButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            applyFilterButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+            applyFilterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
+            applyFilterButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
 
-        view.backgroundColor = .white
-        // Add a label for the categories
-
-
-
-
-
+    fileprivate func configureStarsStackView() {
         let starRatingLabel = UILabel()
         starRatingLabel.text = "Star Rating"
         starRatingLabel.textAlignment = .left
@@ -122,89 +156,153 @@ class CustomModalViewController: UIViewController {
         view.addSubview(starRatingLabel)
 
         NSLayoutConstraint.activate([
-            starRatingLabel.topAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 80),
-            starRatingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            starRatingLabel.topAnchor.constraint(equalTo: overallCategoriesStackView.bottomAnchor, constant: 16),
+            starRatingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
             starRatingLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
         ])
-
-        // Configure the star rating buttons
-        let starButtonSize = CGSize(width: 50, height: 50)
-        let starButtonSpacing: CGFloat = 10
-        let starButtonsViewWidth = CGFloat(starButtonSize.width * 5 + starButtonSpacing * 4)
-        let starButtonsView = UIView(frame: CGRect(x: 0, y: 0, width: starButtonsViewWidth, height: starButtonSize.height))
-        starButtonsView.translatesAutoresizingMaskIntoConstraints = false
-        starButtonsView.layer.cornerRadius = starButtonSize.height / 2
-        starButtonsView.layer.masksToBounds = true
-        starButtonsView.backgroundColor = UIColor.white
-        view.addSubview(starButtonsView)
-
-        NSLayoutConstraint.activate([
-            starButtonsView.topAnchor.constraint(equalTo: starRatingLabel.bottomAnchor, constant: 20),
-            starButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            starButtonsView.widthAnchor.constraint(equalToConstant: starButtonsViewWidth),
-            starButtonsView.heightAnchor.constraint(equalToConstant: starButtonSize.height)
-        ])
+        view.addSubview(overallStarsStackView)
+        overallStarsStackView.addArrangedSubview(upperStarsStackView)
+        overallStarsStackView.addArrangedSubview(lowerStarsStackView)
 
         for i in 1...5 {
             let button = UIButton(type: .system)
-            button.setTitle("\(i)★", for: .normal)
-            button.setTitleColor(.purple, for: .normal)
-            button.addTarget(self, action: #selector(starButtonTapped(sender:)), for: .touchUpInside)
-            button.frame = CGRect(x: CGFloat(i - 1) * (starButtonSize.width + starButtonSpacing), y: 0, width: starButtonSize.width, height: starButtonSize.height)
-            button.layer.cornerRadius = starButtonSize.height / 2
+            button.setTitle(String(repeating: "★", count: i), for: .normal)
+            button.setTitleColor(.systemYellow, for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 20)
+
+            button.addTarget(self, action: #selector(starButtonTapped), for: .touchUpInside)
+            button.layer.cornerRadius = 20
+            button.contentEdgeInsets = .init(top: 0, left: 16, bottom: 0, right: 16)
+            button.layer.borderWidth = 1
+            button.layer.borderColor = UIColor.systemGray.cgColor
             button.layer.masksToBounds = true
-            starButtonsView.addSubview(button)
+            starsButtons.append(button)
+            if i <= 3 {
+                upperStarsStackView.addArrangedSubview(button)
+            } else {
+                lowerStarsStackView.addArrangedSubview(button)
+            }
         }
 
-        // Configure the Apply Filter button
-        applyFilterButton = UIButton(type: .system)
-        applyFilterButton.setTitle("Apply Filter", for: .normal)
-        applyFilterButton.setTitleColor(.white, for: .normal)
-        applyFilterButton.backgroundColor = .purple
-        applyFilterButton.layer.cornerRadius = 10
-        applyFilterButton.translatesAutoresizingMaskIntoConstraints = false
-        applyFilterButton.addTarget(self, action: #selector(applyFilter), for: .touchUpInside)
-        self.view.addSubview(applyFilterButton)
-
         NSLayoutConstraint.activate([
-            applyFilterButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-            applyFilterButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            applyFilterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            applyFilterButton.heightAnchor.constraint(equalToConstant: 50)
+            overallStarsStackView.topAnchor.constraint(equalTo: starRatingLabel.bottomAnchor, constant: 10),
+            overallStarsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+            overallStarsStackView.heightAnchor.constraint(equalToConstant: 90)
         ])
     }
 
-    @objc func starButtonTapped(sender: UIButton) {
-        if let title = sender.title(for: .normal) {
-            starRating = Int(String(title.first!))!
+    func setupUI() {
 
-            // Toggle the isSelected state of the button
-            sender.isSelected = !sender.isSelected
+        view.addSubview(dismissButton)
+
+        NSLayoutConstraint.activate([
+            dismissButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
+            dismissButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+            dismissButton.heightAnchor.constraint(equalToConstant: 35),
+        ])
+
+        view.addSubview(resetFiltersButton)
+
+        NSLayoutConstraint.activate([
+            resetFiltersButton.centerYAnchor.constraint(equalTo: dismissButton.centerYAnchor),
+            resetFiltersButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
+            resetFiltersButton.heightAnchor.constraint(equalToConstant: 35)
+        ])
+
+        for (index, category) in categories.enumerated() {
+            if index < categories.count / 2 {
+                let button = createButton(categoryTitle: category.name, tag: index)
+                   upperCategoriesStackView.addArrangedSubview(button)
+            } else {
+                let button = createButton(categoryTitle: category.name, tag: index)
+                lowerCategoriesStackView.addArrangedSubview(button)
+            }
+            }
+
+        overallCategoriesStackView.addArrangedSubview(upperCategoriesStackView)
+        overallCategoriesStackView.addArrangedSubview(lowerCategoriesStackView)
+
+        view.addSubview(categoriesLabel)
+        view.addSubview(overallCategoriesStackView)
+
+        NSLayoutConstraint.activate([
+            categoriesLabel.topAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: 4),
+            categoriesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+            categoriesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
+        ])
+
+        NSLayoutConstraint.activate([
+            overallCategoriesStackView.topAnchor.constraint(equalTo: categoriesLabel.bottomAnchor, constant: 10),
+            overallCategoriesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+            overallCategoriesStackView.heightAnchor.constraint(equalToConstant: 90)
+        ])
+
+        view.backgroundColor = .white
+
+        configureStarsStackView()
+
+        configureApplyButton()
+    }
+
+    @objc func starButtonTapped(sender: UIButton) {
+        starsButtons.forEach { button in
+            button.layer.borderColor = UIColor.systemGray.cgColor
+        }
+        sender.layer.borderColor = UIColor.customPurple?.cgColor
+        if let selectedRating = starsButtons.firstIndex(of: sender) {
+            self.selectedRating = Double((selectedRating + 1) * 2)
         }
     }
 
     @objc func categoryChanged(_ sender: UIButton) {
-        let index = sender.tag
-        selectedCategory = categories[index]
+        if let index = categoriesButtons.firstIndex(of: sender) {
+            selectedCategory = categories[index]
+        }
+
+        categoriesButtons.forEach { button in
+            button.backgroundColor = .white
+            button.setTitleColor(.black, for: .normal)
+        }
 
         // Set the selected button's background color to purple
-        sender.backgroundColor = .purple
+        sender.backgroundColor = .customPurple
         sender.setTitleColor(.white, for: .normal)
 
         // Reset the background color and title color of other buttons
-        for button in self.view.subviews where button is UIButton && button.tag != index {
-            let otherButton = button as! UIButton
-            otherButton.backgroundColor = .white
-            otherButton.setTitleColor(.purple, for: .normal)
+
+    }
+
+    @objc
+    private func resetFiltersButtonPressed() {
+        categoriesButtons.forEach { button in
+            button.backgroundColor = .white
+            button.setTitleColor(.black, for: .normal)
         }
+
+        selectedCategory = nil
+
+        starsButtons.forEach { button in
+            button.layer.borderColor = UIColor.systemGray.cgColor
+        }
+
+        selectedRating = nil
+    }
+
+    @objc
+    private func dismissButtonPressed() {
+        selectedRating = nil
+        selectedCategory = nil
+
+        applyFilter()
     }
 
     @objc func applyFilter() {
-        // Perform the filtering operation based on selectedCategory and starRating
-        //    delegate?.filterApplied(category: selectedCategory, starRating: starRating)
-
-        // Dismiss the custom modal view controller
-        self.dismiss(animated: true, completion: nil)
+        delegate?.filterApplied(category: selectedCategory, starRating: selectedRating)
+        dismiss(animated: true, completion: nil)
     }
+}
+
+protocol FilterViewControllerDelegate: AnyObject {
+    func filterApplied(category: MovieGenre?, starRating: Double?)
 }
 

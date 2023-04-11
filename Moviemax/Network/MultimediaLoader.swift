@@ -76,7 +76,27 @@ final class MultimediaLoader {
     }
 
     func fetchMoviesByGenre(genre: MovieGenre, completion: @escaping (Result<MultimediaModel, Error>) -> Void) {
-        let urlString = "\(baseURL)discover/movie?api_key=\(apiKey)&with_genres=\(genre.rawValue)"
+        var urlString = "\(baseURL)discover/movie?api_key=\(apiKey)"
+        if genre != .all { urlString.append("&with_genres=\(genre.rawValue)")}
+        guard let url = URL(string: urlString) else { return }
+        networkManager.fetchData(with: url) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let movies = try self.decoder.decode(MultimediaModel.self, from: data)
+                    completion(.success(movies))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func fetchMoviesByGenreAndRating(genre: MovieGenre, rating: Int, completion: @escaping (Result<MultimediaModel, Error>) -> Void) {
+        var urlString = "\(baseURL)discover/movie?api_key=\(apiKey)&vote_average.gte=\(rating)"
+        if genre != .all { urlString.append("&with_genres=\(genre.rawValue)")}
         guard let url = URL(string: urlString) else { return }
         networkManager.fetchData(with: url) { result in
             switch result {
@@ -110,6 +130,8 @@ final class MultimediaLoader {
             }
         }
     }
+
+
 
 
     func getMediaData(for type: MultimediaTypeURL, completion: @escaping (([MultimediaTypeURL: [MultimediaViewModel]]) -> Void)) {
