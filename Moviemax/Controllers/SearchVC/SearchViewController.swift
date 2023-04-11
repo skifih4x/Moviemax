@@ -40,6 +40,8 @@ class SearchViewController: UIViewController {
         
         return searchBar
     }()
+
+    var filterButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +64,7 @@ class SearchViewController: UIViewController {
         view.backgroundColor = UIColor(named: K.Colors.background)
         setupConstraints()
         settingsNavigationBar()
-        
+        setupVisualEffectView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -106,19 +108,44 @@ class SearchViewController: UIViewController {
             }
         }
     }
+
+    var visualEffectView: UIVisualEffectView!
+
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         if let image = UIImage(named: "Combined-Shape") {
             guard let color = UIColor(named: K.Colors.titleColor) else { return }
-            searchBar.setRightImage(image)
+            filterButton = searchBar.setRightImage(image)
             searchBar.textField?.rightView?.tintColor = UIColor(named: K.Colors.titleColor)
             searchBar.changePlaceholderColor(color)
         }
+
+        filterButton?.addTarget(self, action: #selector(filterButtonPressed), for: .touchUpInside)
         
-        
-        
+    }
+
+    @objc
+    private func filterButtonPressed() {
+            let customModalVC = FilterModalViewController()
+            customModalVC.delegate = self
+            customModalVC.modalPresentationStyle = .custom
+            customModalVC.modalTransitionStyle = .coverVertical
+            customModalVC.transitioningDelegate = self
+            present(customModalVC, animated: true, completion: nil)
+
+            // Animate the blur effect
+            UIView.animate(withDuration: 0.3) {
+                self.visualEffectView.alpha = 0.8
+            }
+    }
+
+    func setupVisualEffectView() {
+        let blurEffect = UIBlurEffect(style: .prominent)
+        visualEffectView = UIVisualEffectView(effect: blurEffect)
+        visualEffectView.frame = self.view.bounds
+        visualEffectView.alpha = 0
+        self.view.addSubview(visualEffectView)
     }
     
     @objc func buttonPressed(_ sender: UIButton) {
@@ -128,6 +155,40 @@ class SearchViewController: UIViewController {
         cell.changeImageButton()
     }
 }
+
+extension SearchViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissAnimator()
+    }
+}
+
+extension SearchViewController: FilterViewControllerDelegate {
+    func filterApplied(category: MovieGenre?, starRating: Double?) {
+        UIView.animate(withDuration: 0.3) {
+            self.visualEffectView.alpha = 0
+        }
+
+        if category == nil && starRating == nil { return }
+
+        let genre = category ?? .all
+        let rating = Int(starRating ?? 0)
+
+        manager.fetchMoviesByGenreAndRating(genre: genre, rating: rating) { result in
+            switch result {
+            case .success(let arrayModel):
+                if let array = arrayModel.results {
+                    self.genreArray = array
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+                case .failure(let failure):
+                    print(failure)
+                }
+        }
+    }
+}
+
 
 // MARK: - UISearchTextFieldDelegat
 extension SearchViewController: UITextFieldDelegate {

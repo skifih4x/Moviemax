@@ -60,6 +60,8 @@
 		AB6CE25929E42DA900EB02DA /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25829E42DA900EB02DA /* OnboardingViewController.swift */; };
 		AB6CE25B29E439FE00EB02DA /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25A29E439FE00EB02DA /* CustomPageControl.swift */; };
 		AB6CE25D29E447BB00EB02DA /* OnboardingPageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25C29E447BB00EB02DA /* OnboardingPageContentView.swift */; };
+		AB6CE26129E4BD5A00EB02DA /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE26029E4BD5A00EB02DA /* ModalViewController.swift */; };
+		AB6CE26329E4BF3D00EB02DA /* ClassAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE26229E4BF3D00EB02DA /* ClassAnimator.swift */; };
 		ABA9934729DF51380015329F /* DetailMultimediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9934229DF51380015329F /* DetailMultimediaModel.swift */; };
 		ABA9934829DF51380015329F /* DetailMultimediaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9934329DF51380015329F /* DetailMultimediaViewModel.swift */; };
 		ABA9934929DF51380015329F /* MultimediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9934429DF51380015329F /* MultimediaModel.swift */; };
@@ -70,6 +72,8 @@
 		ABA9935129DF514A0015329F /* MovieError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9935029DF514A0015329F /* MovieError.swift */; };
 		ABA9935329DF516F0015329F /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9935229DF516F0015329F /* UIViewController+Extension.swift */; };
 		ABA9935529DF51A30015329F /* Dateformatter + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9935429DF51A30015329F /* Dateformatter + Extension.swift */; };
+		ABB7BEE129E594780099038C /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB7BEE029E594780099038C /* FilterButton.swift */; };
+		ABB7BEE329E596B20099038C /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB7BEE229E596B20099038C /* UIColor + Extension.swift */; };
 		ABCE3E1429E17989000AE6C5 /* GenreEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE3E1329E17989000AE6C5 /* GenreEnums.swift */; };
 		C5994A9629E49FD100461450 /* ProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5994A9529E49FD100461450 /* ProfileSettingsVC.swift */; };
 		C5994A9B29E4A1EC00461450 /* CustomBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5994A9A29E4A1EC00461450 /* CustomBarButtonItem.swift */; };
@@ -128,6 +132,8 @@
 		AB6CE25829E42DA900EB02DA /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		AB6CE25A29E439FE00EB02DA /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		AB6CE25C29E447BB00EB02DA /* OnboardingPageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageContentView.swift; sourceTree = "<group>"; };
+		AB6CE26029E4BD5A00EB02DA /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
+		AB6CE26229E4BF3D00EB02DA /* ClassAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAnimator.swift; sourceTree = "<group>"; };
 		ABA9934229DF51380015329F /* DetailMultimediaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailMultimediaModel.swift; sourceTree = "<group>"; };
 		ABA9934329DF51380015329F /* DetailMultimediaViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailMultimediaViewModel.swift; sourceTree = "<group>"; };
 		ABA9934429DF51380015329F /* MultimediaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultimediaModel.swift; sourceTree = "<group>"; };
@@ -138,6 +144,8 @@
 		ABA9935029DF514A0015329F /* MovieError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieError.swift; sourceTree = "<group>"; };
 		ABA9935229DF516F0015329F /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		ABA9935429DF51A30015329F /* Dateformatter + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dateformatter + Extension.swift"; sourceTree = "<group>"; };
+		ABB7BEE029E594780099038C /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
+		ABB7BEE229E596B20099038C /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		ABCE3E1329E17989000AE6C5 /* GenreEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreEnums.swift; sourceTree = "<group>"; };
 		C5994A9529E49FD100461450 /* ProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsVC.swift; sourceTree = "<group>"; };
 		C5994A9A29E4A1EC00461450 /* CustomBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButtonItem.swift; sourceTree = "<group>"; };
@@ -209,7 +217,10 @@
 			isa = PBXGroup;
 			children = (
 				52899D9129DAF9C9003D2AB8 /* SearchViewController.swift */,
+				AB6CE26229E4BF3D00EB02DA /* ClassAnimator.swift */,
 				52900CC129DCBF08003014FD /* View */,
+				AB6CE26029E4BD5A00EB02DA /* ModalViewController.swift */,
+				ABB7BEE029E594780099038C /* FilterButton.swift */,
 			);
 			path = SearchVC;
 			sourceTree = "<group>";
@@ -311,6 +322,7 @@
 				52AB71C529DBD36200F149F1 /* UIImageView + Extension.swift */,
 				ABA9935229DF516F0015329F /* UIViewController+Extension.swift */,
 				ABA9935429DF51A30015329F /* Dateformatter + Extension.swift */,
+				ABB7BEE229E596B20099038C /* UIColor + Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -570,7 +582,10 @@
 				52899D9429DAF9E3003D2AB8 /* VideoViewController.swift in Sources */,
 				A549AA3B29DFFB8100F3F359 /* RegisterView.swift in Sources */,
 				ABA9934A29DF51380015329F /* MultimediaViewModel.swift in Sources */,
+				ABB7BEE329E596B20099038C /* UIColor + Extension.swift in Sources */,
 				C5994A9F29E4A24E00461450 /* CustomGenderButton.swift in Sources */,
+				AB6CE26129E4BD5A00EB02DA /* ModalViewController.swift in Sources */,
+				ABB7BEE129E594780099038C /* FilterButton.swift in Sources */,
 				ABA9934B29DF51380015329F /* CastModel.swift in Sources */,
 				359C38AF29DE01EC0021DAE4 /* CategoryHeaderView.swift in Sources */,
 				C5994A9629E49FD100461450 /* ProfileSettingsVC.swift in Sources */,
@@ -603,6 +618,7 @@
 				359C38AD29DDCBE30021DAE4 /* BoxOfficeCell.swift in Sources */,
 				359C38AB29DDCBCA0021DAE4 /* BestMovieCell.swift in Sources */,
 				52AB71C229DBD32900F149F1 /* StackView + Extension.swift in Sources */,
+				AB6CE26329E4BF3D00EB02DA /* ClassAnimator.swift in Sources */,
 				A549AA2129DCB2F300F3F359 /* ErrorsList.swift in Sources */,
 				52899D9629DAFA08003D2AB8 /* HomeViewController.swift in Sources */,
 				A549AA3D29DFFBB000F3F359 /* RegisterViewController.swift in Sources */,
