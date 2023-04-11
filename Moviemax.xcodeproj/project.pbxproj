@@ -13,6 +13,8 @@
 		006B2F7929D9E1D100D8F89A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 006B2F7729D9E1D100D8F89A /* Main.storyboard */; };
 		006B2F7B29D9E1D200D8F89A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 006B2F7A29D9E1D200D8F89A /* Assets.xcassets */; };
 		006B2F7E29D9E1D200D8F89A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 006B2F7C29D9E1D200D8F89A /* LaunchScreen.storyboard */; };
+		00E7D77C29E5647700D1C048 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E7D77B29E5647700D1C048 /* CustomView.swift */; };
+		00E7D77E29E5647D00D1C048 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E7D77D29E5647D00D1C048 /* CustomViewController.swift */; };
 		359C38A729DDBB390021DAE4 /* UserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359C38A629DDBB390021DAE4 /* UserHeaderView.swift */; };
 		359C38A929DDCB960021DAE4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359C38A829DDCB960021DAE4 /* CategoryCell.swift */; };
 		359C38AB29DDCBCA0021DAE4 /* BestMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359C38AA29DDCBCA0021DAE4 /* BestMovieCell.swift */; };
@@ -39,6 +41,22 @@
 		52AB71C429DBD34300F149F1 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB71C329DBD34300F149F1 /* UILabel + Extension.swift */; };
 		52AB71C629DBD36200F149F1 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB71C529DBD36200F149F1 /* UIImageView + Extension.swift */; };
 		6E35D00029DC5A9800573829 /* UIStackView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E35CFFF29DC5A9800573829 /* UIStackView + Extensions.swift */; };
+		A549AA1629DCAD9700F3F359 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA1529DCAD9700F3F359 /* SnapKit */; };
+		A549AA1929DCADB700F3F359 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA1829DCADB700F3F359 /* FirebaseAuth */; };
+		A549AA1B29DCB26C00F3F359 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA1A29DCB26C00F3F359 /* AuthManager.swift */; };
+		A549AA1D29DCB2A300F3F359 /* ValidationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA1C29DCB2A300F3F359 /* ValidationManager.swift */; };
+		A549AA1F29DCB2BC00F3F359 /* StringTypeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA1E29DCB2BC00F3F359 /* StringTypeList.swift */; };
+		A549AA2129DCB2F300F3F359 /* ErrorsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA2029DCB2F300F3F359 /* ErrorsList.swift */; };
+		A549AA2329DCB33400F3F359 /* UserAuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA2229DCB33400F3F359 /* UserAuthData.swift */; };
+		A549AA2629DD592300F3F359 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA2529DD592300F3F359 /* LoginViewController.swift */; };
+		A549AA2E29DD5AD200F3F359 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA2D29DD5AD200F3F359 /* LoginView.swift */; };
+		A549AA3129DD7BF600F3F359 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA3029DD7BF600F3F359 /* GoogleSignIn */; };
+		A549AA3329DD7BF600F3F359 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA3229DD7BF600F3F359 /* GoogleSignInSwift */; };
+		A549AA3629DECC2400F3F359 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A549AA3529DECC2400F3F359 /* GoogleService-Info.plist */; };
+		A549AA3B29DFFB8100F3F359 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3A29DFFB8100F3F359 /* RegisterView.swift */; };
+		A549AA3D29DFFBB000F3F359 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */; };
+		A549AA3F29E4160200F3F359 /* AlertControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */; };
+		A549AA4229E4B7F900F3F359 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA4129E4B7F900F3F359 /* IQKeyboardManagerSwift */; };
 		AB6CE25929E42DA900EB02DA /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25829E42DA900EB02DA /* OnboardingViewController.swift */; };
 		AB6CE25B29E439FE00EB02DA /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25A29E439FE00EB02DA /* CustomPageControl.swift */; };
 		AB6CE25D29E447BB00EB02DA /* OnboardingPageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25C29E447BB00EB02DA /* OnboardingPageContentView.swift */; };
@@ -72,6 +90,8 @@
 		006B2F7A29D9E1D200D8F89A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		006B2F7D29D9E1D200D8F89A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		006B2F7F29D9E1D200D8F89A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00E7D77B29E5647700D1C048 /* CustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
+		00E7D77D29E5647D00D1C048 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		359C38A629DDBB390021DAE4 /* UserHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHeaderView.swift; sourceTree = "<group>"; };
 		359C38A829DDCB960021DAE4 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		359C38AA29DDCBCA0021DAE4 /* BestMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestMovieCell.swift; sourceTree = "<group>"; };
@@ -98,6 +118,17 @@
 		52AB71C329DBD34300F149F1 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
 		52AB71C529DBD36200F149F1 /* UIImageView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extension.swift"; sourceTree = "<group>"; };
 		6E35CFFF29DC5A9800573829 /* UIStackView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extensions.swift"; sourceTree = "<group>"; };
+		A549AA1A29DCB26C00F3F359 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		A549AA1C29DCB2A300F3F359 /* ValidationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationManager.swift; sourceTree = "<group>"; };
+		A549AA1E29DCB2BC00F3F359 /* StringTypeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTypeList.swift; sourceTree = "<group>"; };
+		A549AA2029DCB2F300F3F359 /* ErrorsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorsList.swift; sourceTree = "<group>"; };
+		A549AA2229DCB33400F3F359 /* UserAuthData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthData.swift; sourceTree = "<group>"; };
+		A549AA2529DD592300F3F359 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A549AA2D29DD5AD200F3F359 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		A549AA3529DECC2400F3F359 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A549AA3A29DFFB8100F3F359 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerManager.swift; sourceTree = "<group>"; };
 		AB6CE25829E42DA900EB02DA /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		AB6CE25A29E439FE00EB02DA /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		AB6CE25C29E447BB00EB02DA /* OnboardingPageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageContentView.swift; sourceTree = "<group>"; };
@@ -127,6 +158,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A549AA4229E4B7F900F3F359 /* IQKeyboardManagerSwift in Frameworks */,
+				A549AA1629DCAD9700F3F359 /* SnapKit in Frameworks */,
+				A549AA1929DCADB700F3F359 /* FirebaseAuth in Frameworks */,
+				A549AA3129DD7BF600F3F359 /* GoogleSignIn in Frameworks */,
+				A549AA3329DD7BF600F3F359 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,12 +192,14 @@
 				ABA9934129DF51250015329F /* Network */,
 				006B2F7129D9E1D100D8F89A /* AppDelegate.swift */,
 				006B2F7329D9E1D100D8F89A /* SceneDelegate.swift */,
+				A549AA1329DCAD7F00F3F359 /* Services */,
 				52899D8D29DAF8F6003D2AB8 /* Controllers */,
 				52899D9029DAF909003D2AB8 /* Extension */,
 				006B2F7729D9E1D100D8F89A /* Main.storyboard */,
 				006B2F7A29D9E1D200D8F89A /* Assets.xcassets */,
 				006B2F7C29D9E1D200D8F89A /* LaunchScreen.storyboard */,
 				006B2F7F29D9E1D200D8F89A /* Info.plist */,
+				A549AA3529DECC2400F3F359 /* GoogleService-Info.plist */,
 			);
 			path = Moviemax;
 			sourceTree = "<group>";
@@ -260,6 +298,8 @@
 		52899D8D29DAF8F6003D2AB8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A549AA3729DFFB0500F3F359 /* RegisterVC */,
+				A549AA2429DD590000F3F359 /* LogInVC */,
 				006DF51629DAFE6A00BCB541 /* MainTabBar */,
 				52210A4729DF4967002F159D /* DetailViewController */,
 				006DF51729DAFE7200BCB541 /* SearchVC */,
@@ -300,6 +340,8 @@
 			isa = PBXGroup;
 			children = (
 				52899D8E29DAF905003D2AB8 /* CustomTabBar.swift */,
+				00E7D77B29E5647700D1C048 /* CustomView.swift */,
+				00E7D77D29E5647D00D1C048 /* CustomViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -318,6 +360,69 @@
 				52900CBF29DCA2DC003014FD /* CustomSearchBar.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A549AA1329DCAD7F00F3F359 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA1A29DCB26C00F3F359 /* AuthManager.swift */,
+				A549AA2229DCB33400F3F359 /* UserAuthData.swift */,
+				A549AA1C29DCB2A300F3F359 /* ValidationManager.swift */,
+				A549AA1E29DCB2BC00F3F359 /* StringTypeList.swift */,
+				A549AA2029DCB2F300F3F359 /* ErrorsList.swift */,
+				A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A549AA2429DD590000F3F359 /* LogInVC */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA2C29DD5AAB00F3F359 /* View */,
+				A549AA2B29DD5A9D00F3F359 /* Controller */,
+			);
+			path = LogInVC;
+			sourceTree = "<group>";
+		};
+		A549AA2B29DD5A9D00F3F359 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA2529DD592300F3F359 /* LoginViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A549AA2C29DD5AAB00F3F359 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA2D29DD5AD200F3F359 /* LoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A549AA3729DFFB0500F3F359 /* RegisterVC */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA3929DFFB6500F3F359 /* Controller */,
+				A549AA3829DFFB5B00F3F359 /* View */,
+			);
+			path = RegisterVC;
+			sourceTree = "<group>";
+		};
+		A549AA3829DFFB5B00F3F359 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA3A29DFFB8100F3F359 /* RegisterView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A549AA3929DFFB6500F3F359 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		AB6CE25729E42C8A00EB02DA /* OnboardingVC */ = {
@@ -387,6 +492,13 @@
 			dependencies = (
 			);
 			name = Moviemax;
+			packageProductDependencies = (
+				A549AA1529DCAD9700F3F359 /* SnapKit */,
+				A549AA1829DCADB700F3F359 /* FirebaseAuth */,
+				A549AA3029DD7BF600F3F359 /* GoogleSignIn */,
+				A549AA3229DD7BF600F3F359 /* GoogleSignInSwift */,
+				A549AA4129E4B7F900F3F359 /* IQKeyboardManagerSwift */,
+			);
 			productName = Moviemax;
 			productReference = 006B2F6E29D9E1D100D8F89A /* Moviemax.app */;
 			productType = "com.apple.product-type.application";
@@ -415,6 +527,12 @@
 				Base,
 			);
 			mainGroup = 006B2F6529D9E1D100D8F89A;
+			packageReferences = (
+				A549AA1429DCAD9700F3F359 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				A549AA1729DCADB700F3F359 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A549AA2F29DD7BF600F3F359 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				A549AA4029E4B7F900F3F359 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+			);
 			productRefGroup = 006B2F6F29D9E1D100D8F89A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -429,6 +547,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A549AA3629DECC2400F3F359 /* GoogleService-Info.plist in Resources */,
 				006B2F7E29D9E1D200D8F89A /* LaunchScreen.storyboard in Resources */,
 				006B2F7B29D9E1D200D8F89A /* Assets.xcassets in Resources */,
 				006B2F7929D9E1D100D8F89A /* Main.storyboard in Resources */,
@@ -442,6 +561,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A549AA2629DD592300F3F359 /* LoginViewController.swift in Sources */,
+				A549AA3F29E4160200F3F359 /* AlertControllerManager.swift in Sources */,
+				A549AA2329DCB33400F3F359 /* UserAuthData.swift in Sources */,
+				A549AA1F29DCB2BC00F3F359 /* StringTypeList.swift in Sources */,
 				52899D9229DAF9C9003D2AB8 /* SearchViewController.swift in Sources */,
 				527748C429E3545A0052DAA9 /* CustomImageView.swift in Sources */,
 				ABA9934929DF51380015329F /* MultimediaModel.swift in Sources */,
@@ -449,6 +572,7 @@
 				52210A4F29DF4D9D002F159D /* ExpandableLabel.swift in Sources */,
 				359C38B129DE01FC0021DAE4 /* BoxOfficeHeaderView.swift in Sources */,
 				52AB71BE29DBD2E800F149F1 /* CellFilmTableView.swift in Sources */,
+				A549AA2E29DD5AD200F3F359 /* LoginView.swift in Sources */,
 				52899D8F29DAF905003D2AB8 /* CustomTabBar.swift in Sources */,
 				ABA9934E29DF51430015329F /* NetworkManager.swift in Sources */,
 				52AB71BC29DBD2C400F149F1 /* CustomCell.swift in Sources */,
@@ -456,6 +580,7 @@
 				6E35D00029DC5A9800573829 /* UIStackView + Extensions.swift in Sources */,
 				359C38A929DDCB960021DAE4 /* CategoryCell.swift in Sources */,
 				52899D9429DAF9E3003D2AB8 /* VideoViewController.swift in Sources */,
+				A549AA3B29DFFB8100F3F359 /* RegisterView.swift in Sources */,
 				ABA9934A29DF51380015329F /* MultimediaViewModel.swift in Sources */,
 				ABB7BEE329E596B20099038C /* UIColor + Extension.swift in Sources */,
 				C5994A9F29E4A24E00461450 /* CustomGenderButton.swift in Sources */,
@@ -470,6 +595,7 @@
 				C5994A9B29E4A1EC00461450 /* CustomBarButtonItem.swift in Sources */,
 				ABCE3E1429E17989000AE6C5 /* GenreEnums.swift in Sources */,
 				52AB71C029DBD30B00F149F1 /* GenreView.swift in Sources */,
+				00E7D77E29E5647D00D1C048 /* CustomViewController.swift in Sources */,
 				ABA9934729DF51380015329F /* DetailMultimediaModel.swift in Sources */,
 				AB6CE25D29E447BB00EB02DA /* OnboardingPageContentView.swift in Sources */,
 				C5994A9D29E4A22900461450 /* ChangeAvatarViewController.swift in Sources */,
@@ -478,11 +604,13 @@
 				ABA9935129DF514A0015329F /* MovieError.swift in Sources */,
 				ABA9934F29DF51430015329F /* MultimediaLoader.swift in Sources */,
 				52210A4629DF4945002F159D /* DetailViewController.swift in Sources */,
+				00E7D77C29E5647700D1C048 /* CustomView.swift in Sources */,
 				006B2F7629D9E1D100D8F89A /* MainTabBarController.swift in Sources */,
 				ABA9934829DF51380015329F /* DetailMultimediaViewModel.swift in Sources */,
 				AB6CE25B29E439FE00EB02DA /* CustomPageControl.swift in Sources */,
 				ABA9935529DF51A30015329F /* Dateformatter + Extension.swift in Sources */,
 				006B2F7229D9E1D100D8F89A /* AppDelegate.swift in Sources */,
+				A549AA1B29DCB26C00F3F359 /* AuthManager.swift in Sources */,
 				52AB71C629DBD36200F149F1 /* UIImageView + Extension.swift in Sources */,
 				52899D9A29DAFA2C003D2AB8 /* ProfileViewController.swift in Sources */,
 				52AB71C429DBD34300F149F1 /* UILabel + Extension.swift in Sources */,
@@ -491,7 +619,10 @@
 				359C38AB29DDCBCA0021DAE4 /* BestMovieCell.swift in Sources */,
 				52AB71C229DBD32900F149F1 /* StackView + Extension.swift in Sources */,
 				AB6CE26329E4BF3D00EB02DA /* ClassAnimator.swift in Sources */,
+				A549AA2129DCB2F300F3F359 /* ErrorsList.swift in Sources */,
 				52899D9629DAFA08003D2AB8 /* HomeViewController.swift in Sources */,
+				A549AA3D29DFFBB000F3F359 /* RegisterViewController.swift in Sources */,
+				A549AA1D29DCB2A300F3F359 /* ValidationManager.swift in Sources */,
 				006B2F7429D9E1D100D8F89A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -710,6 +841,69 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A549AA1429DCAD9700F3F359 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		A549AA1729DCADB700F3F359 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+		A549AA2F29DD7BF600F3F359 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+		A549AA4029E4B7F900F3F359 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = exactVersion;
+				version = 6.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A549AA1529DCAD9700F3F359 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A549AA1429DCAD9700F3F359 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		A549AA1829DCADB700F3F359 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A549AA1729DCADB700F3F359 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		A549AA3029DD7BF600F3F359 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A549AA2F29DD7BF600F3F359 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		A549AA3229DD7BF600F3F359 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A549AA2F29DD7BF600F3F359 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		A549AA4129E4B7F900F3F359 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A549AA4029E4B7F900F3F359 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 006B2F6629D9E1D100D8F89A /* Project object */;
 }
