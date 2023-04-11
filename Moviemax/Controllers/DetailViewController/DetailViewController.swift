@@ -331,11 +331,23 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let text = castArray[indexPath.item]
-        var width = text.name.count * 10 + 20
+        
+        var width = culculateWidth(size: 14, text: text.name)
+
         if text.character.count > text.name.count {
-            width = text.character.count * 10 + 20
+            
+            width = culculateWidth(size: 12, text: text.character)
         }
+        
         return CGSize(width: width, height: 50)
+    }
+    
+    private func culculateWidth(size: CGFloat, text: String) -> CGFloat {
+        let font = UIFont.systemFont(ofSize: size, weight: .regular)
+        let attributes = [NSAttributedString.Key.font : font as Any]
+        let width = text.size(withAttributes: attributes).width + 80
+        
+        return width
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
