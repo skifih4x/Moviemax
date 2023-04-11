@@ -75,8 +75,9 @@ extension RegisterViewController: RegisterViewDelegate {
                     switch result {
                     case .success(let user):
                         print(user)
-                        var homeVC: HomeViewController!
-                        homeVC = HomeViewController()
+                        var homeVC: MainTabBarController!
+                        homeVC = MainTabBarController()
+                        homeVC.modalPresentationStyle = .fullScreen
                         present(homeVC, animated: true)
                         
                     case .failure(let error):
