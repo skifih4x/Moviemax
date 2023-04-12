@@ -10,12 +10,16 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    let array = MovieGenre.allCases
+    let allGenresArray = MovieGenre.allCases
     var search = ""
     var searchFlag = false
-    var genre = "Action"
+    var currentGenre: MovieGenre = .action
     var genreArray = [Movie]()
-    var indexCell = 0
+    var indexCell = 0 {
+        didSet {
+            print(indexCell)
+        }
+    }
     
     let manager = MultimediaLoader.shared
     
@@ -90,7 +94,7 @@ class SearchViewController: UIViewController {
             }
             
         } else {
-            manager.fetchMoviesByGenre(genre: array.first ?? .action) { result in
+            manager.fetchMoviesByGenre(genre: allGenresArray.first ?? .action) { result in
                 
                 switch result {
                     
@@ -136,12 +140,12 @@ class SearchViewController: UIViewController {
 
             // Animate the blur effect
             UIView.animate(withDuration: 0.3) {
-                self.visualEffectView.alpha = 0.8
+                self.visualEffectView.alpha = 1
             }
     }
 
     func setupVisualEffectView() {
-        let blurEffect = UIBlurEffect(style: .prominent)
+        let blurEffect = UIBlurEffect(style: .systemMaterial)
         visualEffectView = UIVisualEffectView(effect: blurEffect)
         visualEffectView.frame = self.view.bounds
         visualEffectView.alpha = 0
@@ -173,12 +177,28 @@ extension SearchViewController: FilterViewControllerDelegate {
         let genre = category ?? .all
         let rating = Int(starRating ?? 0)
 
-        manager.fetchMoviesByGenreAndRating(genre: genre, rating: rating) { result in
+        manager.fetchMoviesByGenreAndRating(genre: genre, rating: rating) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let arrayModel):
                 if let array = arrayModel.results {
                     self.genreArray = array
                     DispatchQueue.main.async {
+                        if let newCategoryIndex = self.allGenresArray.firstIndex(where: { $0 == genre }) {
+                            self.currentGenre = self.allGenresArray[newCategoryIndex]
+                            guard let currentCell = self.collectionView.cellForItem(at: IndexPath(item: self.indexCell, section: 0)) as? CustomCell else { return }
+                            currentCell.backgroundColor = .clear
+                            currentCell.titleLabel.textColor = #colorLiteral(red: 0.6117647059, green: 0.6431372549, blue: 0.6705882353, alpha: 1)
+                            let selectedCellIndexPath = IndexPath(item: newCategoryIndex, section: 0)
+                            self.collectionView.scrollToItem(at: selectedCellIndexPath, at: .centeredHorizontally, animated: true)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                self.indexCell = newCategoryIndex
+                                guard let selectedCell = self.collectionView.cellForItem(at: selectedCellIndexPath) as? CustomCell else { return }
+                                selectedCell.backgroundColor = #colorLiteral(red: 0.3176470588, green: 0.3058823529, blue: 0.7137254902, alpha: 1)
+                                selectedCell.titleLabel.textColor = .white
+                                self.tableView.reloadData()
+                            }
+                        }
                         self.tableView.reloadData()
                     }
                 }
@@ -235,7 +255,7 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             print("wow")
-            manager.fetchMoviesByGenre(genre: array.first ?? .action) { result in
+            manager.fetchMoviesByGenre(genre: allGenresArray.first ?? .action) { result in
                 
                 switch result {
                     
@@ -341,7 +361,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         
         let movie = genreArray[indexPath.row]
         
-        cell.cellConfigureMovie(with: movie, genre: genre)
+        cell.cellConfigureMovie(with: movie, genre: currentGenre)
         
         cell.likeButton.tag = indexPath.row
         
@@ -371,7 +391,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 extension SearchViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let text = array[indexPath.item]
+        let text = allGenresArray[indexPath.item]
         let width = text.name.count * 10 + 40
         return CGSize(width: width, height: 50)
     }
@@ -393,7 +413,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
 extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return array.count
+        return allGenresArray.count
     }
     
     
@@ -407,7 +427,7 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
             cell.backgroundColor = .clear
             cell.titleLabel.textColor = #colorLiteral(red: 0.6117647059, green: 0.6431372549, blue: 0.6705882353, alpha: 1)
         }
-        let width = array[indexPath.item]
+        let width = allGenresArray[indexPath.item]
         cell.titleLabel.text = width.name
         
         return cell
@@ -416,9 +436,9 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.indexCell = indexPath.item
         
-        genre = array[indexPath.row].name
+        currentGenre = allGenresArray[indexPath.row]
         
-        manager.fetchMoviesByGenre(genre: array[indexPath.row]) { result in
+        manager.fetchMoviesByGenre(genre: allGenresArray[indexPath.row]) { result in
             
             switch result {
                 
