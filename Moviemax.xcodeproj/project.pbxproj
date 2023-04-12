@@ -79,6 +79,7 @@
 		C5994A9B29E4A1EC00461450 /* CustomBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5994A9A29E4A1EC00461450 /* CustomBarButtonItem.swift */; };
 		C5994A9D29E4A22900461450 /* ChangeAvatarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5994A9C29E4A22900461450 /* ChangeAvatarViewController.swift */; };
 		C5994A9F29E4A24E00461450 /* CustomGenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5994A9E29E4A24E00461450 /* CustomGenderButton.swift */; };
+		C5E40B7429E6CB1C002B94D1 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E40B7329E6CB1C002B94D1 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -151,6 +152,7 @@
 		C5994A9A29E4A1EC00461450 /* CustomBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButtonItem.swift; sourceTree = "<group>"; };
 		C5994A9C29E4A22900461450 /* ChangeAvatarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAvatarViewController.swift; sourceTree = "<group>"; };
 		C5994A9E29E4A24E00461450 /* CustomGenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGenderButton.swift; sourceTree = "<group>"; };
+		C5E40B7329E6CB1C002B94D1 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -472,6 +474,7 @@
 				C5994A9A29E4A1EC00461450 /* CustomBarButtonItem.swift */,
 				C5994A9C29E4A22900461450 /* ChangeAvatarViewController.swift */,
 				C5994A9E29E4A24E00461450 /* CustomGenderButton.swift */,
+				C5E40B7329E6CB1C002B94D1 /* ImagePicker.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				52210A4629DF4945002F159D /* DetailViewController.swift in Sources */,
 				00E7D77C29E5647700D1C048 /* CustomView.swift in Sources */,
 				006B2F7629D9E1D100D8F89A /* MainTabBarController.swift in Sources */,
+				C5E40B7429E6CB1C002B94D1 /* ImagePicker.swift in Sources */,
 				ABA9934829DF51380015329F /* DetailMultimediaViewModel.swift in Sources */,
 				AB6CE25B29E439FE00EB02DA /* CustomPageControl.swift in Sources */,
 				ABA9935529DF51A30015329F /* Dateformatter + Extension.swift in Sources */,
