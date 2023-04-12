@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class HomeViewController: UIViewController {
     //MARK: - properties
@@ -13,6 +14,7 @@ class HomeViewController: UIViewController {
     private var topMovies: [MultimediaViewModel] = []
     private var categoryMovies: [MultimediaViewModel] = []
     private let multimediaLoader = MultimediaLoader.shared
+    private var databaseService: DatabaseService?
     lazy var collectionView : UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,6 +37,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         getInitialMovies()
+        setupDB()
     }
     
     @objc func buttonPressed(_ sender: UIButton) {
@@ -57,6 +60,10 @@ class HomeViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
+    }
+    
+    private func setupDB() {
+        databaseService = RealmService.shared
     }
 }
 //MARK: - UICollectionViewDataSource

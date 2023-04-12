@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class VideoViewController: UIViewController {
+    let databaseService: DatabaseService = RealmService.shared
     
     var array = MovieGenre.allCases
     var genreArrayMovie = [Movie]()
@@ -83,6 +84,12 @@ class VideoViewController: UIViewController {
         let index = IndexPath(item: sender.tag, section: 0)
         guard let cell = tableView.cellForRow(at: index) as? CellFilmTableView else { return }
         cell.changeImageButton()
+        
+        //work with Realm
+        let movie = genreArrayMovie[index.row]
+        cell.buttonTapped
+        ? databaseService.addToFavorites(movie, genre: genre)
+        : databaseService.deleteMovie(movie)
     }
 }
 
