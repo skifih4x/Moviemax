@@ -41,8 +41,8 @@ class MainTabBarController: UITabBarController {
         let videoViewController       = VideoViewController()
         let homeViewController        = HomeViewController()
         let favoritesViewController   = FavoritesViewController()
-//        let profileViewController     = ProfileViewController()
-        let profileViewController     = LoginViewController()
+        let profileViewController     = ProfileViewController()
+//        let profileViewController     = LoginViewController()
         
         searchViewController.title    = "Search"
         videoViewController.title     = "Recent watch"

@@ -9,13 +9,20 @@ import UIKit
 
 final class ProfileSettingsVC: UIViewController {
     
-    private let popupViewController = ChangeAvatarViewController()
+    var imagePicker: ImagePicker!
+//    private let popupViewController = ChangeAvatarViewController()
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
         return formatter
+    }()
+    
+    let visualEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.systemChromeMaterialDark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        return blurEffectView
     }()
     
     private lazy var backButton: UIButton = {
@@ -37,8 +44,12 @@ final class ProfileSettingsVC: UIViewController {
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "ProfileImage")
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+        imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+
         return imageView
     }()
 
@@ -114,30 +125,30 @@ final class ProfileSettingsVC: UIViewController {
         navigationItem.leftBarButtonItem = customBarButton
         navigationItem.title = "Profile"
 
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+//        setupBlur()
     }
 
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func changeAvatarButtonTapped() {
+    @objc func changeAvatarButtonTapped(_ sender: UIButton) {
         print(#function)
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.systemChromeMaterialDark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(blurEffectView)
         
-        let popupViewController = ChangeAvatarViewController()
-
-        addChild(popupViewController)
-        view.addSubview(popupViewController.view)
-        popupViewController.modalPresentationStyle = .overCurrentContext
-        popupViewController.view.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
-        popupViewController.view.center = view.center
-        popupViewController.didMove(toParent: self)
-        popupViewController.showPopup()
+//        self.visualEffectView.alpha = 1.0
+        self.imagePicker.present(from: sender)
+        
+//        let popupViewController = ChangeAvatarViewController()
+//
+//        addChild(popupViewController)
+//        view.addSubview(popupViewController.view)
+//        popupViewController.modalPresentationStyle = .overCurrentContext
+//        popupViewController.view.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+//        popupViewController.view.center = view.center
+//        popupViewController.didMove(toParent: self)
+//        popupViewController.showPopup()
     }
     
     @objc private func saveButtonPressed() {
@@ -165,6 +176,21 @@ final class ProfileSettingsVC: UIViewController {
         scrollView.addSubview(locationTextView)
         scrollView.addSubview(saveButton)
         setupConstraints()
+    }
+    
+    private func setupBlur() {
+
+        visualEffectView.frame = view.bounds
+        visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(visualEffectView)
+        visualEffectView.alpha = 0
+    }
+    
+    private func blurOut() {
+        UIView.animate(withDuration: 0.4) {
+            self.visualEffectView.alpha = 0
+            
+        }
     }
     
     private func setupConstraints() {
@@ -362,5 +388,13 @@ private extension UIToolbar {
         toolBar.setItems([doneButton], animated: false)
         
         return toolBar
+    }
+}
+extension ProfileSettingsVC: ImagePickerDelegate {
+
+    func didSelect(image: UIImage?) {
+        self.avatarImageView.image = image
+        avatarImageView.layer.cornerRadius  = avatarImageView.frame.size.width / 2
+        avatarImageView.clipsToBounds = true
     }
 }
