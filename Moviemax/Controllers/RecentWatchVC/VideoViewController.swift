@@ -12,7 +12,7 @@ class VideoViewController: UIViewController {
     
     let array = MovieGenre.allCases
     var genreArrayMovie = [Movie]()
-    var genre = "Action"
+    var genre: MovieGenre = .action
     var genreArray = [MultimediaViewModel]()
     var indexCell = 0
     
@@ -228,7 +228,7 @@ extension VideoViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.indexCell = indexPath.item
         
-        genre = array[indexPath.row].name
+        genre = array[indexPath.row]
         
         manager.fetchMoviesByGenre(genre: array[indexPath.row]) { result in
             
