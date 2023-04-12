@@ -14,7 +14,6 @@ class DetailViewController: UIViewController {
     var detailModel: DetailMultimediaModel?
     var castArray = [Cast]()
     
-    let array = ["mfdvmfmvfmerferferferfer", "dfjvmkfdffdf", "sdjjsj"]
     var indexCell = 0
     
     var buttonTapped = false
