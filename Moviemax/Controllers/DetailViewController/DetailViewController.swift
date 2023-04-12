@@ -5,10 +5,10 @@
 //  Created by Андрей Фроленков on 6.04.23.
 //
 
-import Foundation
 import UIKit
+import SafariServices
 
-class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController {
     
     var id: Int?
     var detailModel: DetailMultimediaModel?
@@ -170,8 +170,19 @@ class DetailViewController: UIViewController {
         }
     }
     
-    @objc func watchNowButtonPressed() {
-        print("Hello")
+    @objc private func watchNowButtonPressed() {
+        guard let nameFilm = nameFilm.text else { return }
+        MultimediaLoader.shared.fetchWatchNowURL(with: nameFilm) { [weak self] url in
+            DispatchQueue.main.async {
+                self?.openSafariWebView(url: url)
+            }
+        }
+    }
+
+   private func openSafariWebView(url: URL) {
+        let safariViewController = SFSafariViewController(url: url)
+        safariViewController.modalPresentationStyle = .automatic
+        present(safariViewController, animated: true)
     }
     
     // MARK: - Action LeftBarButtonItem

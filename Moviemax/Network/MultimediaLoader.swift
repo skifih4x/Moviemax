@@ -21,7 +21,7 @@ final class MultimediaLoader {
 
     private init() {}
 
-   static let shared = MultimediaLoader()
+    static let shared = MultimediaLoader()
 
     var bookmarks = [MultimediaViewModel]()
 
@@ -149,14 +149,14 @@ final class MultimediaLoader {
 
                 switch type {
                 case .movie:
-                       formattedDate = movieResult.releaseDate?.convertDateString() ?? "Unknown date"
+                    formattedDate = movieResult.releaseDate?.convertDateString() ?? "Unknown date"
                     if let genreId = movieResult.genreIds.first,
-                          let genreEnum = MovieGenre(rawValue: genreId) {
-                           genre = genreEnum.name
-                       } else {
-                           genre = "Unknown genre"
-                       }
-                       title = movieResult.title ?? "Unknown movie"
+                       let genreEnum = MovieGenre(rawValue: genreId) {
+                        genre = genreEnum.name
+                    } else {
+                        genre = "Unknown genre"
+                    }
+                    title = movieResult.title ?? "Unknown movie"
 
 
                 case .tvShow:
@@ -187,23 +187,23 @@ final class MultimediaLoader {
     }
     
     func fetchDetailDataByID(type: MultimediaTypeURL, id: String, completion: @escaping (DetailMultimediaModel?) -> Void) {
-            guard let url = URL(string: baseURL + "\(type.rawValue)/\(id)?api_key=\(apiKey)") else { return }
+        guard let url = URL(string: baseURL + "\(type.rawValue)/\(id)?api_key=\(apiKey)") else { return }
 
-            networkManager.fetchData(with: url) { result in
-                switch result {
-                case .success(let data):
-                    do {
-                        let detailMultimedia = try self.decoder.decode(DetailMultimediaModel.self, from: data)
-                        completion(detailMultimedia)
-                    } catch {
-                        self.delegate?.presentDefaultError()
+        networkManager.fetchData(with: url) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let detailMultimedia = try self.decoder.decode(DetailMultimediaModel.self, from: data)
+                    completion(detailMultimedia)
+                } catch {
+                    self.delegate?.presentDefaultError()
 
-                    }
-                case .failure:
-                    completion(nil)
                 }
+            case .failure:
+                completion(nil)
             }
         }
+    }
 
     func getAllTypesOfMediaData(completion: @escaping (([MultimediaTypeURL: [MultimediaViewModel]]) -> Void)) {
         var dictOfAllData = [MultimediaTypeURL: [MultimediaViewModel]]()
@@ -211,13 +211,12 @@ final class MultimediaLoader {
         MultimediaTypeURL.allCases.forEach { mediaType in
             group.enter()
             getMediaData(for: mediaType) { multiMediaArray in
-                 dictOfAllData = dictOfAllData.merging(multiMediaArray) { (current, _) in current }
+                dictOfAllData = dictOfAllData.merging(multiMediaArray) { (current, _) in current }
                 group.leave()
             }
         }
         group.notify(queue: .main) {
-            print(dictOfAllData)
-           completion(dictOfAllData)
+            completion(dictOfAllData)
         }
     }
     func fetchMultimedia(for type: MultimediaTypeURL, completion: @escaping (MultimediaModel) -> Void) {
@@ -238,13 +237,13 @@ final class MultimediaLoader {
             case .failure:
                 self.delegate?.presentAlert(message: MovieError.codeError.rawValue, completion: {
                     if let mainVC = self.delegate as? HomeViewController {
-                     //   mainVC.fetchAllTypesOfMedia()
+                        //   mainVC.fetchAllTypesOfMedia()
                     }
                 })
             }
         }
     }
-//MARK: - DetailMedia Controller Functions
+    //MARK: - DetailMedia Controller Functions
     func fetchDetailData(multimedia: MultimediaViewModel, completion: @escaping (DetailMultimediaModel) -> Void) {
         guard let url = URL(string: baseURL + "\(multimedia.type.rawValue)/\(multimedia.id)?api_key=\(apiKey)") else { return }
 
@@ -287,22 +286,22 @@ final class MultimediaLoader {
     }
     
     func fetchCastDataById(id: String, type: MultimediaTypeURL, completion: @escaping (CastModel?) -> Void) {
-            guard let url = URL(string: baseURL + "\(type.rawValue)/\(id)/credits?api_key=\(apiKey)") else { return }
+        guard let url = URL(string: baseURL + "\(type.rawValue)/\(id)/credits?api_key=\(apiKey)") else { return }
 
-            networkManager.fetchData(with: url) { result in
-                switch result {
-                case .success(let data):
-                    do {
-                        let detailMultimedia = try self.decoder.decode(CastModel.self, from: data)
-                        completion(detailMultimedia)
-                    } catch {
-                        self.delegate?.presentDefaultError()
-                    }
-                case .failure:
-                    completion(nil)
+        networkManager.fetchData(with: url) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let detailMultimedia = try self.decoder.decode(CastModel.self, from: data)
+                    completion(detailMultimedia)
+                } catch {
+                    self.delegate?.presentDefaultError()
                 }
+            case .failure:
+                completion(nil)
             }
         }
+    }
 
     func convertDetailMMtoViewModel(detailMultimedia: DetailMultimediaModel, type: MultimediaTypeURL) -> DetailMultimediaViewModel {
 
@@ -320,12 +319,12 @@ final class MultimediaLoader {
             title = detailMultimedia.title ?? "No name"
             let timeTuple = minutesToHoursAndMinutes(detailMultimedia.runtime ?? 0)
 
-             time = "\(timeTuple.hours) h \(timeTuple.leftMinutes) min"
+            time = "\(timeTuple.hours) h \(timeTuple.leftMinutes) min"
 
         case .tvShow:
             title = detailMultimedia.name ?? "No name"
 
-           let timeTuple = minutesToHoursAndMinutes(detailMultimedia.episodeRunTime?.first ?? 0)
+            let timeTuple = minutesToHoursAndMinutes(detailMultimedia.episodeRunTime?.first ?? 0)
 
             time = "\(timeTuple.hours) h \(timeTuple.leftMinutes) min"
 
@@ -359,7 +358,7 @@ final class MultimediaLoader {
 
 
     func fetchImage(from endpoint: String, completion: @escaping (UIImage?) -> Void) {
-       let cacheKey = NSString(string: endpoint)
+        let cacheKey = NSString(string: endpoint)
         if let image = MultimediaLoader.cache.object(forKey: cacheKey) {
             DispatchQueue.main.async {
                 completion(image)
@@ -389,49 +388,85 @@ final class MultimediaLoader {
     
     func getViewModelFromModel(model: MultimediaModel, typeOfMedia: MultimediaTypeURL) -> [MultimediaViewModel] {
 
-            var multimdediaViewModels = [MultimediaViewModel]()
+        var multimdediaViewModels = [MultimediaViewModel]()
 
-            guard let result = model.results else { return [] }
-            result.forEach { movieResult in
+        guard let result = model.results else { return [] }
+        result.forEach { movieResult in
 
-                let posterURL = self.imageBaseUrl + (movieResult.posterPath ?? "")
-                let formattedDate: String
-                let genre: String
-                let title: String
+            let posterURL = self.imageBaseUrl + (movieResult.posterPath ?? "")
+            let formattedDate: String
+            let genre: String
+            let title: String
 
-                switch typeOfMedia {
-                case .movie:
-                    formattedDate = movieResult.releaseDate?.convertDateString() ?? "Unknown date"
-                    if let genreId = movieResult.genreIds.first,
-                       let genreEnum = MovieGenre(rawValue: genreId) {
-                        genre = genreEnum.name
-                    } else {
-                        genre = "Unknown genre"
-                    }
-                    title = movieResult.title ?? "Unknown movie"
-
-
-                case .tvShow:
-                    formattedDate = movieResult.firstAirDate?.convertDateString() ?? "Unknown date"
-                    if let genreId = movieResult.genreIds.first,
-                       let genreEnum = TvShowGenre(rawValue: genreId) {
-                        genre = genreEnum.name
-                    } else {
-                        genre = "Unknown genre"
-                    }
-                    title = movieResult.name ?? "Unknown name"
-
+            switch typeOfMedia {
+            case .movie:
+                formattedDate = movieResult.releaseDate?.convertDateString() ?? "Unknown date"
+                if let genreId = movieResult.genreIds.first,
+                   let genreEnum = MovieGenre(rawValue: genreId) {
+                    genre = genreEnum.name
+                } else {
+                    genre = "Unknown genre"
                 }
+                title = movieResult.title ?? "Unknown movie"
 
-                multimdediaViewModels.append(MultimediaViewModel(id: movieResult.id,
-                                                               type: typeOfMedia,
-                                                               posterImageLink: posterURL,
-                                                               titleName: title,
-                                                               releaseDate: formattedDate,
-                                                               genre: genre,
-                                                               description: movieResult.overview,
-                                                               rating: movieResult.voteAverage))
+
+            case .tvShow:
+                formattedDate = movieResult.firstAirDate?.convertDateString() ?? "Unknown date"
+                if let genreId = movieResult.genreIds.first,
+                   let genreEnum = TvShowGenre(rawValue: genreId) {
+                    genre = genreEnum.name
+                } else {
+                    genre = "Unknown genre"
+                }
+                title = movieResult.name ?? "Unknown name"
+
             }
-            return multimdediaViewModels
+
+            multimdediaViewModels.append(MultimediaViewModel(id: movieResult.id,
+                                                             type: typeOfMedia,
+                                                             posterImageLink: posterURL,
+                                                             titleName: title,
+                                                             releaseDate: formattedDate,
+                                                             genre: genre,
+                                                             description: movieResult.overview,
+                                                             rating: movieResult.voteAverage))
         }
+        return multimdediaViewModels
+    }
+
+    func fetchWatchNowURL(with query: String, completion: @escaping (URL) -> Void) {
+        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        guard let url = URL(string: youtubeBaseUrl + "search?q=\(query)trailer&key=\(youtubeApiKey)") else { return }
+        networkManager.fetchData(with: url) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let watchNow = try self.decoder.decode(YouTubeResponse.self, from: data)
+                    guard let videoId = watchNow.items.first?.id.videoId else { return }
+                    guard let youtubeURL = URL(string: "https://www.youtube.com/watch?v=\(videoId)") else { return }
+                    completion(youtubeURL)
+                } catch {
+                    self.delegate?.presentDefaultError()
+                }
+            case .failure:
+                self.delegate?.presentDefaultError()
+            }
+        }
+    }
+
+    let youtubeBaseUrl = "https://youtube.googleapis.com/youtube/v3/"
+    let youtubeApiKey = "AIzaSyCh7MhmwKh1FXz3XVd1k5-bkY44Xfb1qk0"
+}
+
+
+struct YouTubeResponse: Codable {
+    let items: [Item]
+}
+
+struct Item: Codable {
+    let id: VideoID
+}
+
+struct VideoID: Codable {
+    let videoId: String
 }
