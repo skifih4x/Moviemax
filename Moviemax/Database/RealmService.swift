@@ -10,7 +10,7 @@ import RealmSwift
 
 protocol DatabaseService {
     func addToFavorites(_ movie: MultimediaViewModel)
-    func addToFavorites(_ movie: Movie, genre: String)
+    func addToFavorites(_ movie: Movie, genre: MovieGenre)
     func fetchFavorites() -> [MultimediaViewModel]
     func deleteMovie(_ movie: Movie)
     func deleteAllMovies()
@@ -38,11 +38,11 @@ final class RealmService: DatabaseService {
         }
     }
     
-    func addToFavorites(_ movie: Movie, genre: String) {
+    func addToFavorites(_ movie: Movie, genre: MovieGenre) {
         do {
             lock.lock()
             let realm = try Realm()
-            let movieData = MovieData(id: movie.id, title: movie.title ?? "No title", releaseDate: movie.releaseDate ?? "No release date", posterPath: movie.posterPath ?? "No url path", genre: genre, voteAverage: movie.voteAverage)
+            let movieData = MovieData(id: movie.id, title: movie.title ?? "No title", releaseDate: movie.releaseDate ?? "No release date", posterPath: movie.posterPath ?? "No url path", genre: genre.name, voteAverage: movie.voteAverage)
             let data = realm.objects(MovieData.self)
             if !data.contains(where: { $0.id == movieData.id }) {
                 try realm.write {
