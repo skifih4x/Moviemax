@@ -37,8 +37,12 @@ class CategoryCell: UICollectionViewCell {
     }
     
     //MARK: - configuration method
-    func configure(title: String) {
-        categoryLabel.text = title
+    func configure(with category: MovieGenre?) {
+        if let category = category {
+            categoryLabel.text = category.name
+        } else {
+            categoryLabel.text = "All"
+        }
     }
     
     //MARK: - private setup methods

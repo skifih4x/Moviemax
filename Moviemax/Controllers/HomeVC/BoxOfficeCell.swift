@@ -7,107 +7,34 @@
 
 import UIKit
 
-class BoxOfficeCell: UICollectionViewCell {
+final class BoxOfficeCell: UICollectionViewCell {
     //MARK: - properties
-    private let movieImage: UIImageView = {
+    private let filmImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    private let genreLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
-        label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6431372549, blue: 0.6705882353, alpha: 1)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .label
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Drifting Home"
+        label.textColor = UIColor(named: K.Colors.titleColor)
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         return label
     }()
     private let likeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "heart"), for: .normal)
         button.tintColor = #colorLiteral(red: 0.7490196078, green: 0.7764705882, blue: 0.8, alpha: 1)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    //time stack
-    private let timeImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "clock")
-        imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    private let timeAmount: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = #colorLiteral(red: 0.4705882353, green: 0.5098039216, blue: 0.5411764706, alpha: 1)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    private let timeUnits: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = #colorLiteral(red: 0.4705882353, green: 0.5098039216, blue: 0.5411764706, alpha: 1)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    //rating stack
-    private let ratingImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "star.fill")
-        imageView.tintColor = #colorLiteral(red: 0.9803921569, green: 0.8, blue: 0.08235294118, alpha: 1)
-        imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    private let ratingScore: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .clear
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = #colorLiteral(red: 0.9803921569, green: 0.8, blue: 0.08235294118, alpha: 1)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    private let ratingCount: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .clear
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6431372549, blue: 0.6705882353, alpha: 1)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    //stacks
-    private lazy var timeStack: UIStackView = {
-        let hStack = UIStackView(arrangedSubviews: [timeImage, timeAmount, timeUnits])
-        hStack.spacing = 5
-        hStack.translatesAutoresizingMaskIntoConstraints = false
-        return hStack
-    }()
-    
-    private lazy var ratingStack: UIStackView = {
-        let hStack = UIStackView(arrangedSubviews: [ratingImage, ratingScore, ratingCount])
-        hStack.spacing = 5
-        hStack.translatesAutoresizingMaskIntoConstraints = false
-        return hStack
-    }()
-    
-    private lazy var mainStack: UIStackView = {
-        let vStack = UIStackView(arrangedSubviews: [genreLabel, titleLabel, timeStack])
-        vStack.axis = .vertical
-        vStack.distribution = .fill
-        vStack.alignment = .leading
-        vStack.spacing = 0
-        vStack.setCustomSpacing(5, after: titleLabel)
-        vStack.translatesAutoresizingMaskIntoConstraints = false
-        return vStack
-    }()
+    private let timeLabel = UILabel(text: "148 Minutes", font: UIFont.systemFont(ofSize: 15),  textColor: UIColor(named: K.Colors.labelColor))
+    private let imageTime = UIImageView(image: UIImage(named: "star-4"), contentMode: .scaleAspectFill)
+    private let dataLabel = UILabel(text: "17 Sep 2021", font: UIFont.systemFont(ofSize: 15), textColor: UIColor(named: K.Colors.labelColor))
+    private let imageData = UIImageView(image: UIImage(named: "calendar"), contentMode: .scaleAspectFill)
+    private let imageGenre = UIImageView(image: UIImage(named: "genre"), contentMode: .scaleAspectFill)
+    private let genreView = GenreView(frame: .zero)
+    private var isButtonTapped = false
     
     //MARK: - initialization
     override init(frame: CGRect) {
@@ -120,48 +47,98 @@ class BoxOfficeCell: UICollectionViewCell {
         setupView()
     }
     
-    //MARK: - configuration method
-    func configure(title: String, genre: String) {
-        titleLabel.text = title
-        genreLabel.text = genre
+    override func prepareForReuse() {
+        filmImageView.image = nil
+    }
+    
+    //MARK: button
+    func changeImageButton() {
+        let image = isButtonTapped ? UIImage(systemName: "heart") : UIImage(systemName: "heart.fill")
+        likeButton.setImage(image, for: .normal)
+        isButtonTapped = !isButtonTapped
+    }
+    
+    //MARK: - layout
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        filmImageView.layer.cornerRadius = 20
+        layer.cornerRadius = contentView.frame.height / 2
+    }
+    
+    //MARK: - configuration methods
+    func configure(with movie: MultimediaViewModel) {
+        self.nameLabel.text = movie.titleName
+        setImage(nameImage: movie.posterImageLink)
+        self.timeLabel.text = "\(movie.rating)"
+        self.dataLabel.text = "\(movie.releaseDate)"
+        self.genreView.genreLabel.text = movie.genre
+    }
+    
+    //MARK: private support methods
+    private func setImage(nameImage: String) {
+        MultimediaLoader.shared.fetchImage(from: nameImage) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.filmImageView.image = image
+            }
+        }
     }
     
     //MARK: - private setup methods
     private func setupView() {
         backgroundColor = .clear
-        addSubview(movieImage)
-        addSubview(mainStack)
-        addSubview(ratingStack)
-        addSubview(likeButton)
+        likeButton.addTarget(nil, action: #selector(HomeViewController.buttonPressed), for: .touchUpInside)
         setupConstraints()
-        
-        movieImage.image = UIImage(named: "image1")
-        timeAmount.text = "148"
-        timeUnits.text = "Minutes"
-        ratingScore.text = "4.4"
-        ratingCount.text = "(52)"
     }
     
     private func setupConstraints() {
+        filmImageView.translatesAutoresizingMaskIntoConstraints = false
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        imageTime.translatesAutoresizingMaskIntoConstraints = false
+        imageData.translatesAutoresizingMaskIntoConstraints = false
+        imageGenre.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
-            movieImage.leadingAnchor.constraint(equalTo: leadingAnchor),
-            movieImage.topAnchor.constraint(equalTo: topAnchor),
-            movieImage.widthAnchor.constraint(equalTo: movieImage.heightAnchor),
-            movieImage.bottomAnchor.constraint(equalTo: bottomAnchor),
+            likeButton.heightAnchor.constraint(equalToConstant: 23),
+            likeButton.widthAnchor.constraint(equalToConstant: 26),
             
-            mainStack.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: 12),
-            mainStack.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            mainStack.trailingAnchor.constraint(equalTo: ratingStack.leadingAnchor),
-            mainStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            imageTime.heightAnchor.constraint(equalToConstant: 14),
+            imageTime.widthAnchor.constraint(equalToConstant: 14),
             
-            likeButton.heightAnchor.constraint(equalToConstant: 17),
-            likeButton.widthAnchor.constraint(equalToConstant: 19),
-            likeButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            imageData.heightAnchor.constraint(equalToConstant: 14),
+            imageData.widthAnchor.constraint(equalToConstant: 14),
             
-            ratingStack.heightAnchor.constraint(equalToConstant: 20),
-            ratingStack.widthAnchor.constraint(equalToConstant: 70),
-            ratingStack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            ratingStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+            imageGenre.heightAnchor.constraint(equalToConstant: 14),
+            imageGenre.widthAnchor.constraint(equalToConstant: 14),
+        ])
+        
+        let topStack = UIStackView(arrangedSubviews: [nameLabel], axis: .horizontal, spacing: 10)
+        topStack.distribution = .fill
+        let timeStack = UIStackView(arrangedSubviews: [imageTime, timeLabel], axis: .horizontal, spacing: 5)
+        let dataStack = UIStackView(arrangedSubviews: [imageData, dataLabel], axis: .horizontal, spacing: 5)
+        let genreStack = UIStackView(arrangedSubviews: [imageGenre, genreView], axis: .horizontal, spacing: 5)
+        let mainStack = UIStackView(arrangedSubviews: [topStack, timeStack, dataStack, genreStack], axis: .vertical, spacing: 5)
+        mainStack.distribution = .fill
+        mainStack.alignment = .leading
+        
+        addSubview(filmImageView)
+        addSubview(likeButton)
+        addSubview(mainStack)
+        mainStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            filmImageView.heightAnchor.constraint(equalToConstant: 80),
+            filmImageView.widthAnchor.constraint(equalToConstant: 80),
+            filmImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            filmImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            mainStack.leadingAnchor.constraint(equalTo: filmImageView.trailingAnchor, constant: 12),
+            mainStack.topAnchor.constraint(equalTo: topAnchor),
+            mainStack.trailingAnchor.constraint(equalTo: likeButton.leadingAnchor, constant: -24),
+            mainStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 5),
+            
+            likeButton.topAnchor.constraint(equalTo: topAnchor),
+            likeButton.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
 }
