@@ -81,9 +81,10 @@ extension LoginViewController: LoginViewDelegate {
                     switch result {
                     case .success(let user):
                         print(user)
-                        var homeVC: HomeViewController!
-                        homeVC = HomeViewController()
-                        self.navigationController?.pushViewController(homeVC, animated: true)
+                        var homeVC: MainTabBarController!
+                        homeVC = MainTabBarController()
+                        homeVC.modalPresentationStyle = .fullScreen
+                        present(homeVC, animated: true)
                     case .failure(let error):
                         self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
                     }
@@ -106,7 +107,10 @@ extension LoginViewController: LoginViewDelegate {
             switch result {
             case .success(let user):
                 print(user)
-                
+                var homeVC: MainTabBarController!
+                homeVC = MainTabBarController()
+                homeVC.modalPresentationStyle = .fullScreen
+                self.present(homeVC, animated: true)
             case .failure(let error):
                 print(error.localizedDescription)
             }
