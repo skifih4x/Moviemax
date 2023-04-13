@@ -4,7 +4,7 @@
 //
 //  Created by Даниил Петров on 10.04.2023.
 //
-
+/*
 import UIKit
 
 class ChangeAvatarViewController: UIViewController {
@@ -98,3 +98,4 @@ class ChangeAvatarViewController: UIViewController {
     
     
 }
+*/

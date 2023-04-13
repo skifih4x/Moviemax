@@ -6,6 +6,8 @@
 //
 
 enum MovieGenre: Int, CaseIterable {
+    case all
+
     case action = 28
     case adventure = 12
     case animation = 16
@@ -47,6 +49,8 @@ enum MovieGenre: Int, CaseIterable {
            case .thriller: return "Thriller"
            case .war: return "War"
            case .western: return "Western"
+           case .all:
+               return "All"
            }
     }
 }

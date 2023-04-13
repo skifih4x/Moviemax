@@ -5,16 +5,15 @@
 //  Created by Андрей Фроленков on 6.04.23.
 //
 
-import Foundation
 import UIKit
+import SafariServices
 
-class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController {
     
     var id: Int?
     var detailModel: DetailMultimediaModel?
     var castArray = [Cast]()
     
-    let array = ["mfdvmfmvfmerferferferfer", "dfjvmkfdffdf", "sdjjsj"]
     var indexCell = 0
     
     var buttonTapped = false
@@ -171,8 +170,19 @@ class DetailViewController: UIViewController {
         }
     }
     
-    @objc func watchNowButtonPressed() {
-        print("Hello")
+    @objc private func watchNowButtonPressed() {
+        guard let nameFilm = nameFilm.text else { return }
+        MultimediaLoader.shared.fetchWatchNowURL(with: nameFilm) { [weak self] url in
+            DispatchQueue.main.async {
+                self?.openSafariWebView(url: url)
+            }
+        }
+    }
+
+   private func openSafariWebView(url: URL) {
+        let safariViewController = SFSafariViewController(url: url)
+        safariViewController.modalPresentationStyle = .automatic
+        present(safariViewController, animated: true)
     }
     
     // MARK: - Action LeftBarButtonItem
@@ -331,11 +341,23 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let text = castArray[indexPath.item]
-        var width = text.name.count * 10 + 20
+        
+        var width = culculateWidth(size: 14, text: text.name)
+
         if text.character.count > text.name.count {
-            width = text.character.count * 10 + 20
+            
+            width = culculateWidth(size: 12, text: text.character)
         }
+        
         return CGSize(width: width, height: 50)
+    }
+    
+    private func culculateWidth(size: CGFloat, text: String) -> CGFloat {
+        let font = UIFont.systemFont(ofSize: size, weight: .regular)
+        let attributes = [NSAttributedString.Key.font : font as Any]
+        let width = text.size(withAttributes: attributes).width + 80
+        
+        return width
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

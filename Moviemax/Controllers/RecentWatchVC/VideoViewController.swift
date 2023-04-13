@@ -9,10 +9,11 @@ import Foundation
 import UIKit
 
 class VideoViewController: UIViewController {
+    let databaseService: DatabaseService = RealmService.shared
     
-    let array = MovieGenre.allCases
+    var array = MovieGenre.allCases
     var genreArrayMovie = [Movie]()
-    var genre = "Action"
+    var genre: MovieGenre = .action
     var genreArray = [MultimediaViewModel]()
     var indexCell = 0
     
@@ -37,18 +38,12 @@ class VideoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-
-        collectionView.dataSource = self
-        collectionView.delegate   = self
-        
         tableView.delegate        = self
         tableView.dataSource      = self
         
         self.tableView.register(CellFilmTableView.self, forCellReuseIdentifier: "CellForTable")
-        self.collectionView.register(CustomCell.self, forCellWithReuseIdentifier: "Cell")
         
-        view.backgroundColor = #colorLiteral(red: 0.1187649444, green: 0.1217879131, blue: 0.1932167113, alpha: 1)
+        view.backgroundColor = UIColor(named: K.Colors.background)
         setupConstraints()
         settingsNavigationBar()
     }
@@ -89,6 +84,12 @@ class VideoViewController: UIViewController {
         let index = IndexPath(item: sender.tag, section: 0)
         guard let cell = tableView.cellForRow(at: index) as? CellFilmTableView else { return }
         cell.changeImageButton()
+        
+        //work with Realm
+        let movie = genreArrayMovie[index.row]
+        cell.buttonTapped
+        ? databaseService.addToFavorites(movie, genre: genre)
+        : databaseService.deleteMovie(movie)
     }
 }
 
@@ -98,8 +99,8 @@ extension VideoViewController {
     private func settingsNavigationBar() {
         
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = #colorLiteral(red: 0.1187649444, green: 0.1217879131, blue: 0.1932167113, alpha: 1)
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white,
+        appearance.backgroundColor = UIColor(named: K.Colors.background)
+        appearance.titleTextAttributes = [.foregroundColor: UIColor(named: K.Colors.titleColor) ?? "",
                                           .font: UIFont.systemFont(ofSize: 24, weight: .bold)
         ]
         appearance.shadowColor = .clear
@@ -124,17 +125,10 @@ extension VideoViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
         view.addSubview(tableView)
-        // CollectionView
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 100)
-        ])
         
         // TableView
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor,constant: 15),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -228,7 +222,7 @@ extension VideoViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.indexCell = indexPath.item
         
-        genre = array[indexPath.row].name
+        genre = array[indexPath.row]
         
         manager.fetchMoviesByGenre(genre: array[indexPath.row]) { result in
             

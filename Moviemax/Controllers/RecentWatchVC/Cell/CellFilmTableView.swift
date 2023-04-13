@@ -71,13 +71,13 @@ class CellFilmTableView: UITableViewCell {
         self.genreView.genreLabel.text = model.genre
     }
     
-    func cellConfigureMovie(with model: Movie, genre: String) {
+    func cellConfigureMovie(with model: Movie, genre: MovieGenre) {
     
         self.nameLabel.text = model.name ?? model.title
         setImage(nameImage: model.posterPath ?? "")
         self.timeLabel.text = "\(model.voteAverage)"
         self.dataLabel.text = "\(model.releaseDate ?? model.firstAirDate ?? "")"
-        self.genreView.genreLabel.text = genre
+        self.genreView.genreLabel.text = genre.name
     }
     
     func setImage(nameImage: String) {

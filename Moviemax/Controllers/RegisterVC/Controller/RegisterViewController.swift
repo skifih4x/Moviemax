@@ -79,9 +79,8 @@ extension RegisterViewController: RegisterViewDelegate {
                         homeVC = MainTabBarController()
                         homeVC.modalPresentationStyle = .fullScreen
                         present(homeVC, animated: true)
-                        
                     case .failure(let error):
-                        present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
+                        self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
                     }
                 }
             }
