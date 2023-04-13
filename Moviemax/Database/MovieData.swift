@@ -15,8 +15,9 @@ class MovieData: Object {
     @Persisted var posterPath: String
     @Persisted var genre: String
     @Persisted var voteAverage: Double
+    @Persisted var isFavorite: Bool = false
     
-    convenience init(id: Int, title: String, releaseDate: String, posterPath: String, genre: String, voteAverage: Double) {
+    convenience init(id: Int, title: String, releaseDate: String, posterPath: String, genre: String, voteAverage: Double, isFavorite: Bool = false) {
         self.init()
         self.id = id
         self.title = title
@@ -24,5 +25,6 @@ class MovieData: Object {
         self.posterPath = posterPath
         self.genre = genre
         self.voteAverage = voteAverage
+        self.isFavorite = isFavorite
     }
 }

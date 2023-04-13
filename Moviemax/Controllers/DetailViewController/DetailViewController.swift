@@ -10,6 +10,7 @@ import SafariServices
 
 final class DetailViewController: UIViewController {
     
+    var add: Bool = false
     var id: Int?
     var detailModel: DetailMultimediaModel?
     var castArray = [Cast]()
@@ -117,6 +118,7 @@ final class DetailViewController: UIViewController {
             }
             
             if let detailModel {
+                self?.detailModel = detailModel
                 self?.setDetailModel(with: detailModel)
                 
                 self?.manager.fetchCastDataById(id: self?.id?.description ?? "", type: .movie, completion: { castModel in
@@ -193,9 +195,23 @@ final class DetailViewController: UIViewController {
     
     // MARK: - Action RightBarButtonItem
     @objc func buttonRightPressed(_ sender: UIBarButtonItem) {
+        
+        if let detailModel = detailModel {
+            let movieModel = Movie(genreIds: [detailModel.genres.count], id: detailModel.id, overview: detailModel.overview, releaseDate: detailModel.releaseDate, title: detailModel.title, posterPath: detailModel.posterPath, voteAverage: detailModel.voteAverage, firstAirDate: detailModel.firstAirDate, name: detailModel.name)
+            
+            if add {
+                RealmService.shared.deleteMovie(movieModel)
+            } else {
+                RealmService.shared.addToFavorites(movieModel, genre: .action)
+                add = true
+            }
+        }
+        
+        
         buttonTapped = !buttonTapped
         sender.image = buttonTapped ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
         sender.tintColor = buttonTapped ? .red : .gray
+        
     }
     
 

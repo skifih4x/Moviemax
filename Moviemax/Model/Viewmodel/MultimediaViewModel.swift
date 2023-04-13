@@ -16,4 +16,5 @@ struct MultimediaViewModel: Hashable {
     let genre: String?
     let description: String
     let rating: Double
+    var isFavorite: Bool = false
 }

@@ -42,7 +42,7 @@ final class RealmService: DatabaseService {
         do {
             lock.lock()
             let realm = try Realm()
-            let movieData = MovieData(id: movie.id, title: movie.title ?? "No title", releaseDate: movie.releaseDate ?? "No release date", posterPath: movie.posterPath ?? "No url path", genre: genre.name, voteAverage: movie.voteAverage)
+            let movieData = MovieData(id: movie.id, title: movie.title ?? "No title", releaseDate: movie.releaseDate ?? "No release date", posterPath: movie.posterPath ?? "No url path", genre: genre.name, voteAverage: movie.voteAverage, isFavorite: true)
             let data = realm.objects(MovieData.self)
             if !data.contains(where: { $0.id == movieData.id }) {
                 try realm.write {
@@ -62,7 +62,7 @@ final class RealmService: DatabaseService {
             let realm = try Realm()
             let data = realm.objects(MovieData.self)
             lock.unlock()
-            favorites = data.map { MultimediaViewModel(id: $0.id, type: .movie, posterImageLink: $0.posterPath, titleName: $0.title, releaseDate: $0.releaseDate, genre: $0.genre, description: $0.description, rating: $0.voteAverage) }
+            favorites = data.map { MultimediaViewModel(id: $0.id, type: .movie, posterImageLink: $0.posterPath, titleName: $0.title, releaseDate: $0.releaseDate, genre: $0.genre, description: $0.description, rating: $0.voteAverage, isFavorite: $0.isFavorite) }
         } catch {
             print("Realm thrown an error")
         }

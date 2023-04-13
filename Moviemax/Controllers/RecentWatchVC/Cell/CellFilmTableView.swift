@@ -58,7 +58,8 @@ class CellFilmTableView: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        filmImageView.layer.cornerRadius = contentView.frame.height / 7
+        filmImageView.layer.cornerRadius = 10
+        filmImageView.clipsToBounds = true
         
     }
     
@@ -66,7 +67,7 @@ class CellFilmTableView: UITableViewCell {
         
         self.nameLabel.text = model.titleName
         setImage(nameImage: model.posterImageLink)
-        self.timeLabel.text = "\(model.id) Minutes"
+        self.timeLabel.text = "\(model.rating)"
         self.dataLabel.text = "\(model.releaseDate)"
         self.genreView.genreLabel.text = model.genre
     }
@@ -94,6 +95,11 @@ class CellFilmTableView: UITableViewCell {
         let image = buttonTapped ? UIImage(systemName: "heart") : UIImage(systemName: "heart.fill")
         likeButton.setImage(image, for: .normal)
         buttonTapped = !buttonTapped
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
     }
     
     func setupConstraints() {
