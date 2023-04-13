@@ -9,7 +9,7 @@ import UIKit
 import SafariServices
 
 final class DetailViewController: UIViewController {
-    
+    let databaseService: DatabaseService = RealmService.shared
     var add: Bool = false
     var id: Int?
     var detailModel: DetailMultimediaModel?
@@ -128,6 +128,8 @@ final class DetailViewController: UIViewController {
                         self?.collectionView.reloadData()
                     }
                 })
+                //add to recentWatch
+                self?.addToRecentWatch(detailModel)
             }
             
         }
@@ -144,7 +146,19 @@ final class DetailViewController: UIViewController {
         settingsNavigationBar()
         setupConstraints()
         watchNowButton.addPulsationAnimation()
-        
+    }
+    //MARK: - Database methods
+    private func addToRecentWatch(_ movie: DetailMultimediaModel) {
+        let dataModel = MultimediaViewModel(id: movie.id, type: .movie, posterImageLink: movie.posterPath, titleName: movie.title ?? movie.name ?? "", releaseDate: movie.releaseDate ?? "", genre: movie.genres.first?.name, description: movie.overview, rating: movie.voteAverage)
+        databaseService.addToRecentWatch(dataModel)
+        if !databaseService.isInRecentWatch(movie.id) {
+            databaseService.addToRecentWatch(dataModel)
+        }
+    }
+    
+    func isFavorite() {
+        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+        navigationItem.rightBarButtonItem?.tintColor = .red
     }
     
     // MARK: - Set Detail Model
@@ -199,11 +213,12 @@ final class DetailViewController: UIViewController {
         if let detailModel = detailModel {
             let movieModel = Movie(genreIds: [detailModel.genres.count], id: detailModel.id, overview: detailModel.overview, releaseDate: detailModel.releaseDate, title: detailModel.title, posterPath: detailModel.posterPath, voteAverage: detailModel.voteAverage, firstAirDate: detailModel.firstAirDate, name: detailModel.name)
             
-            if add {
-                RealmService.shared.deleteMovie(movieModel)
+            let isFavorite = databaseService.isInFavorites(detailModel.id)
+            if isFavorite {
+                RealmService.shared.deleteMovie(movieModel.id)
             } else {
                 RealmService.shared.addToFavorites(movieModel, genre: .action)
-                add = true
+//                add = true
             }
         }
         
@@ -410,7 +425,6 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         cell.backgroundColor = .lightGray
         cell.titleLabel.text = cast.name
         cell.jobTitleLabel.text = cast.character
-        
         if let cast = cast.profilePath {
             manager.fetchImage(from: cast) { image in
                 

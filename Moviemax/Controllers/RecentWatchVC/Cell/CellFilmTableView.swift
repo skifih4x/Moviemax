@@ -100,6 +100,7 @@ class CellFilmTableView: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        buttonTapped = false
     }
     
     func setupConstraints() {

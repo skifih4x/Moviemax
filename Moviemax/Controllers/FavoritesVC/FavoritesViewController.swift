@@ -32,6 +32,10 @@ class FavoritesViewController: UIViewController {
         settingsNavigationBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -49,9 +53,7 @@ class FavoritesViewController: UIViewController {
         let model = arrayMovie[index.row]
        
         if model.isFavorite {
-
-            let movie = Movie(genreIds: [], id: model.id, overview: model.description, releaseDate: model.releaseDate, title: model.titleName, posterPath: model.posterImageLink, voteAverage: model.rating, firstAirDate: nil, name: nil)
-            RealmService.shared.deleteMovie(movie)
+            RealmService.shared.deleteMovie(model.id)
             self.arrayMovie?.remove(at: index.row)
             self.tableView.reloadData()
         }
@@ -133,8 +135,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         
         let action = UIContextualAction(style: .destructive,
                                         title: "Delete") { (action, view, completionHandler) in
-            let movie = Movie(genreIds: [], id: model.id, overview: model.description, releaseDate: model.releaseDate, title: model.titleName, posterPath: model.posterImageLink, voteAverage: model.rating, firstAirDate: nil, name: nil)
-            RealmService.shared.deleteMovie(movie)
+            RealmService.shared.deleteMovie(model.id)
             self.arrayMovie?.remove(at: indexPath.row)
             self.tableView.reloadData()
             completionHandler(true)

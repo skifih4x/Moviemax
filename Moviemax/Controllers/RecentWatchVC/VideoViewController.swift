@@ -50,33 +50,40 @@ class VideoViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        manager.getMediaData(for: .movie) { [weak self] result in
-            if let array = result[.movie] {
-                self?.genreArray = array
-                
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            self.genreArrayMovie = self.fetchRecentWatch()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
-        
-        manager.fetchMoviesByGenre(genre: array.first ?? .action) { result in
-            
-            switch result {
-                
-            case .success(let arrayModel):
-                if let array = arrayModel.results {
-                    self.genreArrayMovie = array
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+
+//        manager.getMediaData(for: .movie) { [weak self] result in
+//            if let array = result[.movie] {
+//                self?.genreArrayMovie = array
+//
+//                DispatchQueue.main.async {
+//                    self?.tableView.reloadData()
+//                }
+//            }
+//        }
+//
+//        manager.fetchMoviesByGenre(genre: array.first ?? .action) { result in
+//
+//            switch result {
+//
+//            case .success(let arrayModel):
+//                if let array = arrayModel.results {
+//                    self.genreArrayMovie = array
+//
+//                    DispatchQueue.main.async {
+//                        self.tableView.reloadData()
+//                    }
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
     }
     
     @objc func buttonPressed(_ sender: UIButton) {
@@ -89,7 +96,16 @@ class VideoViewController: UIViewController {
         let movie = genreArrayMovie[index.row]
         cell.buttonTapped
         ? databaseService.addToFavorites(movie, genre: genre)
-        : databaseService.deleteMovie(movie)
+        : databaseService.deleteMovie(movie.id)
+    }
+}
+
+//MARK: - Database methods
+extension VideoViewController {
+    func fetchRecentWatch() -> [Movie] {
+        let data = databaseService.fetchRecentWatch()
+        let movies = data.map { Movie(genreIds: [1], id: $0.id, overview: $0.description, releaseDate: $0.releaseDate, title: $0.titleName, posterPath: $0.posterImageLink, voteAverage: $0.rating, firstAirDate: $0.releaseDate, name: $0.titleName) }
+        return movies
     }
 }
 

@@ -12,7 +12,11 @@ protocol DatabaseService {
     func addToFavorites(_ movie: MultimediaViewModel)
     func addToFavorites(_ movie: Movie, genre: MovieGenre)
     func fetchFavorites() -> [MultimediaViewModel]
-    func deleteMovie(_ movie: Movie)
+    func isInFavorites(_ movieId: Int) -> Bool
+    func addToRecentWatch(_ movie: MultimediaViewModel)
+    func fetchRecentWatch() -> [MultimediaViewModel]
+    func isInRecentWatch(_ movieId: Int) -> Bool
+    func deleteMovie(_ movieId: Int)
     func deleteAllMovies()
 }
 
@@ -21,26 +25,27 @@ final class RealmService: DatabaseService {
     static let shared = RealmService()
     private var lock = NSLock()
     
+    //MARK: - favorites methods
     func addToFavorites(_ movie: MultimediaViewModel) {
         do {
-            lock.lock()
+            
             let realm = try Realm()
-            let movieData = MovieData(id: movie.id, title: movie.titleName, releaseDate: movie.releaseDate, posterPath: movie.posterImageLink, genre: movie.genre ?? "No genre", voteAverage: movie.rating)
+            let movieData = MovieData(id: movie.id, title: movie.titleName, releaseDate: movie.releaseDate, posterPath: movie.posterImageLink, genre: movie.genre ?? "No genre", voteAverage: movie.rating, isFavorite: true)
             let data = realm.objects(MovieData.self)
             if !data.contains(where: { $0.id == movieData.id }) {
                 try realm.write {
                     realm.add(movieData)
                 }
             }
-            lock.unlock()
+            
         } catch {
-            print("Realm thrown an error")
+            debugPrint(error)
         }
     }
     
     func addToFavorites(_ movie: Movie, genre: MovieGenre) {
         do {
-            lock.lock()
+            
             let realm = try Realm()
             let movieData = MovieData(id: movie.id, title: movie.title ?? "No title", releaseDate: movie.releaseDate ?? "No release date", posterPath: movie.posterPath ?? "No url path", genre: genre.name, voteAverage: movie.voteAverage, isFavorite: true)
             let data = realm.objects(MovieData.self)
@@ -49,53 +54,119 @@ final class RealmService: DatabaseService {
                     realm.add(movieData)
                 }
             }
-            lock.unlock()
+            
         } catch {
-            print("Realm thrown an error")
+            debugPrint(error)
         }
     }
     
     func fetchFavorites() -> [MultimediaViewModel] {
         var favorites: [MultimediaViewModel] = []
         do {
-            lock.lock()
+            
             let realm = try Realm()
             let data = realm.objects(MovieData.self)
-            lock.unlock()
-            favorites = data.map { MultimediaViewModel(id: $0.id, type: .movie, posterImageLink: $0.posterPath, titleName: $0.title, releaseDate: $0.releaseDate, genre: $0.genre, description: $0.description, rating: $0.voteAverage, isFavorite: $0.isFavorite) }
+            let favoritesData = data.where { $0.isFavorite == true }
+            
+            favorites = favoritesData.map { MultimediaViewModel(id: $0.id, type: .movie, posterImageLink: $0.posterPath, titleName: $0.title, releaseDate: $0.releaseDate, genre: $0.genre, description: $0.description, rating: $0.voteAverage, isFavorite: $0.isFavorite) }
         } catch {
-            print("Realm thrown an error")
+            debugPrint(error)
         }
+        print(favorites.count)
         return favorites
     }
     
-    func deleteMovie(_ movie: Movie) {
+    func deleteMovie(_ movieId: Int) {
         do {
-            lock.lock()
+            
             let realm = try Realm()
             let favorites = realm.objects(MovieData.self)
-            let movieToDelete = favorites.first { $0.id == movie.id }
+            let movieToDelete = favorites.first { $0.id == movieId }
             guard let movieToDelete else { return }
             try realm.write {
                 realm.delete(movieToDelete)
             }
-            lock.unlock()
+            
         } catch {
-            print("Realm thrown an error")
+            debugPrint(error)
         }
     }
     
     func deleteAllMovies() {
         do {
-            lock.lock()
+            
             let realm = try Realm()
             let favorites = realm.objects(MovieData.self)
             try realm.write {
                 realm.delete(favorites)
             }
-            lock.unlock()
+            
         } catch {
-            print("Realm thrown an error")
+            debugPrint(error)
         }
+    }
+    
+    func isInFavorites(_ movieId: Int) -> Bool {
+        do {
+            
+            let realm = try Realm()
+            let data = realm.objects(MovieData.self)
+            let favoritesData = data.where { $0.isFavorite == true }
+            if favoritesData.contains(where: { $0.id == movieId }) {
+                return true
+            }
+            
+        } catch {
+            debugPrint(error)
+        }
+        return false
+    }
+    
+    //MARK: - recentWatch methods
+    func addToRecentWatch(_ movie: MultimediaViewModel) {
+        do {
+            
+            let realm = try Realm()
+            let movieData = MovieData(id: movie.id, title: movie.titleName, releaseDate: movie.releaseDate, posterPath: movie.posterImageLink, genre: movie.genre ?? "No genre", voteAverage: movie.rating)
+            let data = realm.objects(MovieData.self)
+            if !data.contains(where: { $0.id == movieData.id  && $0.isFavorite == true }) {
+                try realm.write {
+                    realm.add(movieData)
+                }
+            }
+            
+        } catch {
+            debugPrint(error)
+        }
+    }
+    
+    func fetchRecentWatch() -> [MultimediaViewModel] {
+        var favorites: [MultimediaViewModel] = []
+        do {
+            
+            let realm = try Realm()
+            let data = realm.objects(MovieData.self)
+            let recentWatchData = data.where { $0.isWatched == true }
+            
+            favorites = recentWatchData.map { MultimediaViewModel(id: $0.id, type: .movie, posterImageLink: $0.posterPath, titleName: $0.title, releaseDate: $0.releaseDate, genre: $0.genre, description: $0.description, rating: $0.voteAverage, isFavorite: $0.isFavorite) }
+        } catch {
+            debugPrint(error)
+        }
+        return favorites
+    }
+    
+    func isInRecentWatch(_ movieId: Int) -> Bool {
+        do {
+            
+            let realm = try Realm()
+            let data = realm.objects(MovieData.self)
+            if data.contains(where: { $0.id == movieId && $0.isWatched == true }) {
+                return true
+            }
+            
+        } catch {
+            debugPrint(error)
+        }
+        return false
     }
 }

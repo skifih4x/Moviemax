@@ -15,9 +15,10 @@ class MovieData: Object {
     @Persisted var posterPath: String
     @Persisted var genre: String
     @Persisted var voteAverage: Double
-    @Persisted var isFavorite: Bool = false
+    @Persisted var isFavorite: Bool
+    @Persisted var isWatched: Bool
     
-    convenience init(id: Int, title: String, releaseDate: String, posterPath: String, genre: String, voteAverage: Double, isFavorite: Bool = false) {
+    convenience init(id: Int, title: String, releaseDate: String, posterPath: String, genre: String, voteAverage: Double, isFavorite: Bool = false, isWatched: Bool = false) {
         self.init()
         self.id = id
         self.title = title
