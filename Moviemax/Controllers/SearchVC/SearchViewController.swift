@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class SearchViewController: UIViewController {
-    
+    private let databaseService: DatabaseService = RealmService.shared
     var arrayMovie: [MultimediaViewModel]?
     let allGenresArray = MovieGenre.allCases
     var search = ""
@@ -50,12 +50,12 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        arrayMovie = RealmService.shared.fetchFavorites()
+        collectionView.reloadData()
+//        arrayMovie = RealmService.shared.fetchFavorites()
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-
+        
         collectionView.dataSource = self
         collectionView.delegate   = self
         
@@ -77,7 +77,7 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        tableView.reloadData()
         if searchFlag {
             manager.searchMedia(type: .movie, query: search) { result in
                 
@@ -367,23 +367,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         
         
         let movie = genreArray[indexPath.row]
-        if let arrayViewModel = arrayMovie {
         
-            for i in arrayViewModel {
-//              print(i.id)
-//                print(movie.id)
-            
-                if i.id == movie.id {
-                    print("true")
-                    let image = UIImage(systemName: "heart.fill")
-                    
-                    cell.likeButton.setImage(image, for: .normal)
-                } else {
-                    let image = UIImage(systemName: "heart")
-                    cell.likeButton.setImage(image, for: .normal)
-                }
-            }
-        
+        //check if movie is favorite and set tapped heart
+        if databaseService.isInFavorites(movie.id) {
+            let image = UIImage(systemName: "heart.fill")
+            cell.likeButton.setImage(image, for: .normal)
         }
         
         cell.cellConfigureMovie(with: movie, genre: currentGenre)
