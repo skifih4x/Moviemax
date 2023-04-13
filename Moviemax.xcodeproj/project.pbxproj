@@ -61,8 +61,6 @@
 		A549AA3D29DFFBB000F3F359 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */; };
 		A549AA3F29E4160200F3F359 /* AlertControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */; };
 		A549AA4229E4B7F900F3F359 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA4129E4B7F900F3F359 /* IQKeyboardManagerSwift */; };
-		A549AA4529E543E400F3F359 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA4429E543E400F3F359 /* CustomView.swift */; };
-		A549AA4729E543FE00F3F359 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA4629E543FE00F3F359 /* CustomViewController.swift */; };
 		AB6CE25929E42DA900EB02DA /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25829E42DA900EB02DA /* OnboardingViewController.swift */; };
 		AB6CE25B29E439FE00EB02DA /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25A29E439FE00EB02DA /* CustomPageControl.swift */; };
 		AB6CE25D29E447BB00EB02DA /* OnboardingPageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25C29E447BB00EB02DA /* OnboardingPageContentView.swift */; };
@@ -138,8 +136,6 @@
 		A549AA3A29DFFB8100F3F359 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerManager.swift; sourceTree = "<group>"; };
-		A549AA4429E543E400F3F359 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
-		A549AA4629E543FE00F3F359 /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		AB6CE25829E42DA900EB02DA /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		AB6CE25A29E439FE00EB02DA /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		AB6CE25C29E447BB00EB02DA /* OnboardingPageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageContentView.swift; sourceTree = "<group>"; };
@@ -453,8 +449,6 @@
 		A549AA4329E543C800F3F359 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
-				A549AA4429E543E400F3F359 /* CustomView.swift */,
-				A549AA4629E543FE00F3F359 /* CustomViewController.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -600,7 +594,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A549AA2629DD592300F3F359 /* LoginViewController.swift in Sources */,
-				A549AA4729E543FE00F3F359 /* CustomViewController.swift in Sources */,
 				A549AA3F29E4160200F3F359 /* AlertControllerManager.swift in Sources */,
 				A549AA2329DCB33400F3F359 /* UserAuthData.swift in Sources */,
 				A549AA1F29DCB2BC00F3F359 /* StringTypeList.swift in Sources */,
@@ -651,7 +644,6 @@
 				AB6CE25B29E439FE00EB02DA /* CustomPageControl.swift in Sources */,
 				ABA9935529DF51A30015329F /* Dateformatter + Extension.swift in Sources */,
 				006B2F7229D9E1D100D8F89A /* AppDelegate.swift in Sources */,
-				A549AA4529E543E400F3F359 /* CustomView.swift in Sources */,
 				A549AA1B29DCB26C00F3F359 /* AuthManager.swift in Sources */,
 				52AB71C629DBD36200F149F1 /* UIImageView + Extension.swift in Sources */,
 				52899D9A29DAFA2C003D2AB8 /* ProfileViewController.swift in Sources */,
