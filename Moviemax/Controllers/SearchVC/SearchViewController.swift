@@ -161,8 +161,13 @@ class SearchViewController: UIViewController {
         
         guard let cell = tableView.cellForRow(at: index) as? CellFilmTableView else { return }
         let model = genreArray[index.row]
-        RealmService.shared.addToFavorites(model, genre: currentGenre)
+        if databaseService.isInFavorites(model.id) {
+            databaseService.deleteMovie(model.id)
+        } else {
+            RealmService.shared.addToFavorites(model, genre: currentGenre)
+        }
         cell.changeImageButton()
+        tableView.reloadData()
     }
 }
 

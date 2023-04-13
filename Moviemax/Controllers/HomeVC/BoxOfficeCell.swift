@@ -49,6 +49,7 @@ final class BoxOfficeCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         filmImageView.image = nil
+        likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
     }
     
     //MARK: button

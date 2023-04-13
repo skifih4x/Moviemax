@@ -146,6 +146,11 @@ final class DetailViewController: UIViewController {
         settingsNavigationBar()
         setupConstraints()
         watchNowButton.addPulsationAnimation()
+        if let id = id {
+            let pressed = databaseService.isInFavorites(id)
+            navigationItem.rightBarButtonItem?.image = pressed ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+            navigationItem.rightBarButtonItem?.tintColor = .red
+        }
     }
     //MARK: - Database methods
     private func addToRecentWatch(_ movie: DetailMultimediaModel) {
@@ -222,10 +227,15 @@ final class DetailViewController: UIViewController {
             }
         }
         
+        if let id = id {
+            let pressed = databaseService.isInFavorites(id)
+            navigationItem.rightBarButtonItem?.image = pressed ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+            navigationItem.rightBarButtonItem?.tintColor = .red
+        }
         
-        buttonTapped = !buttonTapped
-        sender.image = buttonTapped ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
-        sender.tintColor = buttonTapped ? .red : .gray
+//        buttonTapped = !buttonTapped
+//        sender.image = buttonTapped ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+//        sender.tintColor = buttonTapped ? .red : .gray
         
     }
     

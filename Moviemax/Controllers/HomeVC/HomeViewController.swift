@@ -14,7 +14,7 @@ class HomeViewController: UIViewController {
     private var topMovies: [MultimediaViewModel] = []
     private var categoryMovies: [MultimediaViewModel] = []
     private let multimediaLoader = MultimediaLoader.shared
-    private var databaseService: DatabaseService?
+    private var databaseService: DatabaseService = RealmService.shared
     lazy var collectionView : UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +37,11 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         getInitialMovies()
-        setupDB()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadSections(IndexSet(integer: 2))
     }
     
     @objc func buttonPressed(_ sender: UIButton) {
@@ -60,10 +64,6 @@ class HomeViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
-    }
-    
-    private func setupDB() {
-        databaseService = RealmService.shared
     }
 }
 //MARK: - UICollectionViewDataSource
@@ -106,6 +106,10 @@ extension HomeViewController: UICollectionViewDataSource {
         default:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BoxOfficeCell.self), for: indexPath) as? BoxOfficeCell else {fatalError("Could not create new cell")}
             let movie = categoryMovies[indexPath.item]
+            //check if movie is favorite and set tapped heart
+            if databaseService.isInFavorites(movie.id) {
+                cell.changeImageButton()
+            }
             cell.configure(with: movie)
             return cell
         }
