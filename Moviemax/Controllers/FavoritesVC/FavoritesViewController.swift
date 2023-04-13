@@ -10,6 +10,8 @@ import UIKit
 
 class FavoritesViewController: UIViewController {
     
+    var arrayMovie: [MultimediaViewModel]?
+    
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
@@ -25,18 +27,41 @@ class FavoritesViewController: UIViewController {
         
         self.tableView.register(CellFilmTableView.self, forCellReuseIdentifier: "CellForTable")
         
-        view.backgroundColor = #colorLiteral(red: 0.1187649444, green: 0.1217879131, blue: 0.1932167113, alpha: 1)
+        view.backgroundColor = UIColor(named: K.Colors.background)
         setupConstraints()
         settingsNavigationBar()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        arrayMovie = RealmService.shared.fetchFavorites()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
     @objc func buttonPressed(_ sender: UIButton) {
         
-        let index = IndexPath(item: sender.tag, section: 0)
+        let index = IndexPath(row: sender.tag, section: 0)
         guard let cell = tableView.cellForRow(at: index) as? CellFilmTableView else { return }
+        guard let arrayMovie = arrayMovie else { return }
+        let model = arrayMovie[index.row]
+       
+        if model.isFavorite {
+
+            let movie = Movie(genreIds: [], id: model.id, overview: model.description, releaseDate: model.releaseDate, title: model.titleName, posterPath: model.posterImageLink, voteAverage: model.rating, firstAirDate: nil, name: nil)
+            RealmService.shared.deleteMovie(movie)
+            self.arrayMovie?.remove(at: index.row)
+            self.tableView.reloadData()
+        }
+        
+        
         cell.changeImageButton()
     }
 }
+
+
 
 // MARK: - Settings NavigationBar
 extension FavoritesViewController {
@@ -44,8 +69,8 @@ extension FavoritesViewController {
     private func settingsNavigationBar() {
         
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = #colorLiteral(red: 0.1187649444, green: 0.1217879131, blue: 0.1932167113, alpha: 1)
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white,
+        appearance.backgroundColor = UIColor(named: K.Colors.background)
+        appearance.titleTextAttributes = [.foregroundColor:UIColor(named: K.Colors.titleColor) ?? "",
                                           .font: UIFont.systemFont(ofSize: 24, weight: .bold)
         ]
         appearance.shadowColor = .clear
@@ -55,7 +80,7 @@ extension FavoritesViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-//        navigationController?.navigationBar.prefersLargeTitles = true
+        //        navigationController?.navigationBar.prefersLargeTitles = true
         
         definesPresentationContext = true
     }
@@ -84,20 +109,49 @@ extension FavoritesViewController {
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return arrayMovie?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellForTable", for: indexPath) as? CellFilmTableView else { return UITableViewCell()}
-        cell.filmImageView.image = UIImage(named: "image1")
-        cell.likeButton.tag = indexPath.row
         
+        if let arrayMovie = arrayMovie {
+            let model = arrayMovie[indexPath.row]
+            let image = model.isFavorite ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+            print(model.isFavorite)
+            cell.likeButton.setImage(image, for: .normal)
+            cell.cellConfigure(with: model)
+            cell.likeButton.tag = indexPath.row
+        }
         
         return cell
     }
     
+     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+         guard var arrayMovie = arrayMovie else { return UISwipeActionsConfiguration() }
+         let model = arrayMovie[indexPath.row]
+        
+        let action = UIContextualAction(style: .destructive,
+                                        title: "Delete") { (action, view, completionHandler) in
+            let movie = Movie(genreIds: [], id: model.id, overview: model.description, releaseDate: model.releaseDate, title: model.titleName, posterPath: model.posterImageLink, voteAverage: model.rating, firstAirDate: nil, name: nil)
+            RealmService.shared.deleteMovie(movie)
+            self.arrayMovie?.remove(at: indexPath.row)
+            self.tableView.reloadData()
+            completionHandler(true)
+        }
+        action.image = UIImage(systemName: "basket")
+        
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        let detail = DetailViewController()
+        if let arrayMovie = arrayMovie {
+            detail.id = arrayMovie[indexPath.row].id
+            tableView.deselectRow(at: indexPath, animated: true)
+            self.navigationController?.pushViewController(detail, animated: true)
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -10,6 +10,7 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
+    var arrayMovie: [MultimediaViewModel]?
     let allGenresArray = MovieGenre.allCases
     var search = ""
     var searchFlag = false
@@ -50,7 +51,10 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        manager.
+        arrayMovie = RealmService.shared.fetchFavorites()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
 
         collectionView.dataSource = self
         collectionView.delegate   = self
@@ -153,9 +157,11 @@ class SearchViewController: UIViewController {
     }
     
     @objc func buttonPressed(_ sender: UIButton) {
-        print("e")
         let index = IndexPath(item: sender.tag, section: 0)
+        
         guard let cell = tableView.cellForRow(at: index) as? CellFilmTableView else { return }
+        let model = genreArray[index.row]
+        RealmService.shared.addToFavorites(model, genre: currentGenre)
         cell.changeImageButton()
     }
 }
@@ -359,7 +365,26 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellForTable", for: indexPath) as? CellFilmTableView else { return UITableViewCell()}
         
+        
         let movie = genreArray[indexPath.row]
+        if let arrayViewModel = arrayMovie {
+        
+            for i in arrayViewModel {
+//              print(i.id)
+//                print(movie.id)
+            
+                if i.id == movie.id {
+                    print("true")
+                    let image = UIImage(systemName: "heart.fill")
+                    
+                    cell.likeButton.setImage(image, for: .normal)
+                } else {
+                    let image = UIImage(systemName: "heart")
+                    cell.likeButton.setImage(image, for: .normal)
+                }
+            }
+        
+        }
         
         cell.cellConfigureMovie(with: movie, genre: currentGenre)
         
