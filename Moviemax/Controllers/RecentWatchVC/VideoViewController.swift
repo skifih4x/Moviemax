@@ -53,6 +53,7 @@ class VideoViewController: UIViewController {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
             self.genreArrayMovie = self.fetchRecentWatch()
+            print(self.genreArrayMovie.count)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -165,10 +166,12 @@ extension VideoViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellForTable", for: indexPath) as? CellFilmTableView else { return UITableViewCell()}
         
         cell.likeButton.tag = indexPath.row
-//        let model = genreArray[indexPath.row]
-//        cell.cellConfigure(with: model)
         let movie = genreArrayMovie[indexPath.row]
-        
+        //check if movie is favorite and set tapped heart
+        if databaseService.isInFavorites(movie.id) {
+            let image = UIImage(systemName: "heart.fill")
+            cell.likeButton.setImage(image, for: .normal)
+        }
         cell.cellConfigureMovie(with: movie, genre: genre)
        
         

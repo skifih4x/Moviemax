@@ -27,5 +27,6 @@ class MovieData: Object {
         self.genre = genre
         self.voteAverage = voteAverage
         self.isFavorite = isFavorite
+        self.isWatched = isWatched
     }
 }

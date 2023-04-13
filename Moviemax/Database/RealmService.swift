@@ -14,6 +14,7 @@ protocol DatabaseService {
     func fetchFavorites() -> [MultimediaViewModel]
     func isInFavorites(_ movieId: Int) -> Bool
     func addToRecentWatch(_ movie: MultimediaViewModel)
+    func addToRecentWatch(_ movie: Movie, genre: MovieGenre)
     func fetchRecentWatch() -> [MultimediaViewModel]
     func isInRecentWatch(_ movieId: Int) -> Bool
     func deleteMovie(_ movieId: Int)
@@ -32,7 +33,7 @@ final class RealmService: DatabaseService {
             let realm = try Realm()
             let movieData = MovieData(id: movie.id, title: movie.titleName, releaseDate: movie.releaseDate, posterPath: movie.posterImageLink, genre: movie.genre ?? "No genre", voteAverage: movie.rating, isFavorite: true)
             let data = realm.objects(MovieData.self)
-            if !data.contains(where: { $0.id == movieData.id }) {
+            if !data.contains(where: { $0.id == movieData.id && $0.isFavorite == true }) {
                 try realm.write {
                     realm.add(movieData)
                 }
@@ -49,7 +50,7 @@ final class RealmService: DatabaseService {
             let realm = try Realm()
             let movieData = MovieData(id: movie.id, title: movie.title ?? "No title", releaseDate: movie.releaseDate ?? "No release date", posterPath: movie.posterPath ?? "No url path", genre: genre.name, voteAverage: movie.voteAverage, isFavorite: true)
             let data = realm.objects(MovieData.self)
-            if !data.contains(where: { $0.id == movieData.id }) {
+            if !data.contains(where: { $0.id == movieData.id && $0.isFavorite == true }) {
                 try realm.write {
                     realm.add(movieData)
                 }
@@ -81,7 +82,7 @@ final class RealmService: DatabaseService {
             
             let realm = try Realm()
             let favorites = realm.objects(MovieData.self)
-            let movieToDelete = favorites.first { $0.id == movieId }
+            let movieToDelete = favorites.first { $0.id == movieId && $0.isFavorite == true }
             guard let movieToDelete else { return }
             try realm.write {
                 realm.delete(movieToDelete)
@@ -127,9 +128,26 @@ final class RealmService: DatabaseService {
         do {
             
             let realm = try Realm()
-            let movieData = MovieData(id: movie.id, title: movie.titleName, releaseDate: movie.releaseDate, posterPath: movie.posterImageLink, genre: movie.genre ?? "No genre", voteAverage: movie.rating)
+            let movieData = MovieData(id: movie.id, title: movie.titleName, releaseDate: movie.releaseDate, posterPath: movie.posterImageLink, genre: movie.genre ?? "No genre", voteAverage: movie.rating, isWatched: true)
             let data = realm.objects(MovieData.self)
-            if !data.contains(where: { $0.id == movieData.id  && $0.isFavorite == true }) {
+            if !data.contains(where: { $0.id == movieData.id && $0.isWatched == true }) {
+                try realm.write {
+                    realm.add(movieData)
+                }
+            }
+            
+        } catch {
+            debugPrint(error)
+        }
+    }
+    
+    func addToRecentWatch(_ movie: Movie, genre: MovieGenre) {
+        do {
+            
+            let realm = try Realm()
+            let movieData = MovieData(id: movie.id, title: movie.title ?? "No title", releaseDate: movie.releaseDate ?? "No release date", posterPath: movie.posterPath ?? "No url path", genre: genre.name, voteAverage: movie.voteAverage, isWatched: true)
+            let data = realm.objects(MovieData.self)
+            if !data.contains(where: { $0.id == movieData.id && $0.isWatched == true }) {
                 try realm.write {
                     realm.add(movieData)
                 }
@@ -141,18 +159,18 @@ final class RealmService: DatabaseService {
     }
     
     func fetchRecentWatch() -> [MultimediaViewModel] {
-        var favorites: [MultimediaViewModel] = []
+        var watched: [MultimediaViewModel] = []
         do {
             
             let realm = try Realm()
             let data = realm.objects(MovieData.self)
             let recentWatchData = data.where { $0.isWatched == true }
             
-            favorites = recentWatchData.map { MultimediaViewModel(id: $0.id, type: .movie, posterImageLink: $0.posterPath, titleName: $0.title, releaseDate: $0.releaseDate, genre: $0.genre, description: $0.description, rating: $0.voteAverage, isFavorite: $0.isFavorite) }
+            watched = recentWatchData.map { MultimediaViewModel(id: $0.id, type: .movie, posterImageLink: $0.posterPath, titleName: $0.title, releaseDate: $0.releaseDate, genre: $0.genre, description: $0.description, rating: $0.voteAverage, isWatched: true) }
         } catch {
             debugPrint(error)
         }
-        return favorites
+        return watched
     }
     
     func isInRecentWatch(_ movieId: Int) -> Bool {
