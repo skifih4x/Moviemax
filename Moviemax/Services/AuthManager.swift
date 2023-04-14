@@ -21,12 +21,32 @@ protocol AuthInputProtocol: AnyObject {
     func deleteUser(completionBlock: @escaping(Result<Bool, Error>)-> Void)
     func checkCurrentUser(email: String, password: String, completionBlock: @escaping(Result<Bool, Error>) -> Void)
     func signOut(completionBlock: @escaping(Result<Bool, Error>) -> Void)
+    func registerAuthStateHandler(completionBlock: @escaping (Result<Bool, Error>) -> Void)
     
 }
 
 class AuthManager: AuthInputProtocol {
     
     var user: UserAuthData!
+    
+    // add listener
+    
+    var handle: AuthStateDidChangeListenerHandle?
+    
+    func registerAuthStateHandler(completionBlock: @escaping (Result<Bool, Error>) -> Void) {
+    
+        if handle == nil {
+            handle = Auth.auth().addStateDidChangeListener({ (auth, user) in
+                if user == nil {
+                    completionBlock(.failure(ValidateInputError.emptyString))
+                } else {
+                    completionBlock(.success(user != nil))
+                }
+            })
+        }
+        
+    }
+    
     
     //MARK: - Creation new user
     

@@ -277,6 +277,8 @@ extension SearchViewController: UISearchBarDelegate {
                         
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
+                            
+                            
                         }
                     }
                 case .failure(let error):

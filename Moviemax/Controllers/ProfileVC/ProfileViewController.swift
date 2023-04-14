@@ -10,6 +10,10 @@ import UIKit
 class ProfileViewController: UIViewController {
     private var databaseService = RealmService.userAuth
     
+    let authManager = AuthManager()
+    let alertManager = AlertControllerManager()
+    let validator = ValidatorClass()
+    
     private var navigationBar = UINavigationBar()
     
     private let profileImageView: UIImageView = {
@@ -56,7 +60,7 @@ class ProfileViewController: UIViewController {
         return label
     }()
     
-
+    
     private lazy var ProfileButton: UIButton = {
         let button = UIButton(type: .system)
         let image = UIImage(named: "Person")?.withRenderingMode(.alwaysOriginal)
@@ -89,7 +93,7 @@ class ProfileViewController: UIViewController {
         
         return label
     }()
-
+    
     private lazy var changePasswordButton: UIButton = {
         let button = UIButton(type: .system)
         let image = UIImage(named: "Lock")?.withRenderingMode(.alwaysOriginal)
@@ -177,10 +181,36 @@ class ProfileViewController: UIViewController {
     
     @objc private func nextButtonTapped() {
         let newViewController = ProfileSettingsVC()
-            navigationController?.pushViewController(newViewController, animated: true)
+        navigationController?.pushViewController(newViewController, animated: true)
     }
     
     @objc private func changePasswordButtonTapped() {
+        var validationResult: Bool = false
+        let alert = alertManager.showAlertChangePassword(title: "change password", message: "Please enter new password") { (result, email, oldPassword, newPassword, confNewPassword) in
+            switch result {
+            case true:
+                if let email = email,
+                   let oldPassword = oldPassword,
+                   let newPassword = newPassword,
+                   let confNewPassword = confNewPassword {
+                    do {
+                        validationResult = try self.validator.checkString(stringType: .email, string: email, stringForMatching: nil)
+                        validationResult = try self.validator.checkString(stringType: .password , string: oldPassword, stringForMatching: nil)
+                        validationResult = try self.validator.checkString(stringType: .password, string: newPassword, stringForMatching: nil)
+                        validationResult = try self.validator.checkString(stringType: .password, string: confNewPassword, stringForMatching: nil)
+                        validationResult = try self.validator.checkString(stringType: .passwordMatch, string: newPassword, stringForMatching: confNewPassword)
+                    } catch {
+                        self.view?.failure(error: error)
+                    }
+                    if validationResult == true {
+                        self.changePassword(email: email, oldPassword: oldPassword, newPassword: newPassword)
+                    }
+                }
+            case false:
+                return
+            }
+        }
+        
     }
     
     @objc private func forgotPasswordButtonTapped() {
@@ -190,6 +220,21 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func logOutButtonTaped() {
+        
+        authManager.signOut { result in
+            switch result {
+            case .success(let result):
+                if result == true {
+                    
+                    let loginVC = LoginViewController()
+                    loginVC.modalPresentationStyle = .fullScreen
+                    self.navigationController?.pushViewController(loginVC, animated: true)
+                }
+            case .failure(let error):
+                self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
+            }
+        }
+        
     }
     
     @objc func switchStateDidChange(_ sender: UISwitch)
@@ -218,7 +263,7 @@ extension ProfileViewController {
         view.addSubview(profileStackView)
         
         view.addSubview(personalInfoLabel)
-
+        
         view.addSubview(ProfileButton)
         view.addSubview(nextButton)
         
