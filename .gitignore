@@ -119,7 +119,7 @@ xcuserdata
 
 
 ### SwiftPM ###
-*..DS_Store
+*.DS_Store
 
 ### Xcode ###
 
