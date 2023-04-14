@@ -24,6 +24,7 @@ protocol DatabaseService {
 final class RealmService: DatabaseService {
     private init() {}
     static let shared = RealmService()
+    static let userAuth = UserAuthService()
     private var lock = NSLock()
     
     //MARK: - favorites methods

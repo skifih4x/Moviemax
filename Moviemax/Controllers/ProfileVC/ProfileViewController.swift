@@ -8,6 +8,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
+    private var databaseService = RealmService.userAuth
     
     private var navigationBar = UINavigationBar()
     
