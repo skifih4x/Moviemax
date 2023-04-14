@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class MovieData: Object {
+final class MovieData: Object {
     @Persisted var id: Int
     @Persisted var title: String
     @Persisted var releaseDate: String
