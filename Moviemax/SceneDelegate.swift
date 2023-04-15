@@ -7,24 +7,57 @@
 
 import UIKit
 
+
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let authManager = AuthManager()
 
 
+    
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
+        
         if UserDefaults.standard.bool(forKey: "isOnboarded") {
-            window?.rootViewController = MainTabBarController()
+            
+            authManager.registerAuthStateHandler { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(_):
+                    self.window?.rootViewController = MainTabBarController()
+                case .failure(_):
+                    self.window?.rootViewController = LoginViewController()
+                }
+            }
+            
+//            window?.rootViewController = MainTabBarController()
         } else {
             window?.rootViewController = OnboardingViewController()
         }
-
+        UserDefaults.standard.addObserver(self, forKeyPath: "theme", options: [.new], context: nil)
+        
         window?.makeKeyAndVisible()
     }
 
+    deinit {
+        UserDefaults.standard.removeObserver(self, forKeyPath: "theme", context: nil)
+    }
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+        guard
+            let change = change,
+            object != nil,
+            let themeValue = change[.newKey] as? String,
+            let theme = Theme(rawValue: themeValue)?.uiInterfaceStyle
+        else { return }
+
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveLinear, animations: { [weak self] in
+            self?.window?.overrideUserInterfaceStyle = theme
+        }, completion: .none)
+    }
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

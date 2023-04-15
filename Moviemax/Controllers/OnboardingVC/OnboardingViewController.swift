@@ -8,6 +8,8 @@
 import UIKit
 
 final class OnboardingViewController: UIViewController {
+    
+    let authManager = AuthManager()
 
     private lazy var pages: [OnboardingPageContentViewController] = {
         let page1 = OnboardingPageContentViewController(title: "Discover Movies & TV Shows",
@@ -130,9 +132,31 @@ final class OnboardingViewController: UIViewController {
 
     private func presentDestinationViewController() {
         let destinationViewController = MainTabBarController()
-        destinationViewController.modalPresentationStyle = .fullScreen
-        present(destinationViewController, animated: true, completion: nil)
-        UserDefaults.standard.set(true, forKey: "isOnboarded")
+        let loginVC = LoginViewController()
+        
+        authManager.registerAuthStateHandler { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success( _ ):
+                DispatchQueue.main.async {
+                    destinationViewController.modalPresentationStyle = .fullScreen
+                    self.present(destinationViewController, animated: true, completion: nil)
+                    UserDefaults.standard.set(true, forKey: "isOnboarded")
+                }
+                
+            case .failure( _ ):
+                DispatchQueue.main.async {
+                    loginVC.modalPresentationStyle = .fullScreen
+                    self.present(loginVC, animated: true, completion: nil)
+                    UserDefaults.standard.set(true, forKey: "isOnboarded")
+                }
+                
+            }
+        }
+        
+//        destinationViewController.modalPresentationStyle = .fullScreen
+//        present(destinationViewController, animated: true, completion: nil)
+//        UserDefaults.standard.set(true, forKey: "isOnboarded")
     }
 }
 

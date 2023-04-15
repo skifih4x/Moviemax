@@ -99,6 +99,10 @@ extension LoginViewController: LoginViewDelegate {
         if let navigationVC = navigationController {
             let registerVC = RegisterViewController()
             navigationVC.pushViewController(registerVC, animated: true)
+        } else {
+           
+            let registerVC = RegisterViewController()
+            present(registerVC, animated: true)
         }
     }
     
@@ -112,7 +116,7 @@ extension LoginViewController: LoginViewDelegate {
                 homeVC.modalPresentationStyle = .fullScreen
                 self.present(homeVC, animated: true)
             case .failure(let error):
-                print(error.localizedDescription)
+                self.present(self.alertManager.showAlert(title: "Error", message: error.localizedDescription), animated: true)
             }
         }
     }
