@@ -46,15 +46,15 @@ final class CustomTabBar: UITabBar {
         // 1
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = shapePath()
-        shapeLayer.strokeColor = UIColor.lightGray.cgColor
-        shapeLayer.fillColor = UIColor.white.cgColor
+        shapeLayer.strokeColor = UIColor(named: K.Colors.background)?.cgColor
+      shapeLayer.fillColor = UIColor(named: K.Colors.background)?.cgColor
         shapeLayer.lineWidth = 1.0
 
         // 2
         let circleLayer = CAShapeLayer()
         circleLayer.path = circlePath()
         circleLayer.strokeColor = UIColor.lightGray.cgColor
-        circleLayer.fillColor = UIColor.white.cgColor
+        circleLayer.fillColor = UIColor(named: K.Colors.background)?.cgColor
         circleLayer.lineWidth = 1.0
 
         // 3
