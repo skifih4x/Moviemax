@@ -13,7 +13,7 @@ final class CategoryHeaderView: UICollectionReusableView {
     
     lazy var title: UILabel = {
         let usernameLabel = UILabel()
-        usernameLabel.font = UIFont.systemFont(ofSize: 16.0, weight: .bold)
+        usernameLabel.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
         usernameLabel.text = "Category"
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         return usernameLabel

@@ -47,6 +47,15 @@ final class UserHeaderView: UICollectionReusableView {
         setupView()
     }
     
+    func setupUserData(with name: String, _ avatar: URL) {
+        usernameLabel.text = "Hi, \(name)"
+        MultimediaLoader.shared.fetchImage(from: "\(avatar)") { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.avatarView.image = image
+            }
+        }
+    }
     //MARK: - private setup methods
     private func setupView() {
         backgroundColor = .systemBackground

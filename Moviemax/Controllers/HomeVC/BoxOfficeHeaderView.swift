@@ -13,18 +13,10 @@ final class BoxOfficeHeaderView: UICollectionReusableView {
     
     lazy var title: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16.0, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
         label.text = "Box Office"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    lazy var seeAllButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = .systemBackground
-        button.tintColor = #colorLiteral(red: 0.3176470588, green: 0.3058823529, blue: 0.7137254902, alpha: 1)
-        button.setTitle("See All", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
     }()
     
     //MARK: - initialization
@@ -42,7 +34,6 @@ final class BoxOfficeHeaderView: UICollectionReusableView {
     private func setupView() {
         backgroundColor = .systemBackground
         addSubview(title)
-        addSubview(seeAllButton)
         setupLayout()
     }
     
@@ -52,11 +43,6 @@ final class BoxOfficeHeaderView: UICollectionReusableView {
             title.topAnchor.constraint(equalTo: topAnchor),
             title.widthAnchor.constraint(equalToConstant: 83),
             title.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
-            seeAllButton.leadingAnchor.constraint(greaterThanOrEqualTo: title.trailingAnchor),
-            seeAllButton.topAnchor.constraint(equalTo: topAnchor),
-            seeAllButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-            seeAllButton.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 }

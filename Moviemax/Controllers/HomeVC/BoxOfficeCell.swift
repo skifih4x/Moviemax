@@ -9,6 +9,8 @@ import UIKit
 
 final class BoxOfficeCell: UICollectionViewCell {
     //MARK: - properties
+    private var databaseService: DatabaseService = RealmService.shared
+    private var currentMovie: MultimediaViewModel?
     private let filmImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -34,7 +36,7 @@ final class BoxOfficeCell: UICollectionViewCell {
     private let imageData = UIImageView(image: UIImage(named: "calendar"), contentMode: .scaleAspectFill)
     private let imageGenre = UIImageView(image: UIImage(named: "genre"), contentMode: .scaleAspectFill)
     private let genreView = GenreView(frame: .zero)
-    private var isButtonTapped = false
+    var isButtonTapped = false
     
     //MARK: - initialization
     override init(frame: CGRect) {
@@ -50,20 +52,31 @@ final class BoxOfficeCell: UICollectionViewCell {
     override func prepareForReuse() {
         filmImageView.image = nil
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        isButtonTapped = false
     }
     
     //MARK: button
+    @objc func buttonPressed(_ sender: UIButton) {
+        changeImageButton()
+        
+        //work with Realm
+        guard let movieModel = currentMovie else { return }
+        isButtonTapped
+        ? databaseService.addToFavorites(movieModel)
+        : databaseService.deleteMovie(movieModel.id)
+    }
+    
     func changeImageButton() {
         let image = isButtonTapped ? UIImage(systemName: "heart") : UIImage(systemName: "heart.fill")
         likeButton.setImage(image, for: .normal)
-        isButtonTapped = !isButtonTapped
+        isButtonTapped.toggle()
     }
     
     //MARK: - layout
     override func layoutSubviews() {
         super.layoutSubviews()
-        filmImageView.layer.cornerRadius = 20
-        layer.cornerRadius = contentView.frame.height / 2
+        filmImageView.layer.cornerRadius = 10
+        filmImageView.clipsToBounds = true
     }
     
     //MARK: - configuration methods
@@ -73,6 +86,7 @@ final class BoxOfficeCell: UICollectionViewCell {
         self.timeLabel.text = "\(movie.rating)"
         self.dataLabel.text = "\(movie.releaseDate)"
         self.genreView.genreLabel.text = movie.genre
+        self.currentMovie = movie
     }
     
     //MARK: private support methods
@@ -88,8 +102,9 @@ final class BoxOfficeCell: UICollectionViewCell {
     //MARK: - private setup methods
     private func setupView() {
         backgroundColor = .clear
-        likeButton.addTarget(nil, action: #selector(HomeViewController.buttonPressed), for: .touchUpInside)
         setupConstraints()
+        bringSubviewToFront(likeButton)
+        likeButton.addTarget(nil, action: #selector(buttonPressed(_:)), for: .touchUpInside)
     }
     
     private func setupConstraints() {
@@ -98,6 +113,7 @@ final class BoxOfficeCell: UICollectionViewCell {
         imageTime.translatesAutoresizingMaskIntoConstraints = false
         imageData.translatesAutoresizingMaskIntoConstraints = false
         imageGenre.translatesAutoresizingMaskIntoConstraints = false
+        genreView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             likeButton.heightAnchor.constraint(equalToConstant: 23),
@@ -128,10 +144,10 @@ final class BoxOfficeCell: UICollectionViewCell {
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            filmImageView.heightAnchor.constraint(equalToConstant: 80),
-            filmImageView.widthAnchor.constraint(equalToConstant: 80),
             filmImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            filmImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            filmImageView.widthAnchor.constraint(equalTo: filmImageView.heightAnchor, multiplier: 0.8),
+            filmImageView.topAnchor.constraint(equalTo: topAnchor),
+            filmImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             mainStack.leadingAnchor.constraint(equalTo: filmImageView.trailingAnchor, constant: 12),
             mainStack.topAnchor.constraint(equalTo: topAnchor),
