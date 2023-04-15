@@ -15,6 +15,7 @@ class HomeViewController: UIViewController {
     private var categoryMovies: [MultimediaViewModel] = []
     private let multimediaLoader = MultimediaLoader.shared
     private var databaseService: DatabaseService = RealmService.shared
+    private var userService = RealmService.userAuth
     lazy var collectionView : UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -42,12 +43,6 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadSections(IndexSet(integer: 2))
-    }
-    
-    @objc func buttonPressed(_ sender: UIButton) {
-        let indexPath = IndexPath(item: sender.tag, section: 2)
-        guard let cell = collectionView.cellForItem(at: indexPath) as? BoxOfficeCell else { return }
-        cell.changeImageButton()
     }
     
     //MARK: - private setup UI methods
@@ -119,6 +114,9 @@ extension HomeViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "UserHeader", withReuseIdentifier: UserHeaderView.headerIdentifier, for: indexPath) as? UserHeaderView else {fatalError("Could not create header")}
+            let data = getUserData()
+            guard let url = data.1 else { return header }
+            header.setupUserData(with: data.0, url)
             return header
         case 1:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "CategoryHeader", withReuseIdentifier: CategoryHeaderView.headerIdentifier, for: indexPath) as? CategoryHeaderView else {fatalError("Could not create header")}
@@ -142,6 +140,7 @@ extension HomeViewController: UICollectionViewDataSource {
             } else {
                 let genre = categories[indexPath.row - 1]
                 fetchByGenre(genre: genre)
+                collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
             }
         default:
             let detailViewController = DetailViewController()
@@ -182,6 +181,14 @@ extension HomeViewController: UICollectionViewDataSource {
             }
         }
     }
+    
+    //MARK: - user data
+    private func getUserData() -> (String, URL?) {
+        guard let userData = userService.getUserData() else { return ("error", URL(string: ""))}
+        let name = "\(userData.userFirstName) \(userData.userLastName)"
+        let avatar = userData.userImageUrl
+        return (name, avatar)
+    }
 }
 
 //MARK: - UICollectionViewDelegate
@@ -206,10 +213,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
     
     private func bestMovieSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/3), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300))
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         let section = NSCollectionLayoutSection(group: group)

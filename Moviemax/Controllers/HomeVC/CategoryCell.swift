@@ -13,6 +13,7 @@ class CategoryCell: UICollectionViewCell {
         let label = UILabel()
         label.backgroundColor = .clear
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.adjustsFontSizeToFitWidth = true
         label.textColor = #colorLiteral(red: 0.6117647059, green: 0.6431372549, blue: 0.6705882353, alpha: 1)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false

@@ -17,17 +17,16 @@ class BestMovieCell: UICollectionViewCell {
     }()
     private let genreLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.3)
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        label.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.4)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         label.textColor = .systemBackground
-        label.layer.cornerRadius = 24
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label.numberOfLines = 0
         label.textColor = .systemBackground
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,8 +46,10 @@ class BestMovieCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        backgroundImage.layer.cornerRadius = 20
-        layer.cornerRadius = contentView.frame.height / 2
+        backgroundImage.layer.cornerRadius = 10
+        backgroundImage.clipsToBounds = true
+        genreLabel.layer.cornerRadius = 5
+        genreLabel.clipsToBounds = true
     }
     
     override func prepareForReuse() {
@@ -72,19 +73,18 @@ class BestMovieCell: UICollectionViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            backgroundImage.leadingAnchor.constraint(equalTo: leadingAnchor),
-            backgroundImage.topAnchor.constraint(equalTo: topAnchor),
-            backgroundImage.trailingAnchor.constraint(equalTo: trailingAnchor),
-            backgroundImage.bottomAnchor.constraint(equalTo: bottomAnchor),
+            backgroundImage.heightAnchor.constraint(equalToConstant: 200),
+            backgroundImage.widthAnchor.constraint(equalTo: backgroundImage.heightAnchor, multiplier: 0.8),
+            backgroundImage.centerYAnchor.constraint(equalTo: centerYAnchor),
+            backgroundImage.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            genreLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14),
+            genreLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             genreLabel.heightAnchor.constraint(equalToConstant: 20),
-            genreLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 6),
+            genreLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -10),
             
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14),
-            titleLabel.heightAnchor.constraint(equalToConstant: 50),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -14),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15)
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -10),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])
     }
     
