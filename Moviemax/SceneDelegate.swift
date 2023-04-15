@@ -28,9 +28,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 guard let self = self else { return }
                 switch result {
                 case .success(_):
-                    window?.rootViewController = MainTabBarController()
+                    self.window?.rootViewController = MainTabBarController()
                 case .failure(_):
-                    window?.rootViewController = LoginViewController()
+                    self.window?.rootViewController = LoginViewController()
                 }
             }
             
