@@ -13,4 +13,8 @@ struct UserAuthData {
     var userPassword: String
     var uid: String
     var userImageUrl: URL?
+    var isGoogleUser: Bool
+    var userIsMale: Bool?
+    var userBDate: String?
+    var userLocation: String?
 }

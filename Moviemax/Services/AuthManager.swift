@@ -16,12 +16,14 @@ protocol AuthInputProtocol: AnyObject {
     func createUser(userFirstName: String, userLastName: String, email: String, password: String, completionBlock: @escaping(Result<UserAuthData, Error>)-> Void)
     func signIn(email: String, password: String, completionBlock: @escaping(Result<UserAuthData, Error>)-> Void)
     func signInWithGoogle(view: UIViewController, completionBlock: @escaping(Result<UserAuthData, Error>) -> Void)
+    func signOutFromGoogle()
     func restorePassword(email: String, completionBlock: @escaping(Result<Bool, Error>)-> Void)
     func changePassword(newPassword: String, completionBlock: @escaping(Result<Bool, Error>)-> Void)
     func deleteUser(completionBlock: @escaping(Result<Bool, Error>)-> Void)
     func checkCurrentUser(email: String, password: String, completionBlock: @escaping(Result<Bool, Error>) -> Void)
     func signOut(completionBlock: @escaping(Result<Bool, Error>) -> Void)
     func registerAuthStateHandler(completionBlock: @escaping (Result<Bool, Error>) -> Void)
+    
     
 }
 
@@ -68,7 +70,8 @@ class AuthManager: AuthInputProtocol {
                                                     userEmail: curUser.email!,
                                                     userPassword: password,
                                                     uid: curUser.uid,
-                                                    userImageUrl: curUser.photoURL)
+                                                    userImageUrl: curUser.photoURL,
+                                                    isGoogleUser: false)
                             }
                             completionBlock(.success(user))
                         }
@@ -94,7 +97,8 @@ class AuthManager: AuthInputProtocol {
                                         userLastName: fullNameArray[1],
                                         userEmail: currentUser.email ?? email,
                                         userPassword: password,
-                                        uid: currentUser.uid)
+                                        uid: currentUser.uid,
+                                        isGoogleUser: false)
                 }
                 completionBlock(.success(user))
             }
@@ -138,15 +142,24 @@ class AuthManager: AuthInputProtocol {
                                                 userEmail: user.profile?.email ?? "",
                                                 userPassword: "",
                                                 uid: result?.user.uid ?? user.accessToken.tokenString,
-                                                userImageUrl: user.profile?.imageURL(withDimension: .max))
+                                                userImageUrl: user.profile?.imageURL(withDimension: .max), isGoogleUser: true)
                     completionBlock(.success(userData))
                 }
             }
             
             
         }
+    
         
     }
+    
+    //MARK: -  SignOut from google
+    
+    func signOutFromGoogle() {
+        GIDSignIn.sharedInstance.signOut()
+        user = nil
+    }
+    
     
     //MARK: - Restore password
     

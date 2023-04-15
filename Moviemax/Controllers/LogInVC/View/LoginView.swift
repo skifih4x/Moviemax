@@ -157,6 +157,7 @@ class LoginView: CustomView {
         return button
     }()
     
+    //MARK: - Setup views
     
     override func setupViews() {
         super.setupViews()

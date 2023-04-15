@@ -94,6 +94,11 @@ extension RegisterViewController: RegisterViewDelegate {
         if let navigationVC = navigationController {
             
             navigationVC.popViewController(animated: true)
+            
+        } else {
+            let loginVC = LoginViewController()
+            loginVC.modalPresentationStyle = .fullScreen
+            present(loginVC, animated: true)
         }
     }
     

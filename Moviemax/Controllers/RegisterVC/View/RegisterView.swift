@@ -442,6 +442,7 @@ class RegisterView: CustomView {
             make.width.equalTo(200)
             make.leading.equalTo(scrollView.snp.leading).offset(40)
             make.bottom.equalTo(backgroundView.snp.bottom).offset(-40)
+            make.top.equalTo(signUpButton.snp.bottom).offset(30)
         }
         
         logInButton.snp.makeConstraints { make in

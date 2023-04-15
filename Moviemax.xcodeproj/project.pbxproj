@@ -63,6 +63,7 @@
 		A549AA3D29DFFBB000F3F359 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */; };
 		A549AA3F29E4160200F3F359 /* AlertControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */; };
 		A549AA4229E4B7F900F3F359 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A549AA4129E4B7F900F3F359 /* IQKeyboardManagerSwift */; };
+		A56AAE9E29EB1A0A00C3F04D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56AAE9D29EB1A0A00C3F04D /* Theme.swift */; };
 		AB6CE25929E42DA900EB02DA /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25829E42DA900EB02DA /* OnboardingViewController.swift */; };
 		AB6CE25B29E439FE00EB02DA /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25A29E439FE00EB02DA /* CustomPageControl.swift */; };
 		AB6CE25D29E447BB00EB02DA /* OnboardingPageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CE25C29E447BB00EB02DA /* OnboardingPageContentView.swift */; };
@@ -140,6 +141,7 @@
 		A549AA3A29DFFB8100F3F359 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		A549AA3C29DFFBB000F3F359 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerManager.swift; sourceTree = "<group>"; };
+		A56AAE9D29EB1A0A00C3F04D /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		AB6CE25829E42DA900EB02DA /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		AB6CE25A29E439FE00EB02DA /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		AB6CE25C29E447BB00EB02DA /* OnboardingPageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageContentView.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				A549AA1E29DCB2BC00F3F359 /* StringTypeList.swift */,
 				A549AA2029DCB2F300F3F359 /* ErrorsList.swift */,
 				A549AA3E29E4160200F3F359 /* AlertControllerManager.swift */,
+				A56AAE9D29EB1A0A00C3F04D /* Theme.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 				A549AA2629DD592300F3F359 /* LoginViewController.swift in Sources */,
 				A549AA3F29E4160200F3F359 /* AlertControllerManager.swift in Sources */,
 				A549AA2329DCB33400F3F359 /* UserAuthData.swift in Sources */,
+				A56AAE9E29EB1A0A00C3F04D /* Theme.swift in Sources */,
 				A549AA1F29DCB2BC00F3F359 /* StringTypeList.swift in Sources */,
 				52899D9229DAF9C9003D2AB8 /* SearchViewController.swift in Sources */,
 				527748C429E3545A0052DAA9 /* CustomImageView.swift in Sources */,

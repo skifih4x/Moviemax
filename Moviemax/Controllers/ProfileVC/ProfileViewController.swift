@@ -186,7 +186,7 @@ class ProfileViewController: UIViewController {
     
     @objc private func changePasswordButtonTapped() {
         var validationResult: Bool = false
-        let alert = alertManager.showAlertChangePassword(title: "change password", message: "Please enter new password") { (result, email, oldPassword, newPassword, confNewPassword) in
+        let alert = alertManager.showAlertChangePassword(title: "change password", message: "Please enter new password") { [self] (result, email, oldPassword, newPassword, confNewPassword) in
             switch result {
             case true:
                 if let email = email,
@@ -200,7 +200,7 @@ class ProfileViewController: UIViewController {
                         validationResult = try self.validator.checkString(stringType: .password, string: confNewPassword, stringForMatching: nil)
                         validationResult = try self.validator.checkString(stringType: .passwordMatch, string: newPassword, stringForMatching: confNewPassword)
                     } catch {
-                        self.view?.failure(error: error)
+                        self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
                     }
                     if validationResult == true {
                         self.changePassword(email: email, oldPassword: oldPassword, newPassword: newPassword)
@@ -210,6 +210,7 @@ class ProfileViewController: UIViewController {
                 return
             }
         }
+        present(alert, animated: true)
         
     }
     
@@ -220,6 +221,8 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func logOutButtonTaped() {
+        
+        authManager.signOutFromGoogle()
         
         authManager.signOut { result in
             switch result {
@@ -235,16 +238,37 @@ class ProfileViewController: UIViewController {
             }
         }
         
+        
+        
     }
     
     @objc func switchStateDidChange(_ sender: UISwitch)
     {
         if (sender.isOn == true){
             print("UISwitch state is now ON")
+            UserDefaults.standard.setValue(Theme.dark.rawValue, forKey: "theme")
         }
         else{
             print("UISwitch state is now Off")
+            UserDefaults.standard.setValue(Theme.light.rawValue, forKey: "theme")
         }
+    }
+    
+    func changePassword(email: String, oldPassword: String, newPassword: String) {
+        authManager.changePassword(newPassword: newPassword, completionBlock: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async {
+                    let loginVC = LoginViewController()
+                    loginVC.modalPresentationStyle = .fullScreen
+                    self.navigationController?.pushViewController(loginVC, animated: true)
+                }
+                
+            case .failure(let error):
+                self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
+            }
+        })
     }
     
 }
@@ -254,6 +278,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController {
     
     private func setupViews() {
+        view.backgroundColor = .systemBackground
         view.addSubview(navigationBar)
         
         view.addSubview(profileImageView)
