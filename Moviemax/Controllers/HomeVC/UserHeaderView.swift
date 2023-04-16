@@ -13,7 +13,8 @@ final class UserHeaderView: UICollectionReusableView {
     
     lazy var avatarView: UIImageView = {
         let avatarView = UIImageView()
-        avatarView.image = UIImage(systemName: "person")
+        avatarView.image = UIImage(named: "ProfileImage")
+        avatarView.contentMode = .scaleAspectFit
         avatarView.translatesAutoresizingMaskIntoConstraints = false
         return avatarView
     }()
@@ -47,8 +48,9 @@ final class UserHeaderView: UICollectionReusableView {
         setupView()
     }
     
-    func setupUserData(with name: String, _ avatar: URL) {
+    func setupUserData(with name: String, _ avatar: URL?) {
         usernameLabel.text = "Hi, \(name)"
+        guard let avatar = avatar else { return }
         MultimediaLoader.shared.fetchImage(from: "\(avatar)") { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async {
