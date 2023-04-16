@@ -8,6 +8,7 @@
 import UIKit
 
 class MainTabBarController: UITabBarController {
+    
 
     private let middleButtonDiameter: CGFloat = 42
 

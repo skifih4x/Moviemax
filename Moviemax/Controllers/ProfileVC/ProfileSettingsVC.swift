@@ -11,6 +11,9 @@ final class ProfileSettingsVC: UIViewController {
     
     var imagePicker: ImagePicker!
 //    private let popupViewController = ChangeAvatarViewController()
+    private var databaseService = RealmService.userAuth
+    var user: UserAuthData?
+    let alertManager = AlertControllerManager()
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -103,7 +106,7 @@ final class ProfileSettingsVC: UIViewController {
     }
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
-        button.isEnabled = false
+//        button.isEnabled = false
         button.setTitle("Save Changes", for: .normal)
         
         button.titleLabel?.font = button.titleLabel?.font.withSize(16)
@@ -127,6 +130,13 @@ final class ProfileSettingsVC: UIViewController {
 
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
 //        setupBlur()
+        user = databaseService.getUserData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        user = databaseService.getUserData()
+        setUserData()
     }
 
     @objc func backButtonTapped() {
@@ -152,7 +162,26 @@ final class ProfileSettingsVC: UIViewController {
     }
     
     @objc private func saveButtonPressed() {
-        print("saveButtonPressed")
+        guard let user = user else { return }
+        var isMale: Bool?
+        if maleButton.isSelected || femaleButton.isSelected {
+            isMale = maleButton.isSelected
+        }
+       
+        let newUserData = UserAuthData(userFirstName: firstNameTextField.text ?? user.userFirstName,
+                                       userLastName: lastNameTextField.text ?? user.userLastName,
+                                       userEmail: emailTextField.text ?? user.userEmail,
+                                       userPassword: user.userPassword,
+                                       uid: user.uid,
+                                       userImageUrl: user.userImageUrl,
+                                       userImage: avatarImageView.image?.pngData(),
+                                       isGoogleUser: user.isGoogleUser,
+                                       userIsMale: isMale,
+                                       userBDate: dateOfBirthTextField.text ?? user.userBDate,
+                                       userLocation: locationTextView.text ?? user.userLocation)
+        databaseService.deleteUser(with: user.userEmail)
+        databaseService.saveUserData(newUserData)
+        present(alertManager.showAlert(title: "Success!", message: "User data is save!"), animated: true)
     }
 
     private func setupUI() {
@@ -190,6 +219,29 @@ final class ProfileSettingsVC: UIViewController {
         UIView.animate(withDuration: 0.4) {
             self.visualEffectView.alpha = 0
             
+        }
+    }
+    
+    func setUserData() {
+        if let user = user {
+            firstNameTextField.text = user.userFirstName
+            lastNameTextField.text = user.userLastName
+            emailTextField.text = user.userEmail
+            dateOfBirthTextField.text = user.userBDate
+            if user.userIsMale == true {
+                maleButton.isSelected = true
+            }
+            if user.userIsMale == false {
+                femaleButton.isSelected = true
+            }
+            locationTextView.text = user.userLocation
+            if user.userImageUrl != nil {
+                
+            } else {
+                if user.userImage != nil {
+                    avatarImageView.image = UIImage(data: user.userImage!)
+                }
+            }
         }
     }
     

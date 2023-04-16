@@ -15,6 +15,7 @@ class LoginViewController: CustomViewController<LoginView> {
     let authManager = AuthManager()
     let validationManager = ValidatorClass()
     let alertManager = AlertControllerManager()
+    private var databaseService = RealmService.userAuth
     var userEmail: String = ""
     
     override func loadView() {
@@ -81,6 +82,7 @@ extension LoginViewController: LoginViewDelegate {
                     switch result {
                     case .success(let user):
                         print(user)
+                        self.databaseService.saveUserData(user)
                         var homeVC: MainTabBarController!
                         homeVC = MainTabBarController()
                         homeVC.modalPresentationStyle = .fullScreen
@@ -107,10 +109,12 @@ extension LoginViewController: LoginViewDelegate {
     }
     
     func loginView(didTappedGoogleSignIn button: GIDSignInButton) {
-        authManager.signInWithGoogle(view: self) { result in
+        authManager.signInWithGoogle(view: self) { [weak self]result in
+            guard let self = self else { return }  
             switch result {
             case .success(let user):
                 print(user)
+                self.databaseService.saveUserData(user)
                 var homeVC: MainTabBarController!
                 homeVC = MainTabBarController()
                 homeVC.modalPresentationStyle = .fullScreen

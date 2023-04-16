@@ -7,27 +7,28 @@
 
 import Foundation
 import RealmSwift
+import UIKit
 
 final class UserAuthService {
     
     //структура добавлена здесь, чтобы saveUserData не выдавал ошибки. Удалить ее отсюда после добавления в положенном месте
-    struct UserAuthData {
-        var userFirstName: String
-        var userLastName: String
-        var userEmail: String
-        var userPassword: String
-        var uid: String
-        var userImageUrl: URL?
-        var isGoogleUser: Bool
-        var userIsMale: Bool?
-        var userBDate: String?
-        var userLocation: String?
-    }
+//    struct UserAuthData {
+//        var userFirstName: String
+//        var userLastName: String
+//        var userEmail: String
+//        var userPassword: String
+//        var uid: String
+//        var userImageUrl: URL?
+//        var isGoogleUser: Bool
+//        var userIsMale: Bool?
+//        var userBDate: String?
+//        var userLocation: String?
+//    }
     
     func saveUserData(_ data: UserAuthData) {
         do {
             let realm = try Realm()
-            let userData = UserData(userFirstName: data.userFirstName, userLastName: data.userLastName, userEmail: data.userEmail, userPassword: data.userPassword, uid: data.uid, userImageUrl: String(describing: data.userImageUrl),isGoogleUser: data.isGoogleUser, userIsMale: data.userIsMale ?? false, userBDate: data.userBDate ?? "", userLocation: data.userLocation ?? "")
+            let userData = UserData(userFirstName: data.userFirstName, userLastName: data.userLastName, userEmail: data.userEmail, userPassword: data.userPassword, uid: data.uid, userImageUrl: String(describing: data.userImageUrl), userImage: (data.userImage ?? UIImage(named: "ProfileImage")!.pngData())!, isGoogleUser: data.isGoogleUser, userIsMale: data.userIsMale ?? false, userBDate: data.userBDate ?? "", userLocation: data.userLocation ?? "")
             let users = realm.objects(UserData.self)
             if !users.contains(where: { $0.userEmail == userData.userEmail }) {
                 try realm.write {

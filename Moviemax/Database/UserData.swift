@@ -15,12 +15,13 @@ final class UserData: Object {
     @Persisted var userPassword: String
     @Persisted var uid: String
     @Persisted var userImageUrl: String
+    @Persisted var userImage: Data
     @Persisted var isGoogleUser: Bool
     @Persisted var userIsMale: Bool
     @Persisted var userBDate: String
     @Persisted var userLocation: String
     
-    convenience init(userFirstName: String, userLastName: String, userEmail: String, userPassword: String, uid: String, userImageUrl: String, isGoogleUser: Bool, userIsMale: Bool, userBDate: String, userLocation: String) {
+    convenience init(userFirstName: String, userLastName: String, userEmail: String, userPassword: String, uid: String, userImageUrl: String, userImage: Data, isGoogleUser: Bool, userIsMale: Bool, userBDate: String, userLocation: String) {
         self.init()
         self.userFirstName = userFirstName
         self.userLastName = userLastName
@@ -28,6 +29,7 @@ final class UserData: Object {
         self.userPassword = userPassword
         self.uid = uid
         self.userImageUrl = userImageUrl
+        self.userImage = userImage
         self.isGoogleUser = isGoogleUser
         self.userIsMale = userIsMale
         self.userBDate = userBDate

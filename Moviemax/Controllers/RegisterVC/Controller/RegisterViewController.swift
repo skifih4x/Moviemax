@@ -16,7 +16,7 @@ class RegisterViewController: CustomViewController<RegisterView> {
     let authManager = AuthManager()
     let alertManager = AlertControllerManager()
     let validator = ValidatorClass()
-    
+    private var databaseService = RealmService.userAuth
     var canTransitionToLarge = false
     var canTransitionToSmall = true
     
@@ -44,6 +44,7 @@ class RegisterViewController: CustomViewController<RegisterView> {
 }
 
 extension RegisterViewController: RegisterViewDelegate {
+    
     func registerView(didSignUpButtonTapped button: UIButton) {
         var validateResult: Bool = false
         if customView.fNameTextField.text != "" && customView.fNameTextField.text != nil,
@@ -75,6 +76,7 @@ extension RegisterViewController: RegisterViewDelegate {
                     switch result {
                     case .success(let user):
                         print(user)
+                        databaseService.saveUserData(user)
                         var homeVC: MainTabBarController!
                         homeVC = MainTabBarController()
                         homeVC.modalPresentationStyle = .fullScreen
