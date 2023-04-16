@@ -73,17 +73,17 @@ class BestMovieCell: UICollectionViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            backgroundImage.heightAnchor.constraint(equalToConstant: 200),
-            backgroundImage.widthAnchor.constraint(equalTo: backgroundImage.heightAnchor, multiplier: 0.8),
+            backgroundImage.heightAnchor.constraint(equalToConstant: 250),
+            backgroundImage.widthAnchor.constraint(equalTo: backgroundImage.heightAnchor, multiplier: 0.7),
             backgroundImage.centerYAnchor.constraint(equalTo: centerYAnchor),
             backgroundImage.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            genreLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            genreLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             genreLabel.heightAnchor.constraint(equalToConstant: 20),
             genreLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -10),
             
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -10),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: 0),
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])
     }

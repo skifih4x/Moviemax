@@ -76,7 +76,7 @@ extension RegisterViewController: RegisterViewDelegate {
                     switch result {
                     case .success(let user):
                         print(user)
-                        databaseService.saveUserData(user)
+                        self.databaseService.saveUserData(user)
                         var homeVC: MainTabBarController!
                         homeVC = MainTabBarController()
                         homeVC.modalPresentationStyle = .fullScreen

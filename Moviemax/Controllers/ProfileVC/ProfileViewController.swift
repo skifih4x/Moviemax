@@ -332,7 +332,7 @@ class ProfileViewController: UIViewController {
             guard let self = self else { return }
             switch result {
             case .success(_):
-                authManager.changePassword(newPassword: newPassword, completionBlock: { [weak self] result in
+                self.authManager.changePassword(newPassword: newPassword, completionBlock: { [weak self] result in
                     guard let self = self else { return }
                     switch result {
                     case .success(_):
