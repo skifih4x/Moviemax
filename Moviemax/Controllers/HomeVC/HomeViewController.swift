@@ -42,7 +42,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collectionView.reloadSections(IndexSet(integer: 2))
+        collectionView.reloadData()
     }
     
     //MARK: - private setup UI methods
@@ -83,8 +83,14 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0 :
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: BestMovieCell.self), for: indexPath) as? BestMovieCell else {fatalError("Could not create new cell")}
             let movie = topMovies[indexPath.item]
-            cell.configure(with: movie)
-            return cell
+            if indexPath.item == 1 {
+                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+                cell.configure(with: movie)
+                return cell
+            } else {
+                cell.configure(with: movie)
+                return cell
+            }
             
         case 1 :
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CategoryCell.self), for: indexPath) as? CategoryCell else {fatalError("Could not create new cell")}
@@ -115,7 +121,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "UserHeader", withReuseIdentifier: UserHeaderView.headerIdentifier, for: indexPath) as? UserHeaderView else {fatalError("Could not create header")}
             let data = getUserData()
-            header.setupUserData(with: data.0, data.1)
+            header.setupUserData(with: data.0 ?? "", data.1)
             return header
         case 1:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "CategoryHeader", withReuseIdentifier: CategoryHeaderView.headerIdentifier, for: indexPath) as? CategoryHeaderView else {fatalError("Could not create header")}
@@ -182,11 +188,10 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     //MARK: - user data
-    private func getUserData() -> (String, URL?) {
-        let userData = userService.getUserData()
-        guard let firstName = userData?.userFirstName, let lastName = userData?.userLastName else { return ("", userData?.userImageUrl)}
-        let name = "\(firstName) \(lastName)"
-        let avatar = userData?.userImageUrl
+    private func getUserData() -> (String?, URL?) {
+        guard let userData = userService.getUserData() else { return (nil, nil)}
+        let name = "\(userData.userFirstName) \(userData.userLastName)"
+        let avatar = userData.userImageUrl
         return (name, avatar)
     }
 }
@@ -213,15 +218,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
     
     private func bestMovieSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/3), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/2.2), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(250))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 3)
-        group.interItemSpacing = .fixed(120)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        group.interItemSpacing = .fixed(20)
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 120
+        section.interGroupSpacing = 148
         section.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0)
         section.orthogonalScrollingBehavior = .continuous
         section.visibleItemsInvalidationHandler = { (items, offset, environment) in
@@ -233,7 +237,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
                 item.transform = CGAffineTransform(scaleX: scale, y: scale)
             }
         }
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "UserHeader", alignment: .top)
         sectionHeader.pinToVisibleBounds = true
         sectionHeader.zIndex = 2
@@ -251,7 +255,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0)
         section.orthogonalScrollingBehavior = .paging
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "CategoryHeader", alignment: .top)
         sectionHeader.pinToVisibleBounds = true
         sectionHeader.zIndex = 2
@@ -267,7 +271,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = CGFloat(10)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24)
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: "BoxOfficeHeader", alignment: .top)
         sectionHeader.pinToVisibleBounds = true
         sectionHeader.zIndex = 2
