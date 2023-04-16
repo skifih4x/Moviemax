@@ -50,13 +50,20 @@ final class UserHeaderView: UICollectionReusableView {
     
     func setupUserData(with name: String, _ avatar: URL?) {
         usernameLabel.text = "Hi, \(name)"
-        guard let avatar = avatar else { return }
-        MultimediaLoader.shared.fetchImage(from: "\(avatar)") { [weak self] image in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.avatarView.image = image
+        guard let avatarUrl = avatar else { return }
+        do {
+            if try avatarUrl.checkResourceIsReachable() {
+                MultimediaLoader.shared.fetchImage(from: String(describing: avatar)) { [weak self] image in
+                    guard let self = self else { return }
+                    DispatchQueue.main.async {
+                        self.avatarView.image = image
+                    }
+                }
             }
+        } catch {
+            debugPrint(error)
         }
+        
     }
     //MARK: - private setup methods
     private func setupView() {
@@ -74,7 +81,7 @@ final class UserHeaderView: UICollectionReusableView {
             avatarView.widthAnchor.constraint(equalTo: avatarView.heightAnchor),
             avatarView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            usernameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor),
+            usernameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 10),
             usernameLabel.topAnchor.constraint(equalTo: avatarView.topAnchor),
             usernameLabel.heightAnchor.constraint(equalTo: avatarView.heightAnchor, multiplier: 0.5),
             usernameLabel.trailingAnchor.constraint(equalTo: trailingAnchor),

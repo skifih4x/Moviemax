@@ -41,7 +41,7 @@ final class BoxOfficeHeaderView: UICollectionReusableView {
         NSLayoutConstraint.activate([
             title.leadingAnchor.constraint(equalTo: leadingAnchor),
             title.topAnchor.constraint(equalTo: topAnchor),
-            title.widthAnchor.constraint(equalToConstant: 83),
+            title.trailingAnchor.constraint(equalTo: trailingAnchor),
             title.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }

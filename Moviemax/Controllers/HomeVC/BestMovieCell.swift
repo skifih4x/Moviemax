@@ -73,7 +73,7 @@ class BestMovieCell: UICollectionViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            backgroundImage.heightAnchor.constraint(equalToConstant: 250),
+            backgroundImage.heightAnchor.constraint(equalToConstant: 300),
             backgroundImage.widthAnchor.constraint(equalTo: backgroundImage.heightAnchor, multiplier: 0.7),
             backgroundImage.centerYAnchor.constraint(equalTo: centerYAnchor),
             backgroundImage.centerXAnchor.constraint(equalTo: centerXAnchor),
