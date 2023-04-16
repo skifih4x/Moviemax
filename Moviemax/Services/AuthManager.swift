@@ -16,18 +16,20 @@ protocol AuthInputProtocol: AnyObject {
     func createUser(userFirstName: String, userLastName: String, email: String, password: String, completionBlock: @escaping(Result<UserAuthData, Error>)-> Void)
     func signIn(email: String, password: String, completionBlock: @escaping(Result<UserAuthData, Error>)-> Void)
     func signInWithGoogle(view: UIViewController, completionBlock: @escaping(Result<UserAuthData, Error>) -> Void)
-    func signOutFromGoogle()
+    func signOutFromGoogle(email: String)
     func restorePassword(email: String, completionBlock: @escaping(Result<Bool, Error>)-> Void)
     func changePassword(newPassword: String, completionBlock: @escaping(Result<Bool, Error>)-> Void)
     func deleteUser(completionBlock: @escaping(Result<Bool, Error>)-> Void)
     func checkCurrentUser(email: String, password: String, completionBlock: @escaping(Result<Bool, Error>) -> Void)
-    func signOut(completionBlock: @escaping(Result<Bool, Error>) -> Void)
+    func signOut(email: String, completionBlock: @escaping(Result<Bool, Error>) -> Void)
     func registerAuthStateHandler(completionBlock: @escaping (Result<Bool, Error>) -> Void)
     
     
 }
 
 class AuthManager: AuthInputProtocol {
+    
+    private var databaseService = RealmService.userAuth
     
     var user: UserAuthData!
     
@@ -155,8 +157,9 @@ class AuthManager: AuthInputProtocol {
     
     //MARK: -  SignOut from google
     
-    func signOutFromGoogle() {
+    func signOutFromGoogle(email: String) {
         GIDSignIn.sharedInstance.signOut()
+        databaseService.deleteUser(with: email)
         user = nil
     }
     
@@ -223,10 +226,24 @@ class AuthManager: AuthInputProtocol {
         
     }
     
-    func signOut(completionBlock: @escaping (Result<Bool, Error>) -> Void) {
+    func signOut(email: String, completionBlock: @escaping (Result<Bool, Error>) -> Void) {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
+            databaseService.deleteUser(with: email)
+            completionBlock(.success(true))
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+            completionBlock(.failure(signOutError))
+        }
+        
+    }
+    
+    func signOutFaster( completionBlock: @escaping (Result<Bool, Error>) -> Void) {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            GIDSignIn.sharedInstance.signOut()
             completionBlock(.success(true))
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)

@@ -13,8 +13,22 @@ class ProfileViewController: UIViewController {
     let authManager = AuthManager()
     let alertManager = AlertControllerManager()
     let validator = ValidatorClass()
+    var user: UserAuthData?
     
     private var navigationBar = UINavigationBar()
+    
+    //    init(with user: UserAuthData?) {
+    //        self.user = user
+    //        super.init(nibName: nil, bundle: nil)
+    //    }
+    //
+    //    required init?(coder: NSCoder) {
+    //        super.init(coder: coder)
+    //    }
+    
+    
+    
+    
     
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -175,6 +189,13 @@ class ProfileViewController: UIViewController {
         
         setupViews()
         setConstraints()
+        user = databaseService.getUserData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        user = databaseService.getUserData()
+        setUserData()
     }
     
     //MARK: - flow funcs
@@ -184,51 +205,101 @@ class ProfileViewController: UIViewController {
         navigationController?.pushViewController(newViewController, animated: true)
     }
     
+    
+    
     @objc private func changePasswordButtonTapped() {
-        var validationResult: Bool = false
-        let alert = alertManager.showAlertChangePassword(title: "change password", message: "Please enter new password") { [self] (result, email, oldPassword, newPassword, confNewPassword) in
-            switch result {
-            case true:
-                if let email = email,
-                   let oldPassword = oldPassword,
-                   let newPassword = newPassword,
-                   let confNewPassword = confNewPassword {
-                    do {
-                        validationResult = try self.validator.checkString(stringType: .email, string: email, stringForMatching: nil)
-                        validationResult = try self.validator.checkString(stringType: .password , string: oldPassword, stringForMatching: nil)
-                        validationResult = try self.validator.checkString(stringType: .password, string: newPassword, stringForMatching: nil)
-                        validationResult = try self.validator.checkString(stringType: .password, string: confNewPassword, stringForMatching: nil)
-                        validationResult = try self.validator.checkString(stringType: .passwordMatch, string: newPassword, stringForMatching: confNewPassword)
-                    } catch {
-                        self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
-                    }
-                    if validationResult == true {
-                        self.changePassword(email: email, oldPassword: oldPassword, newPassword: newPassword)
-                    }
-                }
-            case false:
-                return
-            }
-        }
-        present(alert, animated: true)
         
+        if user?.isGoogleUser == false {
+            var validationResult: Bool = false
+            let alert = alertManager.showAlertChangePassword(title: "change password", message: "Please enter new password") { [self] (result, email, oldPassword, newPassword, confNewPassword) in
+                switch result {
+                case true:
+                    if let email = email,
+                       let oldPassword = oldPassword,
+                       let newPassword = newPassword,
+                       let confNewPassword = confNewPassword {
+                        do {
+                            validationResult = try self.validator.checkString(stringType: .email, string: email, stringForMatching: nil)
+                            validationResult = try self.validator.checkString(stringType: .password , string: oldPassword, stringForMatching: nil)
+                            validationResult = try self.validator.checkString(stringType: .password, string: newPassword, stringForMatching: nil)
+                            validationResult = try self.validator.checkString(stringType: .password, string: confNewPassword, stringForMatching: nil)
+                            validationResult = try self.validator.checkString(stringType: .passwordMatch, string: newPassword, stringForMatching: confNewPassword)
+                        } catch {
+                            self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
+                        }
+                        if validationResult == true {
+                            self.changePassword(email: email, oldPassword: oldPassword, newPassword: newPassword)
+                        }
+                    }
+                case false:
+                    return
+                }
+            }
+            present(alert, animated: true)
+        } else {
+            present(alertManager.showAlert(title: "Warning!", message: "You can't change Google user password!"), animated: true)
+        }
     }
     
     @objc private func forgotPasswordButtonTapped() {
+        
+        if user?.isGoogleUser == false {
+            
+            var validationResult: Bool = false
+            let alert = alertManager.showAlertRememberPassword(title: "Forgot password?", message: "Enter e-mail address and wait letter)", completionBlock: { (result, email) in
+                switch result {
+                case true:
+                    if let email = email {
+                        do {
+                            validationResult = try self.validator.checkString(stringType: .email, string: email, stringForMatching: nil)
+                        } catch {
+                            self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
+                        }
+                        if validationResult == true {
+                            self.rememberPassword(email: email)
+                        }
+                    }
+                    
+                case false:
+                    return
+                }
+            })
+            present(alert, animated: true)
+            
+        } else {
+            present(alertManager.showAlert(title: "Warning!", message: "You can't restore Google user password!"), animated: true)
+        }
+        
     }
+    
+    
     
     @objc private func darkModeButtonTapped() {
     }
     
     @objc private func logOutButtonTaped() {
         
-        authManager.signOutFromGoogle()
+//        authManager.signOutFaster { result in
+//            switch result {
+//            case .success(let result):
+//                if result == true {
+//                    let loginVC = LoginViewController()
+//                    loginVC.modalPresentationStyle = .fullScreen
+//                    self.navigationController?.pushViewController(loginVC, animated: true)
+//                }
+//            case .failure(let error):
+//                self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
+//            }
+//        }
         
-        authManager.signOut { result in
+        guard let user = user else { return }
+        
+        authManager.signOutFromGoogle(email: user.userEmail)
+        
+        authManager.signOut(email: user.userEmail) { result in
             switch result {
             case .success(let result):
                 if result == true {
-                    
                     let loginVC = LoginViewController()
                     loginVC.modalPresentationStyle = .fullScreen
                     self.navigationController?.pushViewController(loginVC, animated: true)
@@ -236,6 +307,8 @@ class ProfileViewController: UIViewController {
             case .failure(let error):
                 self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
             }
+            
+            
         }
         
         
@@ -255,20 +328,70 @@ class ProfileViewController: UIViewController {
     }
     
     func changePassword(email: String, oldPassword: String, newPassword: String) {
-        authManager.changePassword(newPassword: newPassword, completionBlock: { [weak self] result in
+        authManager.signIn(email: email, password: oldPassword, completionBlock: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(_):
-                DispatchQueue.main.async {
-                    let loginVC = LoginViewController()
-                    loginVC.modalPresentationStyle = .fullScreen
-                    self.navigationController?.pushViewController(loginVC, animated: true)
-                }
-                
+                authManager.changePassword(newPassword: newPassword, completionBlock: { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(_):
+                        DispatchQueue.main.async {
+                            let loginVC = LoginViewController()
+                            loginVC.modalPresentationStyle = .fullScreen
+                            self.navigationController?.pushViewController(loginVC, animated: true)
+                        }
+                        
+                    case .failure(let error):
+                        self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
+                    }
+                })
             case .failure(let error):
                 self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
             }
         })
+    }
+    
+    func rememberPassword(email: String) {
+        authManager.restorePassword(email: email, completionBlock: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+                
+            case .success(_):
+                self.present(self.alertManager.showAlert(title: "Complete!", message: "Password was send on your email address"), animated: true)
+            case .failure(let error):
+                self.present(self.alertManager.showAlert(title: "Error!", message: error.localizedDescription), animated: true)
+            }
+        })
+    }
+    
+    func setUserData() {
+        if let user = user {
+            profileNameLabel.text = String("\(user.userFirstName) \(user.userLastName)")
+            nickNameLabel.text = user.userEmail
+        }
+        let style = UIScreen.main.traitCollection.userInterfaceStyle
+        switch style {
+        case .unspecified:
+            customSwitch.isOn = false
+        case .light:
+            customSwitch.isOn = false
+        case .dark:
+            customSwitch.isOn = true
+//        default:
+//            customSwitch.isOn = false
+        }
+        
+//        let theme = UserDefaults.standard.object(forKey: "theme") as! String
+//        switch theme {
+//        case "light":
+//            customSwitch.isOn = false
+//        case "dark":
+//            customSwitch.isOn = true
+//        default:
+//            customSwitch.isOn = false
+//        }
+        
     }
     
 }
